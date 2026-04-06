@@ -15,7 +15,7 @@ As três tarefas desta fase não possuem dependências entre si e podem ser exec
 
 ### TASK-001: Incrementar versão e data no cabeçalho do documento
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.0
 - **Dependências:** Nenhuma
 - **Decisões aplicadas:** —
@@ -30,7 +30,7 @@ As três tarefas desta fase não possuem dependências entre si e podem ser exec
 
 ### TASK-002: Renomear seção 2.1 — "A Golden Source Semântica" para "A Product Canon"
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.3
 - **Dependências:** Nenhuma
 - **Decisões aplicadas:** D1, D10
@@ -50,7 +50,7 @@ As três tarefas desta fase não possuem dependências entre si e podem ser exec
 
 ### TASK-003: Atualizar terminologia na seção 1 — Problema (1.1, 1.2, 1.3)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.2
 - **Dependências:** Nenhuma
 - **Decisões aplicadas:** D10
@@ -73,7 +73,7 @@ As tarefas desta fase possuem dependências sequenciais internas. TASK-004 depen
 
 ### TASK-004: Reescrever cabeçalho e introdução da Etapa 1 (seção 2.2)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.4.1
 - **Dependências:** TASK-002
 - **Decisões aplicadas:** D3, D10
@@ -96,7 +96,7 @@ As tarefas desta fase possuem dependências sequenciais internas. TASK-004 depen
 
 ### TASK-005: Transformar seção 2.2.1 — Pipeline de Event Storming em Domain Discovery Session
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.4.2
 - **Dependências:** TASK-004
 - **Decisões aplicadas:** D2, D3, D5, D6, D10
@@ -122,7 +122,7 @@ As tarefas desta fase possuem dependências sequenciais internas. TASK-004 depen
 
 ### TASK-006: Substituir Pipeline MARE por Technical Constitution Session (seção 2.2.2)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.4.3
 - **Dependências:** TASK-005
 - **Decisões aplicadas:** D2, D3, D5, D6, D10
@@ -149,7 +149,7 @@ As tarefas desta fase possuem dependências sequenciais internas. TASK-004 depen
 
 ### TASK-007: Substituir seção "Combinação das Pipelines" por Requirements Specification Session (seção 2.2.3)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.4.4
 - **Dependências:** TASK-006
 - **Decisões aplicadas:** D2, D3, D4, D5, D6, D10
@@ -174,7 +174,7 @@ As tarefas desta fase possuem dependências sequenciais internas. TASK-004 depen
 
 ### TASK-008: Substituir "Atuação do Arquiteto" por "Decisão de Continuidade do Ciclo" (seção 2.2.4)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.4.5
 - **Dependências:** TASK-005, TASK-006, TASK-007
 - **Decisões aplicadas:** D6, D7, D8, D10
@@ -202,7 +202,7 @@ As tarefas desta fase possuem dependências sequenciais internas. TASK-004 depen
 
 ### TASK-009: Atualizar Guardrails da Product Canon (seção 2.2.5)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.4.6
 - **Dependências:** TASK-002
 - **Decisões aplicadas:** D10
@@ -238,7 +238,7 @@ TASK-010 e TASK-011 são sequenciais entre si (TASK-011 depende de TASK-010).
 
 ### TASK-010: Atualizar Etapa 2 — Especificação Contextualizada (seção 2.3)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.5
 - **Dependências:** TASK-004, TASK-005, TASK-006, TASK-007, TASK-008
 - **Decisões aplicadas:** D9, D10
@@ -270,7 +270,7 @@ TASK-010 e TASK-011 são sequenciais entre si (TASK-011 depende de TASK-010).
 
 ### TASK-011: Atualizar Etapa 3 — Retroalimentação (seção 2.4)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.6
 - **Dependências:** TASK-010
 - **Decisões aplicadas:** —
@@ -299,7 +299,7 @@ TASK-012, TASK-013 e TASK-014 podem ser executadas em paralelo (todas dependem d
 
 ### TASK-012: Reescrever diagrama do Ciclo Completo (seção 3)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.7
 - **Dependências:** TASK-004 a TASK-011
 - **Decisões aplicadas:** D3, D10
@@ -330,7 +330,7 @@ TASK-012, TASK-013 e TASK-014 podem ser executadas em paralelo (todas dependem d
 
 ### TASK-013: Atualizar Papéis no Modelo (seção 4)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.8
 - **Dependências:** TASK-004 a TASK-008
 - **Decisões aplicadas:** D3, D6, D7, D8, D10
@@ -367,7 +367,7 @@ TASK-012, TASK-013 e TASK-014 podem ser executadas em paralelo (todas dependem d
 
 ### TASK-014: Reformular Estrutura de Artefatos (seção 5)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.9
 - **Dependências:** TASK-002, TASK-004 a TASK-008
 - **Decisões aplicadas:** D1, D2, D4
@@ -401,7 +401,7 @@ As tarefas TASK-015 a TASK-019 podem ser executadas em paralelo (dependem das fa
 
 ### TASK-015: Atualizar Cenários de Aplicação (seção 6)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.10
 - **Dependências:** TASK-004 a TASK-011
 - **Decisões aplicadas:** D4, D9, D10
@@ -430,7 +430,7 @@ As tarefas TASK-015 a TASK-019 podem ser executadas em paralelo (dependem das fa
 
 ### TASK-016: Atualizar Dores Endereçadas (seção 7)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.11
 - **Dependências:** TASK-004 a TASK-011
 - **Decisões aplicadas:** D3, D4, D8, D9, D10
@@ -453,7 +453,7 @@ As tarefas TASK-015 a TASK-019 podem ser executadas em paralelo (dependem das fa
 
 ### TASK-017: Atualizar Princípios de Design (seção 8)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.12
 - **Dependências:** TASK-004 a TASK-008
 - **Decisões aplicadas:** D3, D8
@@ -473,7 +473,7 @@ As tarefas TASK-015 a TASK-019 podem ser executadas em paralelo (dependem das fa
 
 ### TASK-018: Atualizar Riscos e Limitações (seção 9)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.13
 - **Dependências:** TASK-004 a TASK-008
 - **Decisões aplicadas:** D1, D3, D4, D5, D9
@@ -493,7 +493,7 @@ As tarefas TASK-015 a TASK-019 podem ser executadas em paralelo (dependem das fa
 
 ### TASK-019: Atualizar Direções para Prototipação (seção 10)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** 2.14
 - **Dependências:** TASK-001 a TASK-018 (depende de todas as seções anteriores)
 - **Decisões aplicadas:** D2, D3, D4, D7
@@ -519,7 +519,7 @@ Todas as tarefas de verificação dependem da conclusão de **todas** as tarefas
 
 ### TASK-020: Verificação — Busca por termos deprecados
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** Seção 5.1 do plano (Risco: Inconsistência terminológica residual)
 - **Dependências:** TASK-001 a TASK-019
 - **Decisões aplicadas:** D10
@@ -542,7 +542,7 @@ Todas as tarefas de verificação dependem da conclusão de **todas** as tarefas
 
 ### TASK-021: Verificação — Preservação de exemplos e blocos de código
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** Seção 5.2 do plano (Risco: Perda de exemplos)
 - **Dependências:** TASK-001 a TASK-019
 - **Decisões aplicadas:** —
@@ -564,7 +564,7 @@ Todas as tarefas de verificação dependem da conclusão de **todas** as tarefas
 
 ### TASK-022: Verificação — Glosas em português (D10)
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** Seção 5.5 do plano (Risco: Glosas inconsistentes)
 - **Dependências:** TASK-001 a TASK-019
 - **Decisões aplicadas:** D10
@@ -593,7 +593,7 @@ Todas as tarefas de verificação dependem da conclusão de **todas** as tarefas
 
 ### TASK-023: Verificação — Alinhamento entre diagrama e texto
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** Seção 5.4 do plano (Risco: Desalinhamento diagrama/texto)
 - **Dependências:** TASK-001 a TASK-019
 - **Decisões aplicadas:** —
@@ -611,7 +611,7 @@ Todas as tarefas de verificação dependem da conclusão de **todas** as tarefas
 
 ### TASK-024: Verificação — Cobertura das decisões D1–D10
 
-- **Status:** [ ]
+- **Status:** [x]
 - **Bloco do plano:** Seção 3 do plano (tabela de cobertura D1–D10)
 - **Dependências:** TASK-001 a TASK-019
 - **Decisões aplicadas:** D1–D10
