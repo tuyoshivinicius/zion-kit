@@ -1,4 +1,4 @@
-# ZionKit: Uma Camada Semântica Viva para Desenvolvimento de Software Orientado por Especificações
+# ZionKit: Um Corpo  de Conhecimento Vivo para Desenvolvimento de Software Orientado por Especificações
 
 **Status do modelo**: Protótipo conceitual  
 **Versão do documento**: 0.5 — Abril 2026  
