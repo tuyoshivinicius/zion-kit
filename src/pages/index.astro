@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AuroraBackground from '../components/animations/AuroraBackground.astro';
+import StickyNav from '../components/layout/StickyNav.astro';
+import ProgressBar from '../components/layout/ProgressBar.astro';
+import CanonEnrichment from '../components/animations/CanonEnrichment.astro';
+import CTABanner from '../components/ui/CTABanner.astro';
+import Footer from '../components/layout/Footer.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import AgitationSection from '../components/sections/AgitationSection.astro';
+import SolutionBridgeSection from '../components/sections/SolutionBridgeSection.astro';
+import CycleOverviewSection from '../components/sections/CycleOverviewSection.astro';
+import PillarsSection from '../components/sections/PillarsSection.astro';
+import RolesSection from '../components/sections/RolesSection.astro';
+import ComparisonSection from '../components/sections/ComparisonSection.astro';
+import CanonDeepDiveSection from '../components/sections/CanonDeepDiveSection.astro';
+import ScenariosSection from '../components/sections/ScenariosSection.astro';
+import GlossarySection from '../components/sections/GlossarySection.astro';
+---
+
+<BaseLayout>
+  <a href="#main-content" class="skip-link">Pular para o conteúdo</a>
+
+  <AuroraBackground />
+  <ProgressBar />
+  <StickyNav />
+  <CanonEnrichment />
+
+  <main id="main-content" role="main">
+    <!-- Seção 1 — O Problema -->
+    <HeroSection />
+
+    <!-- Seção 2 — A Agitação -->
+    <AgitationSection />
+
+    <!-- Seção 3 — A Solução -->
+    <SolutionBridgeSection />
+
+    <!-- Seção 4 — Visão Geral do Ciclo -->
+    <CycleOverviewSection />
+
+    <!-- CTA após Seção 4 -->
+    <div class="max-width-content">
+      <CTABanner
+        title="Quer saber como implementar?"
+        description="Explore a documentação completa e comece a usar o ZionKit no seu produto."
+        linkText="Ver documentação"
+        linkHref="#glossario"
+      />
+    </div>
+
+    <!-- Seção 5 — Três Pilares -->
+    <PillarsSection />
+
+    <!-- Seção 6 — Papéis -->
+    <RolesSection />
+
+    <!-- Seção 7 — Antes/Depois -->
+    <ComparisonSection />
+
+    <!-- Seção 8 — Product Canon Deep Dive -->
+    <CanonDeepDiveSection />
+
+    <!-- Seção 9 — Cenários -->
+    <ScenariosSection />
+
+    <!-- CTA após Seção 9 -->
+    <div class="max-width-content">
+      <CTABanner
+        title="Experimente com seu produto"
+        description="Aplique o modelo ZionKit ao seu produto e veja a diferença no primeiro ciclo."
+        linkText="Começar agora"
+        linkHref="#problema"
+      />
+    </div>
+
+    <!-- Seção 10 — Glossário -->
+    <GlossarySection />
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: var(--space-4);
+    z-index: calc(var(--z-overlay) + 1);
+    background: var(--color-bg-elevated);
+    color: var(--color-text-accent);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: none;
+    transition: top var(--duration-fast) ease;
+  }
+
+  .skip-link:focus {
+    top: var(--space-4);
+  }
+</style>

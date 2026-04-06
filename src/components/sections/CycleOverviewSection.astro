@@ -1,0 +1,96 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+import CycleDiagram from '../diagrams/CycleDiagram';
+
+const steps = [
+  { icon: '🔨', title: 'Construir o Conhecimento', desc: 'Pessoas de negócio e tecnologia trabalham juntas, em sessões guiadas por IA, para formalizar o que sabem sobre o produto na Product Canon.' },
+  { icon: '📝', title: 'Usar para Especificar', desc: 'Quando alguém escreve uma especificação, a IA consulta a Product Canon e carrega automaticamente o contexto relevante, confrontando com o conhecimento existente.' },
+  { icon: '🔄', title: 'Devolver o Aprendizado', desc: 'Depois da implementação, tudo que foi descoberto — conceitos refinados, regras novas, decisões técnicas — volta para a Product Canon.' },
+];
+---
+
+<section id="ciclo" class="cycle-section section-even">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={4}
+        title='O ciclo que faz o <span class="gradient-text">conhecimento crescer</span>'
+        depth={1}
+        subtitle="O ZionKit opera em um ciclo de três etapas que se repete continuamente. A cada volta, o repositório de conhecimento fica mais rico."
+      />
+    </ScrollReveal>
+
+    <ScrollReveal animation="scale-in">
+      <DiagramContainer label="O Ciclo ZionKit — três etapas que se repetem continuamente" title="Diagrama 3 — O Ciclo ZionKit">
+        <CycleDiagram client:visible />
+      </DiagramContainer>
+    </ScrollReveal>
+
+    <ScrollReveal animation="stagger">
+      <div class="steps-grid">
+        {steps.map(step => (
+          <div class="step-card">
+            <span class="step-icon" aria-hidden="true">{step.icon}</span>
+            <h3>{step.title}</h3>
+            <p>{step.desc}</p>
+          </div>
+        ))}
+      </div>
+    </ScrollReveal>
+  </div>
+</section>
+
+<style>
+  .cycle-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    margin-top: var(--space-8);
+  }
+
+  @media (max-width: 768px) {
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .step-card {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    text-align: center;
+    transition: border-color var(--duration-normal) ease, box-shadow var(--duration-normal) ease;
+  }
+
+  .step-card:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  .step-icon {
+    font-size: var(--text-3xl);
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+
+  .step-card h3 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .step-card p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+</style>

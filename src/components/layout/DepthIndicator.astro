@@ -1,0 +1,76 @@
+---
+/**
+ * DepthIndicator — Shows current depth layer (1/2/3) in the nav.
+ * Updates dynamically via IntersectionObserver.
+ * Sections 1-4, 7: Layer 1; Sections 5-6: Layer 2; Section 8: Layer 3
+ */
+---
+
+<div class="depth-indicator" id="depth-indicator" aria-label="Camada de profundidade atual">
+  <span class="depth-label">Camada</span>
+  <span class="depth-value" id="depth-value">1</span>
+</div>
+
+<style>
+  .depth-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-full);
+    padding: var(--space-1) var(--space-3);
+    transition: border-color var(--duration-normal) ease;
+  }
+
+  .depth-label {
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .depth-value {
+    font-weight: 600;
+    color: var(--color-text-accent);
+    min-width: 1ch;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .depth-indicator {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const depthMap: Record<string, string> = {
+    'problema': '1',
+    'agitacao': '1',
+    'solucao': '1',
+    'ciclo': '1',
+    'pilares': '2',
+    'papeis': '2',
+    'comparacao': '1',
+    'canon': '3',
+    'cenarios': '1',
+    'glossario': '1',
+  };
+
+  const depthValue = document.getElementById('depth-value');
+  const sections = document.querySelectorAll('section[id]');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && depthValue) {
+          const id = entry.target.getAttribute('id') || '';
+          const depth = depthMap[id] || '1';
+          depthValue.textContent = depth;
+        }
+      });
+    },
+    { rootMargin: '-30% 0px -60% 0px' }
+  );
+
+  sections.forEach(section => observer.observe(section));
+</script>

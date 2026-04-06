@@ -1,0 +1,242 @@
+---
+import DepthIndicator from './DepthIndicator.astro';
+import DepthFilter from './DepthFilter.astro';
+
+const sections = [
+  { id: 'problema', label: 'O Problema' },
+  { id: 'agitacao', label: 'Agitação' },
+  { id: 'solucao', label: 'Solução' },
+  { id: 'ciclo', label: 'O Ciclo' },
+  { id: 'pilares', label: 'Pilares' },
+  { id: 'papeis', label: 'Papéis' },
+  { id: 'comparacao', label: 'Antes/Depois' },
+  { id: 'canon', label: 'Product Canon' },
+  { id: 'cenarios', label: 'Cenários' },
+  { id: 'glossario', label: 'Glossário' },
+];
+---
+
+<nav
+  class="sticky-nav"
+  role="navigation"
+  aria-label="Navegação principal"
+>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="#" class="nav-logo" aria-label="ZionKit — Voltar ao topo">
+        <span class="gradient-text font-bold">ZionKit</span>
+      </a>
+      <DepthIndicator />
+      <DepthFilter />
+    </div>
+
+    <button
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="nav-menu"
+      aria-label="Abrir menu de navegação"
+    >
+      <span class="hamburger"></span>
+    </button>
+
+    <ul id="nav-menu" class="nav-links" role="list">
+      {sections.map(({ id, label }) => (
+        <li>
+          <a href={`#${id}`} class="nav-link" data-section={id}>
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+    background: rgba(10, 14, 23, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border-default);
+    transition: background var(--duration-normal) ease;
+  }
+
+  .nav-inner {
+    max-width: var(--max-width-content);
+    margin: 0 auto;
+    padding: var(--space-3) var(--space-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .nav-logo {
+    font-size: var(--text-lg);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--space-1);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: color var(--duration-fast) ease, background var(--duration-fast) ease;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover {
+    color: var(--color-text-primary);
+    background: rgba(148, 163, 184, 0.08);
+  }
+
+  .nav-link.active {
+    color: var(--color-text-accent);
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-2);
+  }
+
+  .hamburger,
+  .hamburger::before,
+  .hamburger::after {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--color-text-secondary);
+    border-radius: 2px;
+    transition: transform var(--duration-normal) ease;
+  }
+
+  .hamburger {
+    position: relative;
+  }
+
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .hamburger::before { top: -6px; }
+  .hamburger::after { top: 6px; }
+
+  .nav-toggle[aria-expanded="true"] .hamburger {
+    background: transparent;
+  }
+
+  .nav-toggle[aria-expanded="true"] .hamburger::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded="true"] .hamburger::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+  @media (max-width: 1024px) {
+    .nav-toggle {
+      display: block;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: rgba(10, 14, 23, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: var(--space-4) var(--space-6);
+      gap: var(--space-1);
+    }
+
+    .nav-links.open {
+      display: flex;
+    }
+
+    .nav-link {
+      padding: var(--space-2) var(--space-3);
+    }
+  }
+</style>
+
+<script>
+  // Mobile menu toggle
+  const toggle = document.querySelector('.nav-toggle') as HTMLButtonElement;
+  const menu = document.getElementById('nav-menu');
+
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    menu?.classList.toggle('open');
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = (link as HTMLAnchorElement).getAttribute('href');
+      if (!href) return;
+      const target = document.querySelector(href);
+      target?.scrollIntoView({ behavior: 'smooth' });
+
+      // Close mobile menu
+      toggle?.setAttribute('aria-expanded', 'false');
+      menu?.classList.remove('open');
+    });
+  });
+
+  // IntersectionObserver for active section
+  const sectionElements = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.toggle(
+              'active',
+              (link as HTMLAnchorElement).dataset.section === id
+            );
+          });
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -70% 0px' }
+  );
+
+  sectionElements.forEach(section => observer.observe(section));
+</script>

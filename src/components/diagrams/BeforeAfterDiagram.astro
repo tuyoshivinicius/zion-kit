@@ -1,0 +1,102 @@
+---
+const rows = [
+  { before: 'Conhecimento disperso (wikis, Slack, cabeças)', after: 'Product Canon centralizada e versionada' },
+  { before: 'Contexto reconstruído a cada spec', after: 'Contexto injetado automaticamente' },
+  { before: 'PO traduzido por intermediários', after: 'PO participa diretamente com mediação da IA' },
+  { before: 'Descobertas perdidas no código', after: 'Retroalimentação formal após cada ciclo' },
+  { before: 'IA decide sozinha', after: 'IA propõe, humanos decidem' },
+  { before: 'Mudanças grandes = efeito cascata', after: 'Versionamento gradual (Strangler Fig)' },
+];
+---
+
+<div class="ba-diagram" role="img" aria-label="Comparação visual antes e depois do ZionKit">
+  <div class="ba-column ba-before">
+    <div class="ba-header problem-header">
+      <span aria-hidden="true">&#10007;</span> SEM ZionKit
+    </div>
+    {rows.map(row => (
+      <div class="ba-cell">
+        <p>{row.before}</p>
+      </div>
+    ))}
+  </div>
+
+  <div class="ba-column ba-after">
+    <div class="ba-header solution-header">
+      <span aria-hidden="true">&#10003;</span> COM ZionKit
+    </div>
+    {rows.map(row => (
+      <div class="ba-cell">
+        <p>{row.after}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .ba-diagram {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    max-width: var(--max-width-diagram);
+    margin: 0 auto;
+  }
+
+  .ba-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .ba-header {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .problem-header {
+    color: var(--color-problem);
+    background: rgba(248, 113, 113, 0.06);
+    border: 1px solid rgba(248, 113, 113, 0.15);
+  }
+
+  .solution-header {
+    color: var(--color-solution);
+    background: rgba(52, 211, 153, 0.06);
+    border: 1px solid rgba(52, 211, 153, 0.15);
+  }
+
+  .ba-cell {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+  }
+
+  .ba-before .ba-cell {
+    background: rgba(248, 113, 113, 0.03);
+    border-left: 2px solid rgba(248, 113, 113, 0.2);
+  }
+
+  .ba-after .ba-cell {
+    background: rgba(52, 211, 153, 0.03);
+    border-left: 2px solid rgba(52, 211, 153, 0.2);
+  }
+
+  .ba-cell p {
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .ba-diagram {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+/**
+ * AuroraBackground — Background animado com efeito aurora boreal.
+ * Usa CSS puro (gradientes radiais animados). Fixo, opacidade baixa.
+ * Mobile: simplificado para 1 gradiente. prefers-reduced-motion: estática.
+ * Intensifica nas Seções 3 e 4 via ScrollTrigger.
+ */
+---
+
+<div class="aurora-bg" id="aurora-bg" aria-hidden="true"></div>
+
+<script>
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion) {
+    const init = async () => {
+      const { gsap } = await import('gsap');
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      gsap.registerPlugin(ScrollTrigger);
+
+      const aurora = document.getElementById('aurora-bg');
+      if (!aurora) return;
+
+      // Intensify aurora on Sections 3 (solucao) and 4 (ciclo)
+      ['#solucao', '#ciclo'].forEach(selector => {
+        const section = document.querySelector(selector);
+        if (!section) return;
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top center',
+          end: 'bottom center',
+          onEnter: () => {
+            gsap.to(aurora, { '--aurora-opacity': 1.8, duration: 0.8, ease: 'power2.out' });
+          },
+          onLeave: () => {
+            gsap.to(aurora, { '--aurora-opacity': 1, duration: 0.8, ease: 'power2.out' });
+          },
+          onEnterBack: () => {
+            gsap.to(aurora, { '--aurora-opacity': 1.8, duration: 0.8, ease: 'power2.out' });
+          },
+          onLeaveBack: () => {
+            gsap.to(aurora, { '--aurora-opacity': 1, duration: 0.8, ease: 'power2.out' });
+          },
+        });
+      });
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => init());
+    } else {
+      setTimeout(init, 200);
+    }
+  }
+</script>
+
+<style>
+  #aurora-bg {
+    --aurora-opacity: 1;
+  }
+
+  #aurora-bg::before,
+  #aurora-bg::after {
+    opacity: calc(0.12 * var(--aurora-opacity));
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  depth?: 1 | 2 | 3;
+  sectionNumber: number;
+  readingTime?: number;
+  headingLevel?: 1 | 2;
+}
+
+const { title, subtitle, depth, sectionNumber, readingTime, headingLevel = 2 } = Astro.props;
+const HeadingTag = `h${headingLevel}` as any;
+
+const depthLabels: Record<number, string> = {
+  1: 'Camada 1 — Essencial',
+  2: 'Camada 2 — Detalhado',
+  3: 'Camada 3 — Técnico',
+};
+---
+
+<header class="section-header">
+  <div class="section-number">
+    <span>{String(sectionNumber).padStart(2, '0')}</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="badges">
+    {depth && (
+      <span class="depth-badge">
+        {depthLabels[depth]}
+      </span>
+    )}
+    {readingTime && (
+      <span class="reading-badge">~{readingTime} min</span>
+    )}
+  </div>
+
+  <HeadingTag class="section-title" set:html={title} />
+
+  {subtitle && (
+    <p class="section-subtitle">{subtitle}</p>
+  )}
+</header>
+
+<style>
+  .section-header {
+    margin-bottom: var(--space-12);
+  }
+
+  .section-number {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .section-number span {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  .section-line {
+    flex: 1;
+    max-width: 4rem;
+    height: 1px;
+    background: var(--color-border-default);
+  }
+
+  .badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .depth-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-text-accent);
+    border: 1px solid var(--color-border-accent);
+    border-radius: var(--radius-full);
+    padding: var(--space-1) var(--space-3);
+  }
+
+  .reading-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-full);
+    padding: var(--space-1) var(--space-3);
+  }
+
+  .section-title {
+    font-size: var(--text-5xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--color-text-primary);
+  }
+
+  @media (min-width: 1024px) {
+    .section-title {
+      font-size: var(--text-6xl);
+    }
+  }
+
+  .section-subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-4);
+    max-width: var(--max-width-narrow);
+    line-height: var(--leading-relaxed);
+  }
+</style>

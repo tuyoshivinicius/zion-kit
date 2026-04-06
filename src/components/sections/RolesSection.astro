@@ -1,0 +1,135 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import RolesMatrixDiagram from '../diagrams/RolesMatrixDiagram.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+
+const roles = [
+  {
+    icon: '🏗️',
+    name: 'Domain Builder',
+    who: 'Product owner, analista de produto, gestor de operações',
+    does: 'Descreve processos e requisitos em linguagem natural. Decide quando o ciclo está completo.',
+    analogy: 'O dono do conteúdo da enciclopédia — sabe o que precisa estar lá.',
+  },
+  {
+    icon: '⚙️',
+    name: 'Architect',
+    who: 'Engenheiro sênior, arquiteto de software, CTO',
+    does: 'Define regras técnicas, valida viabilidade, toma decisões de arquitetura.',
+    analogy: 'O engenheiro estrutural — garante que o prédio fica de pé.',
+  },
+  {
+    icon: '🔍',
+    name: 'Domain Expert',
+    who: 'Autoridade sobre o significado dos conceitos do negócio',
+    does: 'Aprova que o conhecimento registrado é fiel à realidade. Não participa das sessões — valida os resultados.',
+    analogy: 'O revisor técnico — garante que o que foi escrito reflete a verdade do negócio.',
+  },
+  {
+    icon: '🤖',
+    name: 'IA',
+    who: 'Agentes de inteligência artificial',
+    does: 'Facilita sessões, organiza informação, identifica inconsistências, traduz linguagem natural para formatos precisos.',
+    analogy: 'A secretária mais competente do mundo — organiza, lembra, sinaliza, mas nunca assina pelo chefe.',
+  },
+];
+---
+
+<section id="papeis" class="roles-section section-even">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={6}
+        title='Cada decisão é tomada por quem tem <span class="gradient-text">competência sobre ela</span>'
+        depth={2}
+      />
+    </ScrollReveal>
+
+    <ScrollReveal animation="stagger">
+      <div class="roles-grid">
+        {roles.map(role => (
+          <div class="role-card">
+            <span class="role-icon" aria-hidden="true">{role.icon}</span>
+            <h3>{role.name}</h3>
+            <p class="role-who">{role.who}</p>
+            <p class="role-does">{role.does}</p>
+            <p class="role-analogy">{role.analogy}</p>
+          </div>
+        ))}
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up">
+      <DiagramContainer label="Tabela de papéis por etapa do ZionKit" title="Diagrama 7 — Quem Faz O Quê em Cada Etapa">
+        <RolesMatrixDiagram />
+      </DiagramContainer>
+    </ScrollReveal>
+  </div>
+</section>
+
+<style>
+  .roles-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 768px) {
+    .roles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .role-card {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: border-color var(--duration-normal) ease, transform var(--duration-normal) ease;
+  }
+
+  .role-card:hover {
+    border-color: var(--color-border-accent);
+    transform: translateY(-2px);
+  }
+
+  .role-icon {
+    font-size: var(--text-3xl);
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+
+  .role-card h3 {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .role-who {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3);
+  }
+
+  .role-does {
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-3);
+  }
+
+  .role-analogy {
+    font-size: var(--text-sm);
+    font-style: italic;
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+</style>
