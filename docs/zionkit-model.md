@@ -359,7 +359,7 @@ O ZionKit opera como um ciclo contínuo que se retroalimenta:
 │                         ▼                                    │
 │  ┌─────────────────────────────────────────────────────┐    │
 │  │ Requirements Specification Session                   │    │
-│  │   Domain Builder + IA (SBVR + SBE)                   │    │
+│  │   Domain Builder + IA (IEEE 29148 + SBE)              │    │
 │  │   → Canonical Change Plan (specification-plan)       │    │
 │  │   Gate: Domain Expert (1°) + Architect (2°)          │    │
 │  └──────────────────────┬──────────────────────────────┘    │
@@ -373,9 +373,18 @@ O ZionKit opera como um ciclo contínuo que se retroalimenta:
 │  └──────────────────────┬──────────────────────────────┘    │
 │                                                             │
 │  Guardrails: Clarificação de Conformidade,                  │
-│    Validação de Consistência,                               │
+│    Validação de Consistência, Padronização Canônica,        │
+│    Validação Semântica Interna,                             │
 │    Versionamento por Estrangulamento                        │
 └──────────────────────────┬──────────────────────────────────┘
+                           │
+   ┌───────────────────────────────────────────────────┐
+   │ Canal Complementar: Edição Direta (Domain Expert) │
+   │   Domain Expert + IA (expert-edit-plan)           │
+   │   → Alterações pontuais na Product Canon          │
+   │   Gate: Architect aprova expert-edit-plan          │
+   │   Guardrails: ciclo iterativo de validação pela IA │
+   └───────────────────────────────────────────────────┘
                            │
                 contexto de ambas as
                   camadas injetado
