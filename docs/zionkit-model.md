@@ -1,7 +1,7 @@
 # ZionKit: Um Corpo de Conhecimento Vivo para Desenvolvimento de Software Orientado por Especificações
 
 **Status do modelo**: Protótipo conceitual  
-**Versão do documento**: 0.5 — Abril 2026  
+**Versão do documento**: 0.6 — 2026-04-07  
 
 ---
 
