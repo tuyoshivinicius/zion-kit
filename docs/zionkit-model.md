@@ -83,6 +83,8 @@ A Product Canon não é um documento estático produzido em uma fase inicial de 
 
 A organização física/interna da Product Canon é deliberadamente mínima nesta fase de prototipação, sem compromisso com hierarquia final (ver seção 5 — Estrutura de Artefatos).
 
+Artefatos da Product Canon podem conter metadados de hotspot de domínio (autor, data, descrição) e histórico de anotações de aprovação, enriquecendo o contexto disponível para especificações futuras.
+
 ### 2.2 Etapa 1 — Canon Building (Construção e Manutenção da Product Canon)
 
 O Domain Builder e o Architect constroem e mantêm a Product Canon de forma complementar, através de três cerimônias formais organizadas em um fluxo sequencial com gates de aprovação:
