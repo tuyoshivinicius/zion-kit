@@ -196,7 +196,7 @@ A autoridade sobre essa decisão é do Domain Builder, com input da IA sobre cob
 
 A manutenção da Product Canon requer guardrails que garantam sua integridade ao longo do tempo.
 
-**Clarificação de Conformidade (Compliance Clarification).** Quando um participante utiliza termos que divergem do vocabulário formalizado na Product Canon — incluindo o glossário de linguagem ubíqua e os princípios técnicos constitucionais — o agente sinaliza a divergência e propõe alinhamento. Se o participante utiliza "cliente" onde a Product Canon define "titular da conta", o agente identifica a inconsistência e pede confirmação sobre a intenção. Este guardrail atua nas sessões de Domain Discovery e Technical Constitution.
+**Clarificação de Conformidade (Compliance Clarification).** Quando um participante utiliza termos que divergem do vocabulário formalizado na Product Canon — incluindo o glossário de linguagem ubíqua e os princípios técnicos constitucionais — o agente sinaliza a divergência e propõe alinhamento. Se o participante utiliza "cliente" onde a Product Canon define "titular da conta", o agente identifica a inconsistência e pede confirmação sobre a intenção. Este guardrail atua nas sessões de Domain Discovery e Technical Constitution. Quando uma especificação ou edição toca um trecho marcado como hotspot de domínio, a IA exibe proativamente a definição precisa e alerta sobre a incerteza registrada, priorizando esses pontos na clarificação.
 
 **Validação de consistência.** Alterações em requisitos ou regras de negócio são confrontadas com o estado atual da Product Canon, incluindo tanto as regras de negócio quanto os princípios técnicos constitucionais. Contradições em qualquer uma das camadas são identificadas antes de serem aceitas.
 
