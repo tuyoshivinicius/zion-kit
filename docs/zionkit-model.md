@@ -610,6 +610,8 @@ O modelo conceitual sugere as seguintes prioridades para validação experimenta
 
 7. **Fluxo sequencial com gates entre cerimônias.** Testar se: (a) habilitação sequencial funciona na prática sem criar gargalos; (b) aprovadores lidam com múltiplos Canonical Change Plans sem sobrecarga; (c) Decisão de Continuidade é exercida naturalmente pelo Domain Builder.
 
+8. **Guardrail de Padronização Canônica.** Testar se a IA consegue formalizar corretamente edições em linguagem natural para o formato canônico IEEE 29148 + SBE (com classificação conforme nível de aderência configurado), preservando o significado original. Métrica: taxa de aceitação pelo Domain Expert na primeira tentativa de formalização versus necessidade de ciclos iterativos. Validar também se o guardrail opera corretamente nos artefatos produzidos por cerimônias (modo implícito).
+
 ---
 
 *ZionKit — Versão 0.5 do modelo conceitual. Documento gerado como registro de insights para prototipação futura.*
