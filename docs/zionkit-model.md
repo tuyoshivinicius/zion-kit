@@ -439,12 +439,12 @@ Em organizações com múltiplos bounded contexts, Domain Experts e Architects p
 
 **Resumo de atuação por etapa:**
 
-| Papel | Etapa 1 — Canon Building | Etapa 2 — Especificação | Etapa 3 — Retroalimentação |
-|-------|------------------------|------------------------|---------------------------|
-| Domain Builder | Participa de Domain Discovery e Requirements Specification; decide continuidade do ciclo | Escreve especificação de feature | — |
-| Architect | Conduz Technical Constitution Session; aprova secundariamente Discovery e Specification; aprova primariamente Constitution | Toma decisões técnicas na spec; aprova camada de arquitetura | — |
-| Domain Expert | Aprova primariamente Discovery e Specification; aprova secundariamente Constitution | Aprova camada de negócio do Canonical Change Plan incremental (quando aplicável) | — |
-| IA (Agentes LLM) | Conduz sessões, gera Canonical Change Plans, opera guardrails; sem autonomia decisória | Gera Canonical Change Plan incremental; implementa código | Atualiza Product Canon |
+| Papel | Etapa 1 — Canon Building | Etapa 2 — Especificação | Etapa 3 — Retroalimentação | Edição Direta |
+|-------|------------------------|------------------------|---------------------------|---------------|
+| Domain Builder | Participa de Domain Discovery e Requirements Specification; decide continuidade do ciclo | Escreve especificação de feature | — | — |
+| Architect | Conduz Technical Constitution Session; aprova secundariamente Discovery e Specification; aprova primariamente Constitution | Toma decisões técnicas na spec; aprova camada de arquitetura | — | Aprova `expert-edit-plan` (obrigatório, não delegável) |
+| Domain Expert | Aprova primariamente Discovery e Specification; aprova secundariamente Constitution (com anotações e hotspots) | Aprova camada de negócio do Canonical Change Plan incremental (quando aplicável) (com anotações e hotspots) | — | Edita camada de negócio; resolve divergências com IA; aprova Change Plan consolidado |
+| IA (Agentes LLM) | Conduz sessões, gera Canonical Change Plans, opera guardrails; sem autonomia decisória | Gera Canonical Change Plan incremental; implementa código | Atualiza Product Canon | Conduz ciclo de guardrails; formaliza em IEEE 29148 + SBE; gera `expert-edit-plan` |
 
 ---
 
