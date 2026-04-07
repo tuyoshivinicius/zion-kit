@@ -460,7 +460,7 @@ A Product Canon contém as seguintes seções essenciais de conhecimento:
 - **Princípios técnicos constitucionais**: restrições técnicas definidas na Technical Constitution Session
 - **Context maps**: relações formais entre bounded contexts
 - **ADRs (Architecture Decision Records)**: registros de decisões técnicas com contexto e justificativa
-- **Canonical Change Plans** (com envelope tipado): `discovery-plan`, `constitution-plan`, `specification-plan` — registros dos planos de mudança aprovados em cada cerimônia
+- **Canonical Change Plans** (com envelope tipado): `discovery-plan`, `constitution-plan`, `specification-plan`, `expert-edit-plan` — registros dos planos de mudança aprovados em cada cerimônia, onde `expert-edit-plan` designa planos de mudança originados por edição direta do Domain Expert. Todos os tipos contêm requisitos em formato IEEE 29148 + SBE
 - **Changelog / histórico de transições**: registro versionado de cada evolução da Product Canon
 
 A estrutura física é deliberadamente mínima nesta fase de prototipação. A hierarquia final deve emergir da experimentação prática com o modelo.
