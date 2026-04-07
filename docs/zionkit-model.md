@@ -299,6 +299,8 @@ Essa etapa é mecanicamente segura porque não há ambiguidade sobre o que atual
 
 Os novos termos são adicionados ao glossário. Os eventos de domínio novos ou alterados são registrados no catálogo. As regras de negócio são incorporadas. Os ADRs são formalizados. Os princípios técnicos constitucionais são atualizados quando necessário. As alterações são versionadas e passam a integrar o corpo de contexto disponível para todas as especificações futuras.
 
+Anotações contextuais não formalizadas nos ciclos anteriores são apresentadas pela IA como candidatos a incorporação durante cerimônias de Canon Building.
+
 ---
 
 ## 3. O Ciclo Completo
