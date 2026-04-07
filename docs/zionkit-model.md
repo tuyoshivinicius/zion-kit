@@ -176,7 +176,11 @@ No nível de regras individuais: (1) o Domain Builder descreve o requisito em li
 
 A cerimônia é habilitada pela aprovação do Canonical Change Plan produzido pela Technical Constitution Session. A saída é um Canonical Change Plan tipado como `specification-plan`, contendo requisitos em formato IEEE 29148 + SBE. A aprovação é primária pelo Domain Expert — que valida a fidelidade semântica — e secundária pelo Architect — que realiza avaliação técnica de requisitos. Somente após a aprovação a Decisão de Continuidade do Ciclo é habilitada.
 
-**Exemplo — mediação SBVR.** O Domain Builder descreve: "O cliente deve poder cancelar um pedido antes do faturamento." A IA traduz para SBVR controlado: "É obrigatório que cada Pedido cujo Status é 'Pendente' ou 'Confirmado' possa ser cancelado pelo Cliente titular. É proibido que um Pedido cujo Status é 'Faturado' seja cancelado." O Domain Builder valida a formalização, e a IA identifica — consultando a Product Canon — que já existe uma regra de negócio declarada: "Pedidos faturados não podem ser cancelados, apenas devolvidos." A formalização é ajustada para incluir o caminho de devolução como alternativa.
+**Exemplo — clarificação e formalização.** O Domain Builder descreve: "O cliente deve poder cancelar um pedido antes do faturamento." A IA, utilizando validação semântica interna, detecta que a expressão não define o que "antes do faturamento" significa em termos de status do pedido, e apresenta uma pergunta de clarificação: "Quais status de pedido permitem cancelamento? Apenas Pendente, ou também Confirmado?" O Domain Builder esclarece: "Pendente e Confirmado." A IA, consultando a Product Canon, identifica que já existe uma regra: "Pedidos faturados não podem ser cancelados, apenas devolvidos." A IA apresenta essa regra e sugere incluir o caminho de devolução. O requisito é formalizado em IEEE 29148 + SBE:
+
+**REQ-CANCEL-001** | Tipo: Funcional | Contexto: Pedidos | Prioridade: Alta
+*O sistema deve permitir que o Cliente titular cancele um Pedido cujo status é Pendente ou Confirmado. Pedidos com status Faturado não podem ser cancelados — o caminho alternativo é a devolução (ver REQ-RETURN-003).*
+**Cenário SBE:** Dado um Pedido com status 'Confirmado' pertencente ao Cliente titular / Quando o Cliente solicita cancelamento / Então o status do Pedido muda para 'Cancelado' e o evento PedidoCancelado é emitido.
 
 #### 2.2.4 Decisão de Continuidade do Ciclo
 
