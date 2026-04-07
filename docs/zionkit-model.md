@@ -230,6 +230,17 @@ Quando o Domain Expert propõe uma edição direta, um ciclo iterativo de guardr
 
 O Relatório de Conformidade pode assumir forma estática (documento estruturado) ou forma conversacional (sessão interativa), à escolha do Domain Expert. Somente após a conclusão do ciclo, o `expert-edit-plan` é gerado.
 
+##### `expert-edit-plan` e Aprovação Sequencial
+
+A saída do processo de edição direta é um Canonical Change Plan tipado como `expert-edit-plan`, contendo: a versão final formalizada em IEEE 29148 + SBE; o Relatório de Conformidade final; divergências intencionais flagradas; e impactos em bounded contexts adjacentes.
+
+O `expert-edit-plan` requer aprovação sequencial com ordem fixa:
+
+1. **Domain Expert** aprova primeiro — valida que a formalização IEEE 29148 + SBE contida no Change Plan preserva fielmente a intenção original. Embora o Domain Expert já tenha revisado a formalização no ciclo iterativo de guardrails, esta aprovação mitiga o risco de que a IA, ao consolidar o Change Plan, tenha alterado o significado.
+2. **Architect** aprova depois — avalia impacto técnico: dependências cross-context, impacto em eventos de domínio, violação de princípios técnicos constitucionais, necessidade de novos ADRs, e impacto em requisitos não-funcionais. A aprovação do Architect é obrigatória e não delegável.
+
+A ordem é derivada da lógica do modelo: fidelidade semântica é pré-requisito para avaliação técnica. Se o Architect aprovasse primeiro, avaliaria impacto técnico de um artefato cuja semântica de negócio ainda não foi confirmada pelo autor da intenção. A tipagem distinta (`expert-edit-plan`) permite auditoria de frequência — crescimento excessivo da proporção de `expert-edit-plan` em relação a `specification-plan` e `discovery-plan` sinaliza contorno do processo formal.
+
 ### 2.3 Etapa 2 — Especificação Contextualizada com Canonical Change Plan Incremental
 
 Nesta etapa, um Domain Builder ou um Architect escreve uma especificação de feature para um produto novo ou existente. A especificação é criada utilizando ferramentas de Spec-Driven Development existentes e consome contexto de ambas as camadas da Product Canon. O Domain Builder define a intenção de produto; o Architect toma decisões técnicas dentro da spec — escolha de padrões de integração, estratégias de persistência, schemas — orientado pelos princípios técnicos constitucionais da Product Canon.
