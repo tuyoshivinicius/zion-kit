@@ -73,7 +73,7 @@ A Product Canon é um conjunto versionado de artefatos (documentos estruturados)
 
 **Camada de Arquitetura.** Contém artefatos que formalizam as decisões técnicas e estruturais do sistema:
 
-- **Princípios técnicos constitucionais**: as regras técnicas imutáveis do projeto — quais tecnologias usar, como os componentes se comunicam, como os dados são protegidos. Funcionam como o equivalente técnico do glossário de linguagem ubíqua: toda especificação deve respeitá-los ou justificar formalmente a exceção.
+- **Princípios técnicos constitucionais**: as regras técnicas imutáveis do projeto — quais tecnologias usar, como os componentes se comunicam, como os dados são protegidos. Funcionam como o equivalente técnico do glossário de linguagem ubíqua: toda especificação deve respeitá-los ou justificar formalmente a exceção. Incluem o nível de aderência IEEE 29148 configurado para cada bounded context.
 - **Bounded contexts** (contextos delimitados): fronteiras lógicas que separam áreas do negócio com vocabulário e regras próprias. Por exemplo, "Pagamentos" e "Notificações" são contextos diferentes com responsabilidades distintas.
 - **Eventos de domínio**: catálogo dos fatos relevantes que acontecem no sistema — "PagamentoConfirmado", "PedidoCancelado" — com a descrição formal de quais dados cada evento carrega (seu schema) e quais áreas os consomem.
 - **Context maps** (mapas de contexto): representação visual e formal de como os bounded contexts se relacionam entre si — quais dependem de quais, como trocam informações, onde há fronteiras de proteção.
