@@ -516,9 +516,9 @@ O modelo depende de que a Etapa 3 seja efetivamente executada após cada impleme
 
 O Canon Building introduz três gates de aprovação na Etapa 1 e um gate condicional na Etapa 2, o que aumenta a demanda sobre aprovadores. Mitigações: a aprovação por afinidade direciona cada gate para o papel mais competente, evitando sobrecarga simétrica; a aprovação secundária é assíncrona com janela de veto, não exigindo presença simultânea; na Etapa 2, a aprovação é condicional — specs que consomem a Product Canon sem alterá-la fluem sem gate; o roteamento por camada na Etapa 2 exige apenas o aprovador correspondente à camada afetada. Em organizações com múltiplos bounded contexts, Domain Experts e Architects podem ser designados por contexto.
 
-### 9.6 Curva de aprendizado SBVR
+### 9.6 Qualidade da tradução de validação interna para linguagem natural
 
-Se a notação SBVR for percebida como técnica ou burocrática pelos Domain Builders, o modelo perde seu diferencial de inclusão. Mitigação: SBVR é mediado pela IA — o Domain Builder fala em linguagem natural, a IA traduz para SBVR controlado e apresenta a formalização para validação. Risco residual: o Domain Builder pode validar algo que não escreveu diretamente, criando um efeito "rubber stamp" onde a aprovação é mecânica em vez de reflexiva.
+A IA utiliza metodologias de validação semântica (incluindo SBVR) internamente para detectar problemas em requisitos. A eficácia desse processo depende da capacidade da IA de traduzir os problemas detectados em perguntas de clarificação claras e acionáveis em linguagem natural. Se a tradução for imprecisa, o benefício da validação se perde. Mitigação: o ciclo iterativo de clarificação permite que o Domain Builder questione e refine as perguntas da IA; a formalização final em IEEE 29148 + SBE serve como ponto de validação auditável.
 
 ### 9.7 Perda de detalhamento estrutural
 
