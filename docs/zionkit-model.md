@@ -47,6 +47,16 @@ O ZionKit resolve os problemas descritos acima criando um repositório central o
 
 Em termos mais precisos, o ZionKit propõe uma arquitetura de conhecimento em camadas com ciclo bidirecional, onde a Product Canon serve simultaneamente como repositório vivo de conhecimento de domínio e como infraestrutura de contexto para especificações de software.
 
+#### Tríade de padrões oficiais
+
+O ZionKit v0.6 opera com uma tríade formal de padrões oficiais com papéis e visibilidades distintas:
+
+- **SBVR (Semantics of Business Vocabulary and Business Rules)** — motor interno de validação semântica (invisível ao participante). Responsável por detectar ambiguidade, incompletude, contradição e redundância na expressão individual de requisitos. A IA utiliza SBVR internamente como metodologia principal de validação, mas não exclusiva — outras metodologias de validação podem ser utilizadas desde que os resultados sejam apresentados em linguagem natural.
+- **IEEE 29148 (ISO/IEC/IEEE 29148:2018)** — formato canônico de estrutura (visível ao participante). Responsável por organizar requisitos com tipo, identificador, rastreabilidade e classificação, cobrindo categorias que o SBVR não alcança (requisitos não-funcionais, interfaces, restrições de design). A aderência ao IEEE 29148 é adaptativa, com três níveis (Mínimo, Moderado, Completo) definidos pelo Architect.
+- **SBE (Specification by Example)** — formato canônico de verificação (visível ao participante). Responsável por transformar cada requisito em cenários concretos (Dado/Quando/Então) compreensíveis por pessoas de negócio e executáveis como testes. Obrigatório em todos os níveis de aderência.
+
+Cada padrão tem responsabilidade única e delimitada: SBVR detecta, IEEE 29148 estrutura, SBE verifica. O formato canônico visível nos artefatos da Product Canon e nos Canonical Change Plans é IEEE 29148 + SBE.
+
 ### 2.1 A Product Canon
 
 A Product Canon é um conjunto versionado de artefatos (documentos estruturados) que representam o conhecimento de domínio do produto em duas camadas complementares.
