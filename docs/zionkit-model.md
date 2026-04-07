@@ -412,8 +412,8 @@ Em organizações com múltiplos bounded contexts, Domain Experts e Architects p
 A Product Canon contém as seguintes seções essenciais de conhecimento:
 
 - **Glossário de linguagem ubíqua**: definições precisas dos termos do domínio, associados aos bounded contexts onde têm validade
-- **Regras de negócio**: formalizadas em SBVR quando mediadas pela IA na Requirements Specification Session
-- **Requisitos com critérios de aceitação**: especificados em SBE (Specification by Example) para verificabilidade
+- **Regras de negócio**: formalizadas em formato IEEE 29148, validadas internamente pela IA utilizando metodologias como SBVR
+- **Requisitos com critérios de aceitação**: estruturados em IEEE 29148 com cenários SBE (Specification by Example) para verificabilidade
 - **Fluxos de domínio**: eventos, comandos, atores e agregados descobertos na Domain Discovery Session
 - **Bounded contexts com seus artefatos**: definição, eventos publicados/consumidos, fluxos e casos de uso por contexto
 - **Princípios técnicos constitucionais**: restrições técnicas definidas na Technical Constitution Session
