@@ -1,0 +1,296 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import ExampleBlock from '../ui/ExampleBlock.astro';
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+import CanonBuildingDiagram from '../diagrams/CanonBuildingDiagram';
+import ContextualSpecDiagram from '../diagrams/ContextualSpecDiagram';
+import FeedbackDiagram from '../diagrams/FeedbackDiagram';
+---
+
+<section id="pilares" class="pillars-section section-odd" aria-labelledby="heading-pilares">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={5}
+        sectionId="pilares"
+        title='Por dentro de <span class="gradient-text">cada etapa</span>'
+        depth={2}
+      />
+    </ScrollReveal>
+
+    <!-- Tab Navigation -->
+    <div class="pillars-tabs" role="tablist" aria-label="Etapas do ZionKit">
+      <button role="tab" aria-selected="true" aria-controls="pillar-1" id="tab-1" class="tab-btn active">
+        <span class="tab-icon" aria-hidden="true">🔨</span> Construir o Conhecimento
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="pillar-2" id="tab-2" class="tab-btn">
+        <span class="tab-icon" aria-hidden="true">📝</span> Especificação Contextualizada
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="pillar-3" id="tab-3" class="tab-btn">
+        <span class="tab-icon" aria-hidden="true">🔄</span> Retroalimentação
+      </button>
+    </div>
+
+    <!-- Tab Panels -->
+    <div id="pillar-1" role="tabpanel" aria-labelledby="tab-1" class="tab-panel active">
+      <div class="pillar-content">
+        <h3>Canon Building</h3>
+        <p>O Canon Building é onde o conhecimento bruto se transforma em conhecimento formalizado. Funciona como uma sequência de três sessões, cada uma focada em uma dimensão do produto.</p>
+
+        <div class="session-blocks">
+          <div class="session-block">
+            <h4>Sessão 1 — Descoberta de Processos</h4>
+            <p><strong>Quem participa:</strong> Domain Builder + IA como facilitadora.</p>
+            <p>O Domain Builder descreve os processos do negócio em linguagem natural. A IA identifica eventos, comandos, atores e áreas do negócio.</p>
+          </div>
+          <div class="session-block">
+            <h4>Sessão 2 — Constituição Técnica</h4>
+            <p><strong>Quem participa:</strong> Architect + IA como facilitadora.</p>
+            <p>O arquiteto define as regras técnicas que governam o sistema: stack, comunicação, segurança, monitoramento.</p>
+          </div>
+          <div class="session-block">
+            <h4>Sessão 3 — Especificação de Requisitos</h4>
+            <p><strong>Quem participa:</strong> Domain Builder + IA como mediadora.</p>
+            <p>O Domain Builder descreve o que o produto precisa fazer. A IA traduz para linguagem formal e apresenta para validação.</p>
+          </div>
+        </div>
+
+        <ExampleBlock>
+          <strong>Exemplo concreto.</strong> Um gestor de operações de uma fintech descreve: "Quando um cliente pede pra sacar dinheiro, a gente verifica se tem saldo, se tem limite diário disponível, e se não tem nenhum bloqueio judicial." A partir dessa fala, a IA identifica 6 eventos (SaqueSolicitado, SaldoVerificado, LimiteValidado, BloqueioVerificado, SaqueProcessado, NotificaçãoEnviada) e propõe três áreas do negócio: Conta, Compliance e Notificações. O gestor não precisou saber nenhum termo técnico.
+        </ExampleBlock>
+
+        <p class="gates-note"><strong>Gates de aprovação:</strong> Cada sessão produz um Plano de Mudanças (Canonical Change Plan) que precisa ser aprovado antes de avançar para a próxima sessão.</p>
+
+        <DiagramContainer label="As Três Sessões do Canon Building com gates de aprovação" title="Diagrama 4 — As Três Sessões">
+          <CanonBuildingDiagram client:visible />
+        </DiagramContainer>
+      </div>
+    </div>
+
+    <div id="pillar-2" role="tabpanel" aria-labelledby="tab-2" class="tab-panel">
+      <div class="pillar-content">
+        <h3>Especificação Contextualizada</h3>
+        <p>Com a Product Canon construída, qualquer pessoa pode escrever uma especificação de funcionalidade. A diferença é que agora a IA não trabalha no escuro.</p>
+
+        <ol class="spec-steps">
+          <li>Alguém descreve uma funcionalidade</li>
+          <li>A IA identifica áreas afetadas e carrega contexto relevante da Product Canon</li>
+          <li>A IA confronta a especificação com o conhecimento existente e identifica impactos</li>
+          <li>Impactos são documentados em um Plano de Mudanças antes de qualquer código</li>
+          <li>Se há impacto, o plano é aprovado por quem tem autoridade sobre o assunto</li>
+        </ol>
+
+        <ExampleBlock>
+          <strong>Exemplo concreto.</strong> Carla é product owner em uma empresa de saúde. Carla escreve: "Adicionar consulta por vídeo ao sistema de agendamento." A IA, com acesso à Product Canon, identifica impactos que Carla não havia considerado: o evento "ConsultaRealizada" precisa de metadados de vídeo, "sala" precisa incluir "sala virtual", e o Faturamento precisa diferenciar preço presencial de remoto. O especialista de Faturamento identifica que a regra de preço proposta conflita com um contrato existente.
+        </ExampleBlock>
+
+        <p class="ai-note"><strong>O papel da IA:</strong> A IA identifica, sinaliza e propõe — mas nunca decide. Se uma funcionalidade contradiz uma regra existente, a IA sinaliza o conflito — mas quem decide como resolver é o humano responsável.</p>
+
+        <DiagramContainer label="Fluxo de especificação contextualizada consumindo a Product Canon" title="Diagrama 5 — Especificação Contextualizada">
+          <ContextualSpecDiagram client:visible />
+        </DiagramContainer>
+      </div>
+    </div>
+
+    <div id="pillar-3" role="tabpanel" aria-labelledby="tab-3" class="tab-panel">
+      <div class="pillar-content">
+        <h3>Retroalimentação</h3>
+        <p>Depois que a funcionalidade é implementada, tudo que foi descoberto durante o processo volta para a Product Canon: termos novos, regras descobertas, eventos alterados, decisões técnicas — tudo versionado.</p>
+
+        <p>A Product Canon depois da retroalimentação é mais rica que antes. A próxima especificação que tocar as mesmas áreas do negócio terá acesso a todo esse contexto.</p>
+
+        <h4>E quando a mudança é grande demais?</h4>
+        <p>Mudanças estruturais grandes são aplicadas gradualmente. A Product Canon mantém duas versões: a vigente e a em transição. Funcionalidades de manutenção usam a versão vigente; funcionalidades novas podem usar a versão em transição.</p>
+
+        <ExampleBlock>
+          <strong>Exemplo concreto.</strong> A empresa decide que a área de "Faturamento" precisa ser dividida em "Cobrança" e "Receita." A Product Canon registra a versão atual (Faturamento) e a versão em transição (Cobrança + Receita). Especificações de manutenção continuam referenciando Faturamento. Novas especificações já podem ser escritas para os contextos separados. A migração acontece gradualmente, sem quebrar o que já funciona.
+        </ExampleBlock>
+
+        <DiagramContainer label="Retroalimentação e versionamento gradual" title="Diagrama 6 — Retroalimentação">
+          <FeedbackDiagram client:visible />
+        </DiagramContainer>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pillars-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-primary);
+  }
+
+  .pillars-tabs {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border-default);
+    padding-bottom: var(--space-2);
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .tab-btn:hover {
+    color: var(--color-text-secondary);
+  }
+
+  .tab-btn.active {
+    color: var(--color-text-accent);
+    border-bottom-color: var(--color-aurora-cyan);
+  }
+
+  .tab-panel {
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    animation: tabFade 0.3s ease;
+  }
+
+  .tab-panel.active {
+    visibility: visible;
+    height: auto;
+    overflow: visible;
+    position: relative;
+  }
+
+  @keyframes tabFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .pillar-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .pillar-content h3 {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .pillar-content h4 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .pillar-content p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  .session-blocks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 768px) {
+    .session-blocks {
+      grid-template-columns: 1fr;
+    }
+
+    .pillars-tabs {
+      flex-direction: column;
+    }
+
+    .tab-btn {
+      border-bottom: none;
+      border-left: 2px solid transparent;
+      border-radius: 0;
+    }
+
+    .tab-btn.active {
+      border-left-color: var(--color-aurora-cyan);
+      border-bottom-color: transparent;
+    }
+  }
+
+  .session-block {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .session-block h4 {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-2);
+  }
+
+  .session-block p {
+    font-size: var(--text-sm);
+  }
+
+  .spec-steps {
+    padding-left: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .spec-steps li {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .spec-steps li::marker {
+    color: var(--color-text-accent);
+    font-weight: 600;
+  }
+
+  .gates-note,
+  .ai-note {
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll('.pillars-section .tab-btn');
+  const panels = document.querySelectorAll('.pillars-section .tab-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      panels.forEach(p => p.classList.remove('active'));
+
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      const panelId = tab.getAttribute('aria-controls');
+      if (panelId) {
+        document.getElementById(panelId)?.classList.add('active');
+        // Trigger resize so ReactFlow recalculates fitView for newly visible diagrams
+        requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+      }
+    });
+  });
+</script>

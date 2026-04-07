@@ -1,0 +1,141 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import StatCard from '../ui/StatCard.astro';
+import ExampleBlock from '../ui/ExampleBlock.astro';
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+import ThreeGapsDiagram from '../diagrams/ThreeGapsDiagram';
+---
+
+<section id="consequencias" class="consequencias-section section-even" aria-labelledby="heading-consequencias">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={2}
+        sectionId="consequencias"
+        title='Três problemas que <span class="gradient-text">ninguém resolveu</span>'
+        depth={1}
+      />
+    </ScrollReveal>
+
+    <!-- StatCards -->
+    <ScrollReveal animation="stagger">
+      <div class="stat-grid">
+        <StatCard value="35%" description="dos defeitos em produção são causados por problemas de requisitos" source="Accenture" />
+        <StatCard value="40%" description="do esforço em projetos ágeis é retrabalho por baixa qualidade pré-código" source="ScopeMaster" />
+        <StatCard value="56%" description="das falhas em projetos de TI são causadas por falha de comunicação" source="PMI Pulse of the Profession" />
+      </div>
+    </ScrollReveal>
+
+    <!-- 3 Problemas -->
+    <div class="problems-grid">
+      <ScrollReveal animation="fade-up" delay={0}>
+        <div class="problem-card">
+          <h3><span class="problem-number">1</span> A IA trabalha no escuro</h3>
+          <p>Ferramentas de IA atuais geram código a partir de padrões estatísticos — elas inferem o que parece correto, não o que é correto para o seu produto. Pesquisas mostram que código gerado por IA apresenta até 75% mais problemas de lógica em áreas críticas de negócio. 65% dos desenvolvedores reportam que assistentes de IA "perdem contexto relevante" durante o trabalho.</p>
+          <p class="problem-conclusion">Não é culpa da IA — ela simplesmente não tem acesso ao conhecimento que precisaria ter.</p>
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal animation="fade-up" delay={0.15}>
+        <div class="problem-card">
+          <h3><span class="problem-number">2</span> Quem conhece o negócio não participa</h3>
+          <p>As ferramentas de especificação atuais são feitas para engenheiros. O product owner que conhece as regras do produto, o analista que sabe como o processo funciona na prática, o gestor que entende as restrições do negócio — essas pessoas ou são excluídas do processo, ou participam e produzem especificações ambíguas.</p>
+          <ExampleBlock>
+            Um product owner descreve: "clientes inativos não devem receber promoções." Mas no vocabulário do produto, "cliente inativo" tem uma definição precisa — sem compras nos últimos 12 meses E sem login nos últimos 6 meses. Sem algo que confronte o que ele disse com o que já está definido, a spec nasce com uma definição errada.
+          </ExampleBlock>
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal animation="fade-up" delay={0.3}>
+        <div class="problem-card">
+          <h3><span class="problem-number">3</span> O que o time aprende, o time esquece</h3>
+          <p>Cada implementação gera descobertas: conceitos que precisam ser refinados, regras que não estavam documentadas, áreas do sistema que precisam ser reorganizadas. Hoje, essas descobertas morrem no código ou na cabeça de quem implementou.</p>
+          <ExampleBlock>
+            Durante a implementação de um sistema de notificações, o time descobre que "preferência do usuário" precisa ser separado em "preferência de canal" (email, SMS, push) e "preferência de conteúdo" (marketing, transacional, operacional). Essa descoberta é valiosa para qualquer funcionalidade futura. Mas sem um mecanismo formal de retroalimentação, ela se perde.
+          </ExampleBlock>
+        </div>
+      </ScrollReveal>
+    </div>
+
+    <!-- Diagrama 2 -->
+    <ScrollReveal animation="scale-in">
+      <DiagramContainer label="Os Três Gaps — três problemas distintos mas conectados" title="Diagrama 2 — Os Três Gaps">
+        <ThreeGapsDiagram client:visible />
+      </DiagramContainer>
+    </ScrollReveal>
+  </div>
+</section>
+
+<style>
+  .consequencias-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 768px) {
+    .stat-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 1024px) {
+    .problems-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .problem-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .problem-card h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .problem-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(248, 113, 113, 0.1);
+    color: var(--color-problem);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .problem-card p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  .problem-conclusion {
+    font-style: italic;
+    color: var(--color-text-muted) !important;
+  }
+</style>

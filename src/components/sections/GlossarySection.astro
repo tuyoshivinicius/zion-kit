@@ -1,0 +1,195 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import GlossaryItem from '../ui/GlossaryItem.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+
+const glossaryTerms = [
+  {
+    id: 'product-canon',
+    term: 'Product Canon',
+    definition: 'Repositório central e versionado onde todo o conhecimento do produto fica formalizado — regras, vocabulário, processos, decisões técnicas.',
+    analogy: 'A constituição do produto: todo mundo segue as mesmas regras, e quando algo muda, existe um processo formal.',
+  },
+  {
+    id: 'canon-building',
+    term: 'Canon Building',
+    definition: 'Processo de construir e manter a Product Canon, composto por três sessões formais com aprovação entre cada uma.',
+    analogy: 'Montar a enciclopédia do produto — sessão por sessão, com revisão antes de publicar cada capítulo.',
+  },
+  {
+    id: 'canonical-change-plan',
+    term: 'Canonical Change Plan',
+    definition: 'Documento que descreve exatamente o que será adicionado ou alterado na Product Canon. Precisa de aprovação antes de ser aplicado.',
+    analogy: 'A "proposta de emenda" à constituição — descreve o que muda e precisa ser votada antes de entrar em vigor.',
+  },
+  {
+    id: 'domain-builder',
+    term: 'Domain Builder',
+    definition: 'Pessoa de negócio (PO, analista, gestor) que conhece o produto e descreve processos e requisitos em linguagem natural.',
+    analogy: 'O morador da casa — sabe como quer viver nela, mesmo sem ser engenheiro civil.',
+  },
+  {
+    id: 'architect',
+    term: 'Architect',
+    definition: 'Pessoa técnica que define as regras de arquitetura e valida viabilidade.',
+    analogy: 'O engenheiro estrutural — garante que o prédio fica de pé.',
+  },
+  {
+    id: 'domain-expert',
+    term: 'Domain Expert',
+    definition: 'Autoridade sobre o significado dos conceitos do negócio. Aprova que o conhecimento registrado é fiel à realidade.',
+    analogy: 'O revisor técnico da enciclopédia — garante que o que está escrito é verdade.',
+  },
+  {
+    id: 'bounded-context',
+    term: 'Bounded Context',
+    definition: 'Área delimitada do negócio com vocabulário e regras próprias. "Pagamentos" e "Notificações" são contextos diferentes.',
+    analogy: 'Departamentos de uma empresa — cada um tem sua linguagem e suas regras, mesmo fazendo parte do mesmo negócio.',
+  },
+  {
+    id: 'linguagem-ubiqua',
+    term: 'Linguagem Ubíqua',
+    definition: 'Vocabulário oficial do produto onde cada palavra tem um significado acordado por todos.',
+    analogy: 'O dicionário da empresa — quando alguém diz "cliente inativo", todo mundo entende a mesma coisa.',
+  },
+  {
+    id: 'event-storming',
+    term: 'Event Storming',
+    definition: 'Técnica colaborativa de mapeamento de processos. No ZionKit, é feita via conversa com a IA em vez de post-its em uma parede.',
+    analogy: 'Contar a história do negócio do começo ao fim, e alguém organiza em um mapa enquanto você fala.',
+  },
+  {
+    id: 'sbvr',
+    term: 'SBVR',
+    definition: 'Método para escrever regras de negócio de forma precisa mas legível. No ZionKit, a IA faz a tradução — o Domain Builder fala normal e valida o resultado.',
+    analogy: 'Traduzir "o cliente pode cancelar antes de pagar" para "É obrigatório que Pedidos com status \'Pendente\' possam ser cancelados pelo titular" — preciso, mas compreensível.',
+  },
+  {
+    id: 'sbe',
+    term: 'SBE (Specification by Example)',
+    definition: 'Técnica que usa exemplos concretos como critérios de aceitação. Em vez de "o sistema deve validar o pagamento", diz "Dado um pagamento de R$ 100 via PIX, quando confirmado, então o saldo é debitado em R$ 100."',
+    analogy: 'Explicar uma regra mostrando casos — como explicar um jogo mostrando jogadas.',
+  },
+  {
+    id: 'adr',
+    term: 'ADR (Architecture Decision Record)',
+    definition: 'Registro formal de uma decisão técnica: o que foi decidido, por quê, quais alternativas existiam e quais são as consequências.',
+    analogy: 'A ata de uma decisão importante — para que ninguém precise perguntar "por que fizemos assim?" daqui a 6 meses.',
+  },
+  {
+    id: 'strangler-fig',
+    term: 'Strangler Fig (Versionamento Gradual)',
+    definition: 'Padrão para aplicar mudanças grandes de forma gradual. A versão nova cresce ao redor da antiga até substituí-la completamente.',
+    analogy: 'Reformar uma casa morando nela — um cômodo por vez, sem precisar mudar para outro lugar.',
+  },
+  {
+    id: 'guardrails',
+    term: 'Guardrails de Conformidade',
+    definition: 'Mecanismos automáticos da IA que identificam quando alguém usa um termo diferente do vocabulário oficial ou propõe algo que contradiz regras existentes.',
+    analogy: 'O corretor ortográfico do produto — se você escreve "cliente" onde o vocabulário define "titular da conta", ele sinaliza.',
+  },
+  {
+    id: 'injecao-seletiva',
+    term: 'Injeção Seletiva de Contexto',
+    definition: 'A IA não recebe toda a Product Canon de uma vez — apenas os fragmentos relevantes para a tarefa atual.',
+    analogy: 'Levar para a reunião só os documentos que importam para aquele assunto, não o arquivo inteiro.',
+  },
+  {
+    id: 'retroalimentacao',
+    term: 'Retroalimentação',
+    definition: 'Processo de devolver à Product Canon as descobertas feitas durante a implementação.',
+    analogy: 'Atualizar o manual depois de montar o móvel, incluindo os passos que estavam faltando.',
+  },
+];
+---
+
+<section id="glossario" class="glossary-section section-even" aria-labelledby="heading-glossario">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={10}
+        sectionId="glossario"
+        title='Glossário <span class="gradient-text">acessível</span>'
+        subtitle="Referência rápida para qualquer conceito mencionado neste site."
+      />
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.15}>
+      <search class="glossary-search">
+        <label for="glossary-filter" class="sr-only">Filtrar termos do glossário</label>
+        <input
+          type="search"
+          id="glossary-filter"
+          placeholder="Buscar termo..."
+          aria-label="Filtrar termos do glossário"
+          class="glossary-input"
+        />
+      </search>
+    </ScrollReveal>
+
+    <div class="glossary-list" id="glossary-list">
+      {glossaryTerms.map(item => (
+        <GlossaryItem
+          id={item.id}
+          term={item.term}
+          definition={item.definition}
+          analogy={item.analogy}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .glossary-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .glossary-search {
+    margin-bottom: var(--space-8);
+    max-width: 24rem;
+  }
+
+  .glossary-input {
+    width: 100%;
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    transition: border-color var(--duration-fast) ease;
+  }
+
+  .glossary-input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .glossary-input:focus {
+    outline: none;
+    border-color: var(--color-border-accent);
+  }
+
+  .glossary-list {
+    max-width: var(--max-width-narrow);
+  }
+</style>
+
+<script>
+  const filterInput = document.getElementById('glossary-filter') as HTMLInputElement;
+  const glossaryList = document.getElementById('glossary-list');
+
+  filterInput?.addEventListener('input', () => {
+    const query = filterInput.value.toLowerCase().trim();
+    const items = glossaryList?.querySelectorAll('.glossary-item');
+
+    items?.forEach(item => {
+      const term = item.querySelector('.glossary-term')?.textContent?.toLowerCase() || '';
+      const definition = item.querySelector('.glossary-definition')?.textContent?.toLowerCase() || '';
+      const matches = !query || term.includes(query) || definition.includes(query);
+      (item as HTMLElement).style.display = matches ? '' : 'none';
+    });
+  });
+</script>

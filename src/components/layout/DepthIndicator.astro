@@ -1,0 +1,128 @@
+---
+/**
+ * DepthIndicator — Shows current depth layer (1/2/3) in the nav.
+ * Updates dynamically via IntersectionObserver.
+ * Sections 1-4, 7: Layer 1; Sections 5-6: Layer 2; Section 8: Layer 3
+ */
+---
+
+<div class="depth-indicator" id="depth-indicator" aria-label="Camada de profundidade atual">
+  <span class="depth-label">Camada</span>
+  <span class="depth-value" id="depth-value">1</span>
+</div>
+
+<style>
+  .depth-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-full);
+    padding: var(--space-1) var(--space-3);
+    transition: border-color var(--duration-normal) ease;
+  }
+
+  .depth-label {
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .depth-value {
+    font-weight: 600;
+    color: var(--color-text-accent);
+    min-width: 1ch;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .depth-indicator {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const depthMap: Record<string, string> = {
+    'problema': '1',
+    'consequencias': '1',
+    'solucao': '1',
+    'ciclo': '1',
+    'pilares': '2',
+    'papeis': '2',
+    'comparacao': '1',
+    'canon': '3',
+    'cenarios': '1',
+    'glossario': '1',
+  };
+
+  const filterSections: Record<string, string[]> = {
+    essential: ['problema', 'consequencias', 'solucao', 'ciclo', 'comparacao', 'cenarios', 'glossario'],
+    detailed: ['problema', 'consequencias', 'solucao', 'ciclo', 'pilares', 'papeis', 'comparacao', 'cenarios', 'glossario'],
+    technical: ['problema', 'consequencias', 'solucao', 'ciclo', 'pilares', 'papeis', 'comparacao', 'canon', 'cenarios', 'glossario'],
+  };
+
+  let currentFilter = 'technical';
+  let lastVisibleSectionId = '';
+
+  const depthValue = document.getElementById('depth-value');
+  const sections = document.querySelectorAll('section[id]');
+
+  function updateDepthDisplay(sectionId: string) {
+    if (!depthValue) return;
+    const visibleSections = filterSections[currentFilter] || filterSections.technical;
+    if (visibleSections.includes(sectionId)) {
+      lastVisibleSectionId = sectionId;
+      depthValue.textContent = depthMap[sectionId] || '1';
+    }
+  }
+
+  function updateDepthFromVisibleSection() {
+    if (!depthValue) return;
+    const visibleSections = filterSections[currentFilter] || filterSections.technical;
+
+    // If the last tracked section is still visible in this filter, keep it
+    if (visibleSections.includes(lastVisibleSectionId)) {
+      depthValue.textContent = depthMap[lastVisibleSectionId] || '1';
+      return;
+    }
+
+    // Otherwise find the first visible section currently in the viewport
+    for (const id of visibleSections) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.7 && rect.bottom > window.innerHeight * 0.3) {
+        lastVisibleSectionId = id;
+        depthValue.textContent = depthMap[id] || '1';
+        return;
+      }
+    }
+
+    // Fallback: use the first visible section
+    if (visibleSections.length > 0) {
+      lastVisibleSectionId = visibleSections[0];
+      depthValue.textContent = depthMap[visibleSections[0]] || '1';
+    }
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id') || '';
+          updateDepthDisplay(id);
+        }
+      });
+    },
+    { rootMargin: '-30% 0px -60% 0px' }
+  );
+
+  sections.forEach(section => observer.observe(section));
+
+  window.addEventListener('depth-filter-change', (e: Event) => {
+    const detail = (e as CustomEvent).detail;
+    currentFilter = detail.level;
+    updateDepthFromVisibleSection();
+  });
+</script>

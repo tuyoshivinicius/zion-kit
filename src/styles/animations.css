@@ -1,0 +1,92 @@
+/* === Animations — Borealis Theme === */
+
+/* ── Aurora Boreal ── */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-background);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora-bg::before,
+.aurora-bg::after {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 50%;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.12;
+  animation: aurora-drift 60s ease-in-out infinite alternate;
+}
+
+.aurora-bg::before {
+  background: radial-gradient(ellipse, var(--color-aurora-green), transparent 70%);
+  top: -20%;
+  left: -25%;
+}
+
+.aurora-bg::after {
+  background: radial-gradient(ellipse, var(--color-aurora-violet), transparent 70%);
+  top: -10%;
+  right: -25%;
+  animation-delay: -30s;
+  animation-duration: 45s;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 0.08; }
+  33%  { transform: translate(5%, 3%) rotate(2deg); opacity: 0.15; }
+  66%  { transform: translate(-3%, -2%) rotate(-1deg); opacity: 0.10; }
+  100% { transform: translate(2%, 1%) rotate(1deg); opacity: 0.12; }
+}
+
+/* ── Product Canon Glow Pulse ── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(34, 211, 238, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(34, 211, 238, 0.4), 0 0 50px rgba(34, 211, 238, 0.1); }
+}
+
+.glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ── Bounce ── */
+@keyframes bounce-in {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.15); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* ── Edge Flow (Diagramas) ── */
+@keyframes edge-flow {
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* ── Acessibilidade — Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .aurora-bg::before,
+  .aurora-bg::after {
+    animation: none;
+    opacity: 0.08;
+  }
+}
+
+/* ── Mobile: Aurora simplificada ── */
+@media (max-width: 768px) {
+  .aurora-bg::after {
+    display: none;
+  }
+}

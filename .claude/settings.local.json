@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch"
+      "WebSearch",
+      "mcp__playwright__*",
+      "Bash(npm run:*)"
     ]
   }
 }

@@ -1,2 +1,35 @@
 .backup-and-draft-information-that-ai-shouldnt-read
 .backup-and-draft-information-that-ai-shouldnt-read/**
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Astro
+.astro/
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Screenshots (QA/debug)
+*.png
+!public/**/*.png
+
+# QA
+qa-screenshots/
+
+# Playwright MCP
+.playwright-mcp/
+
+# MCP config
+.mcp.json
+
+# Claude local settings
+.claude/settings.local.json

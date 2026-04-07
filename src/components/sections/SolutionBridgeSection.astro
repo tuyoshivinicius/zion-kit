@@ -1,0 +1,81 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import ExampleBlock from '../ui/ExampleBlock.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+---
+
+<section id="solucao" class="solution-section section-odd" aria-labelledby="heading-solucao">
+  <div class="max-width-content solution-content">
+    <ScrollReveal animation="scale-in">
+      <SectionHeader
+        sectionNumber={3}
+        sectionId="solucao"
+        title='E se todo o conhecimento do seu produto <span class="gradient-text">tivesse uma casa?</span>'
+        depth={1}
+      />
+    </ScrollReveal>
+
+    <div class="solution-text max-width-narrow" style="margin: 0 auto; text-align: center;">
+      <ScrollReveal animation="fade-up" delay={0.15}>
+        <p>
+          O ZionKit é um modelo que cria um repositório central onde todo o conhecimento do produto — suas regras, seu vocabulário, seus processos, suas decisões técnicas — fica formalizado, versionado e acessível.
+        </p>
+      </ScrollReveal>
+
+      <ScrollReveal animation="fade-up" delay={0.3}>
+        <p>
+          Quando alguém pede para a IA construir algo, ela consulta esse repositório para garantir que o que será construído respeita o que já foi definido. E quando a construção revela algo novo sobre o produto, esse aprendizado volta para o repositório, enriquecendo o contexto disponível para todos.
+        </p>
+      </ScrollReveal>
+
+      <ScrollReveal animation="fade-up" delay={0.45}>
+        <p>
+          Esse repositório se chama <span class="canon-badge glow-pulse">Product Canon</span> — o cânone do produto. E o ciclo que o mantém vivo tem três etapas: construir o conhecimento, usá-lo para especificar, e devolver o que foi aprendido.
+        </p>
+      </ScrollReveal>
+
+      <ScrollReveal animation="fade-up" delay={0.6}>
+        <ExampleBlock variant="analogy">
+          Pense na Product Canon como a constituição de um país. Todo mundo precisa seguir as mesmas regras, usar os mesmos termos com os mesmos significados, e quando algo precisa mudar, existe um processo formal para isso — não é cada um interpretando do seu jeito. A diferença é que essa constituição evolui continuamente, ficando mais rica a cada ciclo.
+        </ExampleBlock>
+      </ScrollReveal>
+    </div>
+  </div>
+</section>
+
+<style>
+  .solution-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-primary);
+    position: relative;
+  }
+
+  .solution-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .solution-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .solution-text p {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  .canon-badge {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--color-text-accent);
+    background: rgba(34, 211, 238, 0.08);
+    border: 1px solid var(--color-border-accent);
+    border-radius: var(--radius-md);
+    padding: var(--space-1) var(--space-3);
+  }
+</style>

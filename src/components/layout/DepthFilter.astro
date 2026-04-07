@@ -1,0 +1,237 @@
+---
+/**
+ * DepthFilter — Toggle persistente com 3 opções de profundidade.
+ * Essencial (Camada 1): Seções 1-4, 7, 9, 10
+ * Detalhado (Camada 2): + Seções 5, 6
+ * Técnico (Camada 3): + Seção 8
+ */
+interface Props {
+  showTooltip?: boolean;
+}
+const { showTooltip = false } = Astro.props;
+const levels = [
+  { id: 'essential', label: 'Essencial', time: '~5 min' },
+  { id: 'detailed', label: 'Detalhado', time: '~12 min' },
+  { id: 'technical', label: 'Técnico', time: '~20 min' },
+];
+---
+
+<div class="depth-filter-wrapper">
+  <div class="depth-filter" role="group" aria-label="Filtro de profundidade de leitura" aria-describedby={showTooltip ? "depth-tooltip" : undefined}>
+    {levels.map((level, i) => (
+      <button
+        class:list={['depth-btn', { active: i === 2 }]}
+        data-depth={level.id}
+        aria-pressed={i === 2 ? 'true' : 'false'}
+      >
+        {level.label}
+        <span class="depth-time">{level.time}</span>
+      </button>
+    ))}
+  </div>
+  {showTooltip && (
+    <div class="depth-tooltip" id="depth-tooltip" role="tooltip" aria-live="polite">
+      <div class="depth-tooltip-arrow"></div>
+      <span class="depth-tooltip-text">Escolha o nível de profundidade da leitura</span>
+    </div>
+  )}
+</div>
+
+<style>
+  .depth-filter {
+    display: flex;
+    gap: var(--space-1);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-full);
+    padding: 2px;
+    border: 1px solid var(--color-border-default);
+  }
+
+  .depth-btn {
+    background: none;
+    border: none;
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    white-space: nowrap;
+  }
+
+  .depth-btn:hover {
+    color: var(--color-text-secondary);
+  }
+
+  .depth-btn.active {
+    background: rgba(34, 211, 238, 0.1);
+    color: var(--color-text-accent);
+  }
+
+  .depth-time {
+    font-size: 0.625rem;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 1024px) {
+    .depth-filter {
+      display: none;
+    }
+  }
+
+  .depth-filter-wrapper {
+    position: relative;
+  }
+
+  .depth-tooltip {
+    position: absolute;
+    top: calc(100% + var(--space-3));
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-accent);
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-4);
+    white-space: nowrap;
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    opacity: 0;
+    animation: tooltip-enter 0.4s ease 0.8s forwards;
+    pointer-events: none;
+    z-index: calc(var(--z-sticky) + 1);
+  }
+
+  .depth-tooltip.hidden {
+    animation: tooltip-exit 0.3s ease forwards;
+  }
+
+  .depth-tooltip-arrow {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 10px;
+    height: 10px;
+    background: var(--color-bg-elevated);
+    border-top: 1px solid var(--color-border-accent);
+    border-left: 1px solid var(--color-border-accent);
+  }
+
+  .depth-tooltip-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes tooltip-enter {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  @keyframes tooltip-exit {
+    from {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-50%) translateY(8px);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .depth-tooltip {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Tooltip onboarding
+  const TOOLTIP_KEY = 'zionkit-depth-tooltip-seen';
+  const tooltip = document.getElementById('depth-tooltip');
+
+  function dismissTooltip() {
+    if (!tooltip || !tooltip.parentElement) return;
+    tooltip.classList.add('hidden');
+    localStorage.setItem(TOOLTIP_KEY, 'true');
+    document.querySelectorAll('[aria-describedby="depth-tooltip"]').forEach(el => {
+      el.removeAttribute('aria-describedby');
+    });
+    setTimeout(() => tooltip.remove(), 300);
+  }
+
+  if (tooltip) {
+    if (localStorage.getItem(TOOLTIP_KEY) === 'true') {
+      tooltip.remove();
+    } else {
+      setTimeout(dismissTooltip, 6000);
+      // Delay click/scroll listeners to avoid dismissal from page initialization events
+      setTimeout(() => {
+        document.addEventListener('click', dismissTooltip, { once: true });
+        window.addEventListener('scroll', dismissTooltip, { once: true });
+      }, 1000);
+    }
+  }
+
+  const depthSections: Record<string, string[]> = {
+    essential: ['problema', 'consequencias', 'solucao', 'ciclo', 'comparacao', 'cenarios', 'glossario'],
+    detailed: ['problema', 'consequencias', 'solucao', 'ciclo', 'pilares', 'papeis', 'comparacao', 'cenarios', 'glossario'],
+    technical: ['problema', 'consequencias', 'solucao', 'ciclo', 'pilares', 'papeis', 'comparacao', 'canon', 'cenarios', 'glossario'],
+  };
+
+  const allSectionIds = ['problema', 'consequencias', 'solucao', 'ciclo', 'pilares', 'papeis', 'comparacao', 'canon', 'cenarios', 'glossario'];
+
+  function applyDepth(level: string) {
+    const visible = depthSections[level] || allSectionIds;
+
+    allSectionIds.forEach(id => {
+      const section = document.getElementById(id);
+      if (!section) return;
+
+      if (visible.includes(id)) {
+        section.style.display = '';
+        section.removeAttribute('aria-hidden');
+      } else {
+        section.style.display = 'none';
+        section.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // Also hide/show nav links for filtered sections
+    document.querySelectorAll('.nav-link').forEach(link => {
+      const sectionId = (link as HTMLElement).dataset.section;
+      if (!sectionId) return;
+      const li = link.closest('li');
+      if (!li) return;
+      (li as HTMLElement).style.display = visible.includes(sectionId) ? '' : 'none';
+    });
+
+  }
+
+  const buttons = document.querySelectorAll('.depth-btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      dismissTooltip();
+      buttons.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      const level = (btn as HTMLElement).dataset.depth || 'technical';
+      applyDepth(level);
+      window.dispatchEvent(new CustomEvent('depth-filter-change', { detail: { level } }));
+    });
+  });
+</script>
