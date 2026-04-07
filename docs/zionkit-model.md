@@ -159,6 +159,11 @@ SEGURANÇA
 OBSERVABILIDADE
   - Todos os eventos de domínio publicam traces OpenTelemetry
   - Métricas de negócio são expostas via Prometheus
+
+REQUISITOS
+  - Nível de aderência IEEE 29148: Mínimo (produto em fase de 
+    prototipação)
+  - SBE obrigatório em todos os requisitos funcionais
 ```
 
 Esses princípios funcionam como o glossário de linguagem ubíqua funciona para a camada de negócio: quando uma especificação propõe comunicação síncrona entre dois bounded contexts, a IA sinaliza a violação do princípio constitucional e exige justificativa — que, se aprovada pelo Architect, é registrada como ADR.
