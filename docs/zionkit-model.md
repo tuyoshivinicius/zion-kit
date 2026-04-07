@@ -614,6 +614,8 @@ O modelo conceitual sugere as seguintes prioridades para validação experimenta
 
 9. **Edição direta do Domain Expert com aprovação sequencial.** Testar o fluxo completo: Domain Expert edita em formato livre → guardrails validam e formalizam em IEEE 29148 + SBE → Domain Expert revisa no ciclo iterativo → `expert-edit-plan` gerado → Domain Expert aprova o Change Plan consolidado → Architect avalia impacto técnico. Avaliar: (a) se a segunda aprovação do Domain Expert no Change Plan agrega valor real ou é percebida como burocracia; (b) se a ordem sequencial (Domain Expert antes do Architect) elimina retrabalho; (c) se o Domain Expert consegue identificar diferenças entre o que revisou no ciclo iterativo e o artefato consolidado final; (d) se o processo é percebido como facilitador ou como burocracia; (e) testar ambas as formas do Relatório de Conformidade (estática e conversacional).
 
+10. **Taxonomia IEEE 29148 na Requirements Specification Session.** Testar se: (a) a IA consegue guiar Domain Builder e Architect pelas categorias IEEE 29148 sem que o processo pareça burocrático; (b) a sinalização de categorias não cobertas (requisitos não-funcionais, interfaces, restrições de design) produz requisitos que teriam sido omitidos sem o guia; (c) a aderência adaptativa funciona na prática — projetos em fase inicial aceitam seções 'pendente' sem pressão artificial de preenchimento; (d) os três níveis de aderência são percebidos como proporcionais e não arbitrários; (e) a progressão de nível Mínimo para Moderado acontece naturalmente conforme a Product Canon cresce.
+
 ---
 
 *ZionKit — Versão 0.5 do modelo conceitual. Documento gerado como registro de insights para prototipação futura.*
