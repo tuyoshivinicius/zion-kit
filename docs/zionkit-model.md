@@ -218,6 +218,18 @@ As salvaguardas que preservam a primazia das cerimônias formais são: (a) escop
 
 O fluxo operacional da edição direta é descrito nas subseções seguintes.
 
+##### Fluxo de Guardrails na Edição Direta
+
+Quando o Domain Expert propõe uma edição direta, um ciclo iterativo de guardrails opera antes da geração de qualquer Canonical Change Plan:
+
+1. O Domain Expert propõe a alteração em linguagem natural ou formato livre.
+2. A IA executa simultaneamente todos os mecanismos de validação — Clarificação de Conformidade (alinhamento terminológico), validação semântica interna (incluindo SBVR, para ambiguidade e incompletude), Validação de Consistência (contradições com regras existentes) — e o Guardrail de Padronização Canônica (reescrita no formato IEEE 29148 + SBE).
+3. A IA apresenta ao Domain Expert: perguntas de clarificação em linguagem natural; a versão formalizada como proposta (não como alteração consumada); e um Relatório de Conformidade consolidando divergências, contradições e impactos em bounded contexts adjacentes.
+4. O Domain Expert decide: aceitar a formalização, solicitar ajustes, responder perguntas de clarificação, ou reescrever a edição original e submeter novamente.
+5. O ciclo se repete até que o Domain Expert aceite a versão formalizada e as divergências sejam resolvidas ou explicitamente justificadas.
+
+O Relatório de Conformidade pode assumir forma estática (documento estruturado) ou forma conversacional (sessão interativa), à escolha do Domain Expert. Somente após a conclusão do ciclo, o `expert-edit-plan` é gerado.
+
 ### 2.3 Etapa 2 — Especificação Contextualizada com Canonical Change Plan Incremental
 
 Nesta etapa, um Domain Builder ou um Architect escreve uma especificação de feature para um produto novo ou existente. A especificação é criada utilizando ferramentas de Spec-Driven Development existentes e consome contexto de ambas as camadas da Product Canon. O Domain Builder define a intenção de produto; o Architect toma decisões técnicas dentro da spec — escolha de padrões de integração, estratégias de persistência, schemas — orientado pelos princípios técnicos constitucionais da Product Canon.
