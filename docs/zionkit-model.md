@@ -119,6 +119,14 @@ A Technical Constitution Session é uma cerimônia conduzida pelo Architect, foc
 
 A cerimônia é habilitada pela aprovação do Canonical Change Plan produzido pela Domain Discovery Session. O Architect utiliza as estruturas de domínio descobertas (bounded contexts, eventos, agregados) como insumo para definir as restrições técnicas que governam todas as especificações futuras: stack tecnológica, padrões de comunicação entre contextos, estratégias de persistência, políticas de segurança e requisitos de observabilidade. O Architect define também o nível de aderência IEEE 29148 (ver níveis de aderência) como parte dos princípios técnicos constitucionais.
 
+A aplicação do IEEE 29148 é proporcional à maturidade do produto e ao contexto do ciclo, através de três níveis de aderência definidos pelo Architect nos princípios técnicos constitucionais:
+
+- **Mínimo** — produto novo, prototipação, discovery inicial: tipo de requisito, descrição em linguagem natural estruturada, critérios SBE.
+- **Moderado** — produto em crescimento, após 2–3 ciclos de Canon Building: adiciona subtipo, rastreabilidade para Change Plans, dependências entre requisitos.
+- **Completo** — produto maduro, domínios regulados, integrações complexas: aplicação integral da taxonomia IEEE 29148 com rastreabilidade bidirecional, atributos de qualidade, seções de interface e restrição de design.
+
+O nível pode variar por bounded context — um contexto maduro pode operar em nível Completo enquanto um contexto novo opera em nível Mínimo. O SBE (Dado/Quando/Então) é obrigatório em todos os níveis.
+
 A saída é um Canonical Change Plan tipado como `constitution-plan`. A aprovação é primária pelo Architect — que valida a adequação técnica dos princípios — e secundária pelo Domain Expert — que valida que os princípios não restringem indevidamente as necessidades de negócio. Somente após a aprovação a próxima cerimônia (Requirements Specification Session) é habilitada.
 
 **Exemplo de princípios técnicos constitucionais** — tipo de artefato produzido pela Technical Constitution Session:
