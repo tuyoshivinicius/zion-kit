@@ -373,7 +373,7 @@ O ZionKit define quatro papéis com autoridades complementares e não sobreposta
 
 **IA (Agentes LLM — mediadores de cerimônias e guardrails).** Processa linguagem natural, mantém contexto de ambas as camadas da Product Canon, identifica inconsistências semânticas e técnicas, propõe clarificações, gera Canonical Change Plans, e implementa código. No ZionKit, a IA opera **sem autonomia decisória** — é um mediador entre a intenção dos participantes e a integridade do domínio e da arquitetura. Atos da IA dividem-se em:
 
-- **Operacional** (permitido): formatar, sugerir, reorganizar, sinalizar inconsistência, traduzir linguagem natural para SBVR
+- **Operacional** (permitido): formatar, sugerir, reorganizar, sinalizar inconsistência, usar metodologias de validação semântica (incluindo SBVR) internamente para detectar ambiguidades, incompletudes e contradições, e traduzir os problemas detectados em perguntas de clarificação em linguagem natural
 - **Decisório** (requer humano): incluir/excluir da Product Canon, aprovar Canonical Change Plan, resolver ambiguidade de domínio
 
 **Domain Expert.** Detém autoridade sobre o significado dos conceitos do domínio. Não participa diretamente das cerimônias nem escreve especificações. É aprovador primário nos gates de Domain Discovery e Requirements Specification, validando fidelidade semântica ao domínio. É aprovador secundário no gate de Technical Constitution. Funciona como guardião da integridade semântica da Product Canon.
