@@ -170,7 +170,7 @@ Esses princípios funcionam como o glossário de linguagem ubíqua funciona para
 
 #### 2.2.3 Requirements Specification Session
 
-A Requirements Specification Session é uma cerimônia conversacional de formalização semântica de requisitos, utilizando SBVR (Semantics of Business Vocabulary and Business Rules) para vocabulário e regras de negócio declarativas, e SBE (Specification by Example) para critérios de aceitação verificáveis. A cerimônia opera sem fases rígidas, seguindo diretrizes de condução.
+A Requirements Specification Session é uma cerimônia conversacional de formalização de requisitos, produzindo requisitos no formato IEEE 29148 com critérios de aceitação SBE (Specification by Example). A cerimônia opera em dois níveis — regra individual e documento — sem fases rígidas, seguindo diretrizes de condução.
 
 O Domain Builder descreve requisitos em linguagem natural. A IA traduz para SBVR controlado e apresenta a formalização para validação do Domain Builder. O objetivo é produzir requisitos que sejam simultaneamente compreensíveis por pessoas de negócio e formalmente precisos o suficiente para consumo por agentes de IA.
 
