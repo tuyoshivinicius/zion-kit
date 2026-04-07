@@ -606,7 +606,7 @@ O modelo conceitual sugere as seguintes prioridades para validação experimenta
 
 5. **Ciclo completo em escopo reduzido.** Executar o ciclo mínimo — três cerimônias do Canon Building + Decisão de Continuidade + Etapa 2 + Etapa 3 — em um domínio simples (3 bounded contexts, 1 funcionalidade) e avaliar se a Product Canon resultante é efetivamente mais rica e útil após um ciclo completo.
 
-6. **Formalização SBVR + SBE mediada pela IA.** Testar se: (a) a IA consegue traduzir linguagem natural do Domain Builder para SBVR controlado com fidelidade; (b) o Domain Builder consegue compreender e validar o resultado SBVR; (c) SBE produz critérios de aceitação verificáveis. Risco a monitorar: efeito "rubber stamp" na validação.
+6. **Validação SBVR como motor interno de clarificação.** Testar se: (a) a IA consegue usar SBVR internamente para detectar ambiguidades, incompletudes e contradições em requisitos em linguagem natural; (b) a IA consegue traduzir os problemas detectados pela validação SBVR em perguntas de clarificação claras e acionáveis em linguagem natural; (c) o processo de clarificação produz requisitos IEEE 29148 + SBE mais completos e consistentes do que sem a validação SBVR. Métrica principal: taxa de problemas detectados pela validação SBVR que resultam em mudanças efetivas no requisito final.
 
 7. **Fluxo sequencial com gates entre cerimônias.** Testar se: (a) habilitação sequencial funciona na prática sem criar gargalos; (b) aprovadores lidam com múltiplos Canonical Change Plans sem sobrecarga; (c) Decisão de Continuidade é exercida naturalmente pelo Domain Builder.
 
