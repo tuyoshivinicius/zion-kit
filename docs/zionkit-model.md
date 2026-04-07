@@ -612,6 +612,8 @@ O modelo conceitual sugere as seguintes prioridades para validação experimenta
 
 8. **Guardrail de Padronização Canônica.** Testar se a IA consegue formalizar corretamente edições em linguagem natural para o formato canônico IEEE 29148 + SBE (com classificação conforme nível de aderência configurado), preservando o significado original. Métrica: taxa de aceitação pelo Domain Expert na primeira tentativa de formalização versus necessidade de ciclos iterativos. Validar também se o guardrail opera corretamente nos artefatos produzidos por cerimônias (modo implícito).
 
+9. **Edição direta do Domain Expert com aprovação sequencial.** Testar o fluxo completo: Domain Expert edita em formato livre → guardrails validam e formalizam em IEEE 29148 + SBE → Domain Expert revisa no ciclo iterativo → `expert-edit-plan` gerado → Domain Expert aprova o Change Plan consolidado → Architect avalia impacto técnico. Avaliar: (a) se a segunda aprovação do Domain Expert no Change Plan agrega valor real ou é percebida como burocracia; (b) se a ordem sequencial (Domain Expert antes do Architect) elimina retrabalho; (c) se o Domain Expert consegue identificar diferenças entre o que revisou no ciclo iterativo e o artefato consolidado final; (d) se o processo é percebido como facilitador ou como burocracia; (e) testar ambas as formas do Relatório de Conformidade (estática e conversacional).
+
 ---
 
 *ZionKit — Versão 0.5 do modelo conceitual. Documento gerado como registro de insights para prototipação futura.*
