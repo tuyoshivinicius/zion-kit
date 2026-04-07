@@ -66,6 +66,9 @@ A Product Canon é um conjunto versionado de artefatos (documentos estruturados)
 - **Glossário de linguagem ubíqua**: definições precisas dos termos do domínio — o vocabulário oficial do produto, onde cada palavra tem um significado acordado por todos. Cada termo é associado ao bounded context (a área do negócio) onde tem validade.
 - **Regras de negócio declarativas**: restrições, políticas e invariantes do domínio, expressas em linguagem natural com critérios verificáveis. Por exemplo: "Reembolsos acima de R$ 500 exigem aprovação do gerente."
 - **Requisitos formalizados em formato IEEE 29148 com critérios de aceitação SBE (Specification by Example)**: requisitos de software produzidos e mantidos através de processos assistidos de formalização, com completude e consistência validadas internamente pela IA utilizando metodologias como SBVR (Semantics of Business Vocabulary and Business Rules).
+
+  IEEE 29148 (ISO/IEC/IEEE 29148:2018) fornece a taxonomia para classificar requisitos (funcionais, não-funcionais, de interface, de design, restrições), atributos obrigatórios por requisito (identificador único, rastreabilidade, prioridade, verificabilidade) e critérios de qualidade. A adoção é motivada pela maturidade do padrão e pela familiaridade dos LLMs com sua taxonomia.
+
 - **Fluxos de domínio**: representações dos processos de negócio — o que acontece, em que ordem, quem faz o quê — derivados de sessões de Event Storming (uma técnica colaborativa de mapeamento de processos, descrita na seção 2.2.1).
 
 **Camada de Arquitetura.** Contém artefatos que formalizam as decisões técnicas e estruturais do sistema:
