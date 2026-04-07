@@ -524,7 +524,7 @@ Todos os artefatos são markdown versionado em Git, garantindo rastreabilidade d
 
 **Injeção seletiva de contexto.** A Product Canon completa não é enviada inteira para a IA a cada interação. Apenas os fragmentos relevantes para a tarefa em questão são carregados. Na prática, isso significa que a IA recebe apenas as informações que precisa para aquela especificação, evitando sobrecarga e mantendo a qualidade das respostas.
 
-**Governança por cerimônia.** O conhecimento da Product Canon é construído e modificado exclusivamente através de cerimônias formais (Domain Discovery, Technical Constitution, Requirements Specification), cada uma com saída padronizada (Canonical Change Plan), gate de aprovação e rastreabilidade. Na prática, isso significa que toda mudança no corpo de conhecimento do produto passa por um processo formal, garantindo que nada é alterado silenciosamente.
+**Governança por cerimônia com canal de exceção.** O conhecimento da Product Canon é construído e modificado primariamente através de cerimônias formais (Domain Discovery, Technical Constitution, Requirements Specification), cada uma com saída padronizada (Canonical Change Plan), gate de aprovação e rastreabilidade. Para capturar conhecimento de domínio que emerge fora do ritmo das cerimônias, o Domain Expert dispõe de um canal de exceção — edição direta na camada de negócio (seção 2.2.6) — com salvaguardas que preservam a primazia das cerimônias: escopo restrito a refinamentos, tipagem distinta para auditoria, e aprovação obrigatória do Architect. Na prática, isso significa que toda mudança no corpo de conhecimento do produto passa por um processo formal — seja cerimônia ou edição direta com guardrails — garantindo que nada é alterado silenciosamente.
 
 ---
 
