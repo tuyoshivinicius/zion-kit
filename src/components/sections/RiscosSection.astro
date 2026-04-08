@@ -1,0 +1,232 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+
+const riscos = [
+  {
+    title: 'Qualidade dos guardrails depende da capacidade da IA',
+    problem: 'Se a IA não detecta que um termo está sendo usado incorretamente, o guardrail falha silenciosamente.',
+    mitigation: 'Eficácia precisa ser validada empiricamente.',
+  },
+  {
+    title: 'Injeção seletiva de contexto é problema não trivial',
+    problem: 'Uma spec que aparenta tocar um bounded context pode ter implicações em outros.',
+    mitigation: 'Qualidade da seleção afeta diretamente a qualidade do Change Plan.',
+  },
+  {
+    title: 'Custo de bootstrap',
+    problem: 'Construir a Product Canon inicial exige investimento. Canon Building é mais estruturado (3 cerimônias com gates).',
+    mitigation: 'Retorno se materializa ao longo de múltiplos ciclos, não imediatamente.',
+  },
+  {
+    title: 'Disciplina de retroalimentação',
+    problem: 'Equipes sob pressão podem pular a Etapa 3, degradando o modelo para SDD convencional.',
+    mitigation: 'Canon Building antecipa parte da integração; sinalização explícita captura descobertas no momento em que surgem; detecção assistida funciona como rede de segurança.',
+  },
+  {
+    title: 'Disponibilidade de aprovadores',
+    problem: 'Múltiplos gates exigem múltiplos aprovadores.',
+    mitigation: 'Aprovação por afinidade; secundária assíncrona com janela de veto; Etapa 2 condicional; roteamento por camada.',
+  },
+  {
+    title: 'Qualidade da tradução de validação interna para linguagem natural',
+    problem: 'Se a IA traduz mal os problemas detectados pelo SBVR, o benefício se perde.',
+    mitigation: 'Ciclo iterativo de clarificação; formalização IEEE 29148 + SBE como ponto de validação auditável.',
+  },
+  {
+    title: 'Acúmulo de papéis pode degradar governança',
+    problem: 'Uma pessoa exercendo múltiplos papéis pode aprovar mecanicamente.',
+    mitigation: 'Protocolo de Perspectiva Assistida (perguntas específicas por papel, variação baseada no conteúdo).',
+  },
+  {
+    title: 'Concorrência de transições no Versionamento por Estrangulamento',
+    problem: 'Duas transições simultâneas afetando artefatos interdependentes podem gerar inconsistências.',
+    mitigation: 'Architect avalia caso a caso; semântica de concorrência será refinada com dados empíricos.',
+  },
+  {
+    title: 'Estagnação no nível Mínimo de aderência IEEE 29148',
+    problem: 'Se progressão depende só do julgamento do Architect, risco de permanecer no Mínimo por inércia.',
+    mitigation: 'Checkpoint de revisão de nível na Decisão de Continuidade.',
+  },
+  {
+    title: 'Perda de detalhamento estrutural',
+    problem: 'Canon Building não detalha fases internas de todas as cerimônias nem organização física da Product Canon.',
+    mitigation: 'Escolha deliberada — estrutura deve emergir da prototipação prática.',
+  },
+];
+---
+
+<section id="riscos" class="riscos-section section-odd" aria-labelledby="heading-riscos">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={15}
+        sectionId="riscos"
+        title='Riscos e <span class="gradient-text">Limitações</span>'
+        depth={2}
+      />
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.1}>
+      <p class="section-intro">Todo modelo tem limitações. O ZionKit documenta as suas abertamente.</p>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.2}>
+      <div class="status-note">
+        <span class="status-icon" aria-hidden="true">&#9888;</span>
+        <p>O modelo é um protótipo conceitual que ainda não foi testado em produção.</p>
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="stagger">
+      <div class="riscos-list">
+        {riscos.map((risco, i) => (
+          <div class="risco-card">
+            <div class="risco-header">
+              <span class="risco-number">{i + 1}</span>
+              <h3>{risco.title}</h3>
+            </div>
+            <div class="risco-body">
+              <div class="risco-detail">
+                <span class="risco-label risco-label--problem">O que pode dar errado</span>
+                <p>{risco.problem}</p>
+              </div>
+              <div class="risco-detail">
+                <span class="risco-label risco-label--mitigation">Mitigação</span>
+                <p>{risco.mitigation}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </ScrollReveal>
+  </div>
+</section>
+
+<style>
+  .riscos-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-primary);
+  }
+
+  .section-intro {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    max-width: 640px;
+    margin-bottom: var(--space-6);
+  }
+
+  .status-note {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    background: rgba(251, 191, 36, 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-12);
+  }
+
+  .status-icon {
+    font-size: var(--text-xl);
+    color: var(--color-warning);
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+
+  .status-note p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-warning);
+    margin: 0;
+  }
+
+  .riscos-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .risco-card {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--duration-normal) ease;
+  }
+
+  .risco-card:hover {
+    border-color: var(--color-border-accent);
+  }
+
+  .risco-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .risco-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(248, 113, 113, 0.1);
+    color: var(--color-problem);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .risco-header h3 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .risco-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-6);
+  }
+
+  @media (max-width: 768px) {
+    .risco-body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .risco-detail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .risco-label {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .risco-label--problem {
+    color: var(--color-problem);
+  }
+
+  .risco-label--mitigation {
+    color: var(--color-solution);
+  }
+
+  .risco-detail p {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+</style>
