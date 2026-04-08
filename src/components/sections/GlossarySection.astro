@@ -19,8 +19,8 @@ const glossaryTerms = [
   {
     id: 'canonical-change-plan',
     term: 'Canonical Change Plan',
-    definition: 'Documento que descreve exatamente o que será adicionado ou alterado na Product Canon. Precisa de aprovação antes de ser aplicado.',
-    analogy: 'A "proposta de emenda" à constituição — descreve o que muda e precisa ser votada antes de entrar em vigor.',
+    definition: 'Documento que descreve exatamente o que será adicionado ou alterado na Product Canon. Possui envelope com metadados (tipo, status, autor, escopo) e payload com conteúdo da mudança. Precisa de aprovação.',
+    analogy: 'A proposta de emenda à constituição do produto — descreve o que muda, quem precisa aprovar, e só entra em vigor depois da votação.',
   },
   {
     id: 'domain-builder',
@@ -100,6 +100,102 @@ const glossaryTerms = [
     definition: 'Processo de devolver à Product Canon as descobertas feitas durante a implementação.',
     analogy: 'Atualizar o manual depois de montar o móvel, incluindo os passos que estavam faltando.',
   },
+  {
+    id: 'envelope-change-plan',
+    term: 'Envelope do Change Plan',
+    definition: 'Conjunto de metadados que acompanha todo Canonical Change Plan: identificador, tipo, status, autor, escopo e registro de aprovações.',
+    analogy: 'A capa de um processo administrativo — identifica o processo, seu status e quem já assinou.',
+  },
+  {
+    id: 'expert-edit-plan',
+    term: 'expert-edit-plan',
+    definition: 'Tipo de Canonical Change Plan originado por edição direta do Domain Expert. Aprovação sequencial obrigatória: Domain Expert valida fidelidade, Architect avalia impacto técnico.',
+    analogy: 'Uma correção no manual do produto — o especialista propõe, mas o engenheiro precisa verificar se a mudança não quebra nada.',
+  },
+  {
+    id: 'incremental-plan',
+    term: 'incremental-plan',
+    definition: 'Tipo de Canonical Change Plan gerado na Etapa 2 (Spec Crafting). Captura impactos emergentes que só aparecem quando uma spec concreta é escrita contra a Product Canon. Pode ser vazio (sem impacto = sem aprovação).',
+    analogy: 'A lista de ajustes que aparece quando você aplica uma regra geral a um caso concreto.',
+  },
+  {
+    id: 'protocolo-perspectiva-assistida',
+    term: 'Protocolo de Perspectiva Assistida',
+    definition: 'Mecanismo que permite que uma mesma pessoa exerça múltiplos papéis sem perder a qualidade das validações. A IA apresenta perguntas específicas da perspectiva de cada papel.',
+    analogy: 'Quando o fundador de uma startup precisa ser ao mesmo tempo o cliente e o vendedor — ele usa um checklist diferente para cada "chapéu".',
+  },
+  {
+    id: 'hotspot-dominio',
+    term: 'Hotspot de domínio',
+    definition: 'Área da Product Canon marcada pelo Domain Expert como frágil, frequentemente mal interpretada, ou com histórico de problemas. A IA usa essas marcações para atenção especial durante validações.',
+    analogy: 'Um trecho de uma receita com a anotação "cuidado aqui — já errei várias vezes nesse passo".',
+  },
+  {
+    id: 'anotacao-contextual',
+    term: 'Anotação contextual',
+    definition: 'Observação que o Domain Expert adiciona durante a revisão de um Change Plan — nuances de domínio, ressalvas, esclarecimentos. Ciclo de vida: formalizar, descartar ou adiar.',
+    analogy: 'Um post-it na margem de um documento — "isso aqui merece uma discussão mais profunda depois".',
+  },
+  {
+    id: 'relatorio-conformidade',
+    term: 'Relatório de Conformidade',
+    definition: 'Documento gerado pela IA durante edição direta. 4 seções: divergências terminológicas, contradições com regras, impactos em bounded contexts, divergências intencionais aceitas.',
+    analogy: 'O parecer do revisor antes de publicar — lista tudo que encontrou de inconsistente para o autor decidir.',
+  },
+  {
+    id: 'aprovacao-afinidade',
+    term: 'Aprovação por afinidade',
+    definition: 'Modelo de aprovação onde o aprovador primário é o papel com expertise principal. O secundário opera com janela de veto assíncrona — sem manifestação no prazo = aprovação tácita.',
+    analogy: 'Quem entende de encanamento aprova a obra de encanamento; o síndico pode vetar, mas se não disser nada no prazo, a obra segue.',
+  },
+  {
+    id: 'sinalizacao-explicita',
+    term: 'Sinalização explícita',
+    definition: 'Marcação durante implementação para registrar descobertas emergentes (ex.: // CANON-DISCOVERY: conceito novo). Captura aprendizados no momento em que surgem.',
+    analogy: 'Anotar no cantinho do caderno "lembrar de incluir isso no relatório" enquanto trabalha.',
+  },
+  {
+    id: 'deteccao-assistida',
+    term: 'Detecção assistida',
+    definition: 'IA compara código implementado contra Product Canon e identifica conceitos novos não sinalizados. Rede de segurança.',
+    analogy: 'O revisor que lê o texto final e percebe uma referência nova que o autor esqueceu de adicionar ao índice.',
+  },
+  {
+    id: 'clarificacao-conformidade',
+    term: 'Clarificação de Conformidade',
+    definition: 'Guardrail que sinaliza quando alguém usa termos diferentes do vocabulário oficial. Não bloqueia — pergunta e propõe alinhamento.',
+    analogy: 'O corretor ortográfico do produto — sublinha e pergunta.',
+  },
+  {
+    id: 'validacao-consistencia',
+    term: 'Validação de Consistência',
+    definition: 'Guardrail que confronta alterações com estado atual da Product Canon, detectando contradições em ambas as camadas.',
+    analogy: 'O verificador de compatibilidade — antes de instalar uma peça nova, confere se não conflita.',
+  },
+  {
+    id: 'validacao-semantica-interna',
+    term: 'Validação Semântica Interna',
+    definition: 'Guardrail interno da IA (incluindo SBVR) para detectar ambiguidade, incompletude e contradição. Resultados em linguagem natural.',
+    analogy: 'O consultor que lê nas entrelinhas e transforma em perguntas claras.',
+  },
+  {
+    id: 'padronizacao-canonica',
+    term: 'Padronização Canônica',
+    definition: 'Guardrail que garante formato IEEE 29148 + SBE em toda escrita na Product Canon. Reescreve automaticamente.',
+    analogy: 'O formatador de documentos — você escreve o conteúdo, ele coloca nos campos certos.',
+  },
+  {
+    id: 'nivel-aderencia-ieee',
+    term: 'Nível de aderência IEEE 29148',
+    definition: 'Configuração de formalidade dos requisitos: Mínimo (tipo + descrição + SBE), Moderado (+ rastreabilidade e dependências), Completo (aplicação integral). Definido pelo Architect.',
+    analogy: 'O nível de detalhe de uma planta de casa — croqui básico, planta técnica ou projeto executivo.',
+  },
+  {
+    id: 'decisao-continuidade',
+    term: 'Decisão de Continuidade',
+    definition: 'Ponto de decisão no final de cada ciclo de Canon Building. 3 caminhos: mapear mais fluxos, formalizar mais requisitos, ou encerrar e seguir para Spec Crafting.',
+    analogy: 'O final de cada capítulo de um livro — o autor decide se continua a história, aprofunda um ponto, ou passa para o próximo ato.',
+  },
 ];
 ---
 
@@ -107,7 +203,7 @@ const glossaryTerms = [
   <div class="max-width-content">
     <ScrollReveal animation="fade-up">
       <SectionHeader
-        sectionNumber={10}
+        sectionNumber={16}
         sectionId="glossario"
         title='Glossário <span class="gradient-text">acessível</span>'
         subtitle="Referência rápida para qualquer conceito mencionado neste site."
@@ -128,13 +224,15 @@ const glossaryTerms = [
     </ScrollReveal>
 
     <div class="glossary-list" id="glossary-list">
-      {glossaryTerms.map(item => (
-        <GlossaryItem
-          id={item.id}
-          term={item.term}
-          definition={item.definition}
-          analogy={item.analogy}
-        />
+      {glossaryTerms.map((item, index) => (
+        <ScrollReveal animation="fade-up" delay={0.05 * index}>
+          <GlossaryItem
+            id={item.id}
+            term={item.term}
+            definition={item.definition}
+            analogy={item.analogy}
+          />
+        </ScrollReveal>
       ))}
     </div>
   </div>
