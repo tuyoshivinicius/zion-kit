@@ -9,10 +9,10 @@ const scenarios = [
     title: 'Cenário 1 — Produto Novo (Greenfield)',
     context: 'Uma startup de logística está construindo sua primeira plataforma. O fundador entende profundamente o negócio mas não é técnico.',
     steps: [
-      'O fundador descreve os fluxos do negócio em linguagem natural: "Um embarcador cadastra uma carga, transportadoras fazem ofertas, o embarcador aceita uma oferta, a carga é coletada, rastreada e entregue." A IA organiza em eventos, atores e áreas do negócio.',
-      'O CTO (como Arquiteto) define as regras técnicas: comunicação assíncrona entre áreas, stack inicial, princípios de segurança.',
-      'Na sessão de requisitos, a IA identifica gaps: "O que acontece se nenhuma transportadora fizer oferta dentro de 24 horas?" O fundador responde e os requisitos são registrados.',
-      'A primeira spec — "Implementar cadastro de carga" — consome o contexto já construído. A segunda spec gera descobertas: o conceito de "Oferta Vinculante" que não estava no glossário original. A Product Canon é atualizada.',
+      'O fundador descreve os fluxos do negócio em linguagem natural na Domain Discovery Session: "Um embarcador cadastra uma carga, transportadoras fazem ofertas, o embarcador aceita uma oferta, a carga é coletada, rastreada e entregue." A IA organiza em eventos, atores e bounded contexts, e a cerimônia produz um Canonical Change Plan tipado como discovery-plan.',
+      'O CTO conduz a Technical Constitution Session: define comunicação assíncrona entre contextos, stack inicial, princípios de segurança e o nível Mínimo de aderência IEEE 29148 — adequado ao estágio de prototipação. A cerimônia produz um constitution-plan aprovado.',
+      'Na Requirements Specification Session, a IA identifica gaps: "O que acontece se nenhuma transportadora fizer oferta dentro de 24 horas?" O fundador responde e os requisitos são formalizados em um specification-plan. Cada cerimônia produz Canonical Change Plans tipados com gates de aprovação entre elas.',
+      'A primeira spec — "Implementar cadastro de carga" — consome o contexto já construído. A segunda spec gera descobertas: o conceito de "Oferta Vinculante" que não estava no glossário original. A Product Canon é atualizada via Canon Enrichment.',
     ],
   },
   {
@@ -22,8 +22,8 @@ const scenarios = [
     context: 'Carla é product owner em uma empresa de saúde. Precisa adicionar telemedicina a um sistema maduro.',
     steps: [
       'A Product Canon já existe — construída ao longo de ciclos anteriores. Carla não precisou construí-la do zero.',
-      'Carla escreve: "Adicionar consulta por vídeo ao agendamento." A IA carrega o contexto e identifica impactos: "ConsultaRealizada" precisa de metadados de vídeo, "sala" precisa incluir "sala virtual", Faturamento precisa diferenciar preço.',
-      'O especialista de Faturamento identifica que a regra de preço proposta conflita com um contrato existente — algo que Carla não tinha como saber. A spec é ajustada antes de qualquer código.',
+      'Carla escreve: "Adicionar consulta por vídeo ao agendamento." A IA gera um Canonical Change Plan incremental que lista os bounded contexts afetados — Agendamento, Prontuário e Faturamento — e identifica impactos: "ConsultaRealizada" precisa de metadados de vídeo, "sala" precisa incluir "sala virtual", Faturamento precisa diferenciar preço.',
+      'O Change Plan é roteado por bounded context para os aprovadores correspondentes. O Domain Expert de Faturamento identifica que a regra de preço proposta conflita com um contrato de operadora de saúde existente — algo que Carla não tinha como saber. A spec é ajustada antes de qualquer código.',
       'Após implementação, a Product Canon é atualizada. A próxima pessoa que trabalhar em Agendamento, Prontuário ou Faturamento já tem acesso a esse contexto.',
     ],
   },
@@ -34,9 +34,9 @@ const scenarios = [
     context: 'Uma reorganização exige que "Faturamento" seja dividido em "Cobrança" e "Receita."',
     steps: [
       'O diretor financeiro mapeia os processos: "Emissão de boleto e régua de cobrança são Cobrança. Reconhecimento de receita e conciliação bancária são Receita."',
-      'A mudança é registrada como transição — não como alteração imediata. A Product Canon mantém duas versões.',
-      'Specs de manutenção continuam referenciando "Faturamento." Specs novas para os contextos separados já usam a versão em transição.',
-      'A migração acontece gradualmente. Quando tudo for migrado, a versão antiga é descontinuada.',
+      'A mudança é registrada via Versionamento por Estrangulamento: a Product Canon mantém duas faces — current (estado vigente, "Faturamento") e next (estado em transição, "Cobrança" e "Receita").',
+      'Specs de manutenção continuam referenciando a face current ("Faturamento"). Specs novas para os contextos separados já usam a face next com a nova estrutura.',
+      'A migração acontece gradualmente. Quando todas as dependências forem migradas, o Architect declara formalmente a conclusão da transição — a face next se torna current e a versão anterior é descontinuada.',
     ],
   },
 ];
@@ -46,7 +46,7 @@ const scenarios = [
   <div class="max-width-content">
     <ScrollReveal animation="fade-up">
       <SectionHeader
-        sectionNumber={9}
+        sectionNumber={14}
         sectionId="cenarios"
         title='ZionKit <span class="gradient-text">em ação</span>'
         depth={1}
