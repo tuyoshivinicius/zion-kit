@@ -12,10 +12,16 @@ import ContextVoidDiagram from '../diagrams/ContextVoidDiagram';
       <SectionHeader
         sectionNumber={1}
         sectionId="problema"
-        title='O conhecimento do seu produto <span class="gradient-text">morre a cada sprint</span>'
+        title='O conhecimento do seu produto <span class="gradient-text">está espalhado em lugares que a IA não alcança</span>'
         depth={1}
         headingLevel={1}
       />
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.1}>
+      <p class="prototype-note">
+        O ZionKit é um modelo conceitual em fase de prototipação. Ainda não foi testado em ambiente de produção.
+      </p>
     </ScrollReveal>
 
     <div class="hero-narrative max-width-narrow">
@@ -68,6 +74,14 @@ import ContextVoidDiagram from '../diagrams/ContextVoidDiagram';
 
   .hero-content {
     width: 100%;
+  }
+
+  .prototype-note {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-bottom: var(--space-4);
   }
 
   .hero-narrative {
