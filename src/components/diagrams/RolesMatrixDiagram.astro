@@ -3,37 +3,42 @@ const roles = [
   {
     name: 'Domain Builder',
     icon: '🏗️',
-    build: 'Participa das sessões de descoberta e requisitos',
-    specify: 'Escreve specs de funcionalidade',
-    feedback: '—',
+    canonBuilding: 'Participa de Discovery e Specification; decide continuidade',
+    specCrafting: 'Escreve spec de feature',
+    canonEnrichment: '—',
+    directEdit: '—',
   },
   {
     name: 'Architect',
     icon: '⚙️',
-    build: 'Conduz sessão técnica; aprova viabilidade',
-    specify: 'Toma decisões técnicas na spec; aprova arquitetura',
-    feedback: '—',
+    canonBuilding: 'Conduz Technical Constitution; aprova gates',
+    specCrafting: 'Decisões técnicas; aprova camada de arquitetura',
+    canonEnrichment: 'Revisão assíncrona (janela de veto)',
+    directEdit: 'Aprova expert-edit-plan (obrigatório)',
   },
   {
     name: 'Domain Expert',
     icon: '🔍',
-    build: 'Aprova fidelidade do conhecimento ao domínio',
-    specify: 'Aprova impactos de negócio (quando houver)',
-    feedback: '—',
+    canonBuilding: 'Aprova Discovery e Specification (com anotações e hotspots)',
+    specCrafting: 'Aprova camada de negócio',
+    canonEnrichment: 'Revisão assíncrona (janela de veto)',
+    directEdit: 'Edita e aprova expert-edit-plan (fidelidade)',
   },
   {
     name: 'IA',
     icon: '🤖',
-    build: 'Facilita sessões, gera planos de mudança',
-    specify: 'Injeta contexto, gera plano incremental, implementa código',
-    feedback: 'Atualiza a Product Canon',
+    canonBuilding: 'Conduz sessões, gera Change Plans, opera guardrails',
+    specCrafting: 'Gera Change Plan incremental; implementa código',
+    canonEnrichment: 'Atualiza Product Canon',
+    directEdit: 'Conduz guardrails; gera expert-edit-plan',
   },
 ];
 
 const columns = [
-  { key: 'build', label: 'Etapa 1 — Construir' },
-  { key: 'specify', label: 'Etapa 2 — Especificar' },
-  { key: 'feedback', label: 'Etapa 3 — Retroalimentar' },
+  { key: 'canonBuilding', label: 'Etapa 1 — Canon Building' },
+  { key: 'specCrafting', label: 'Etapa 2 — Spec Crafting' },
+  { key: 'canonEnrichment', label: 'Etapa 3 — Canon Enrichment' },
+  { key: 'directEdit', label: 'Edição Direta' },
 ];
 ---
 
@@ -54,15 +59,20 @@ const columns = [
             <span class="role-icon" aria-hidden="true">{role.icon}</span>
             <strong>{role.name}</strong>
           </td>
-          <td>{role.build}</td>
-          <td>{role.specify}</td>
-          <td class:list={{ 'cell-empty': role.feedback === '—' }}>
-            {role.feedback}
-          </td>
+          {columns.map(col => (
+            <td class:list={{ 'cell-empty': role[col.key] === '—' }}>
+              {role[col.key]}
+            </td>
+          ))}
         </tr>
       ))}
     </tbody>
   </table>
+
+  <div class="protocol-indicator">
+    <span class="protocol-badge" aria-hidden="true">👥</span>
+    <p><strong>Protocolo de Perspectiva Assistida:</strong> Quando uma pessoa acumula papéis, a IA medeia checklist de perspectiva por papel e registra cada aprovação separadamente.</p>
+  </div>
 </div>
 
 <style>
@@ -83,7 +93,7 @@ const columns = [
     width: 100%;
     border-collapse: collapse;
     font-size: var(--text-sm);
-    min-width: 600px;
+    min-width: 780px;
   }
 
   .roles-matrix th {
@@ -134,6 +144,36 @@ const columns = [
   }
 
   .col-role {
-    width: 160px;
+    width: 140px;
+  }
+
+  .protocol-indicator {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-aurora-green);
+  }
+
+  .protocol-badge {
+    font-size: var(--text-lg);
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+
+  .protocol-indicator p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .role-row {
+      transition: none;
+    }
   }
 </style>
