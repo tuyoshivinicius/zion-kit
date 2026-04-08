@@ -1,0 +1,354 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+import FeedbackDiagram from '../diagrams/FeedbackDiagram';
+---
+
+<section id="enrichment" class="enrichment-section section-odd" aria-labelledby="heading-enrichment">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={7}
+        sectionId="enrichment"
+        title='Canon Enrichment — <span class="gradient-text">Retroalimentação</span>'
+        depth={2}
+      />
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.15}>
+      <p class="section-intro">
+        Depois que a funcionalidade é implementada, tudo que foi descoberto durante o processo volta para a Product Canon. A Etapa 3 garante que o conhecimento gerado na prática enriqueça continuamente o repositório central.
+      </p>
+    </ScrollReveal>
+
+    <!-- 1. Integração de Change Plans aprovados -->
+    <ScrollReveal animation="fade-up" delay={0.3}>
+      <div class="content-block">
+        <h3>Integração de Change Plans aprovados</h3>
+        <p>
+          Canonical Change Plans aprovados no Canon Building e no Spec Crafting já declararam quais artefatos da Product Canon serão afetados. Essa integração é parcialmente antecipada via Versionamento por Estrangulamento — as mudanças estruturais grandes mantêm duas versões (vigente e em transição) enquanto a migração acontece gradualmente.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <!-- 2. Descobertas emergentes -->
+    <ScrollReveal animation="fade-up" delay={0.45}>
+      <div class="content-block">
+        <h3>Descobertas emergentes</h3>
+        <p>
+          Durante a implementação, surgem conhecimentos que não foram antecipados no Canon Building nem no Spec Crafting. O ZionKit captura essas descobertas através de dois mecanismos complementares:
+        </p>
+
+        <div class="mechanisms-grid">
+          <div class="mechanism-card primary">
+            <div class="mechanism-header">
+              <span class="mechanism-icon" aria-hidden="true">📌</span>
+              <h4>Sinalização explícita</h4>
+              <span class="mechanism-badge">Mecanismo primário</span>
+            </div>
+            <p>
+              O desenvolvedor (ou a IA de codificação) marca descobertas durante a implementação usando a tag <code>CANON-DISCOVERY</code> em formato leve:
+            </p>
+            <div class="code-example">
+              <code>// CANON-DISCOVERY: O conceito "OfertaExpirada" emergiu durante implementação do fluxo de checkout</code>
+            </div>
+            <p class="mechanism-note">
+              Não depende de capacidades incertas da IA — qualquer pessoa pode sinalizar uma descoberta.
+            </p>
+          </div>
+
+          <div class="mechanism-card complementary">
+            <div class="mechanism-header">
+              <span class="mechanism-icon" aria-hidden="true">🔍</span>
+              <h4>Detecção assistida pela IA</h4>
+              <span class="mechanism-badge secondary">Rede de segurança</span>
+            </div>
+            <p>
+              Ao iniciar a Etapa 3, a IA compara artefatos da implementação contra a Product Canon e apresenta candidatos a descobertas não sinalizados.
+            </p>
+            <div class="code-example">
+              <code>"O código introduziu o conceito 'OfertaExpirada' que não existe no glossário — formalizar?"</code>
+            </div>
+            <p class="mechanism-note">
+              Mecanismo complementar que funciona como rede de segurança para descobertas não sinalizadas explicitamente.
+            </p>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+
+    <!-- 3. Mecanismo de aprovação leve com escalação -->
+    <ScrollReveal animation="fade-up" delay={0.6}>
+      <div class="content-block">
+        <h3>Aprovação leve com escalação condicional</h3>
+        <p>
+          A IA formaliza cada descoberta e submete aos guardrails (Padronização Canônica, Validação de Consistência, Clarificação de Conformidade). O resultado determina o caminho:
+        </p>
+
+        <div class="approval-paths">
+          <div class="approval-path path-ok">
+            <div class="path-header">
+              <span class="path-icon" aria-hidden="true">✅</span>
+              <h4>Sem problemas — Revisão assíncrona</h4>
+            </div>
+            <p>
+              Integração aprovada com janela de veto: se o período expira sem manifestação, a aprovação é tácita. Adequado para refinamentos de termos, correções factuais e ajustes sem impacto cross-context.
+            </p>
+          </div>
+
+          <div class="approval-path path-escalation">
+            <div class="path-header">
+              <span class="path-icon" aria-hidden="true">⚠️</span>
+              <h4>Com problemas — Escalação para Change Plan formal</h4>
+            </div>
+            <p>
+              Descoberta escalada para Canonical Change Plan formal do tipo apropriado (<code>specification-plan</code>, <code>constitution-plan</code> ou <code>discovery-plan</code>), que segue aprovação ativa pelos responsáveis.
+            </p>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+
+    <!-- 4. Anotações contextuais e ciclo de vida -->
+    <ScrollReveal animation="fade-up" delay={0.75}>
+      <div class="content-block">
+        <h3>Anotações contextuais e ciclo de vida</h3>
+        <p>
+          Anotações não formalizadas em ciclos anteriores são reapresentadas pela IA como candidatos a incorporação durante cerimônias de Canon Building. Cada anotação exige resolução obrigatória:
+        </p>
+        <ul class="lifecycle-list">
+          <li><strong>Formalizar</strong> — incorporar via Canonical Change Plan</li>
+          <li><strong>Descartar</strong> — arquivar com motivo registrado</li>
+          <li><strong>Adiar</strong> — re-apresentar no próximo ciclo</li>
+        </ul>
+        <p class="ai-signal-note">
+          Adiamentos consecutivos (mais de 2 ciclos) ativam sinalização da IA: <em>"Esta anotação foi adiada N vezes — considerar formalizar ou descartar."</em>
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <!-- Diagrama -->
+    <ScrollReveal animation="fade-up" delay={0.9}>
+      <DiagramContainer label="Fluxo de retroalimentação com sinalização explícita, detecção assistida e escalação condicional" title="Diagrama — Canon Enrichment">
+        <FeedbackDiagram client:visible />
+      </DiagramContainer>
+    </ScrollReveal>
+  </div>
+</section>
+
+<style>
+  .enrichment-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-primary);
+  }
+
+  .section-intro {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+  }
+
+  .content-block {
+    margin-bottom: var(--space-8);
+  }
+
+  .content-block h3 {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .content-block p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  /* Mechanisms grid */
+  .mechanisms-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  @media (max-width: 768px) {
+    .mechanisms-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .mechanism-card {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+
+  .mechanism-card.primary {
+    border-color: rgba(52, 211, 153, 0.3);
+  }
+
+  .mechanism-card.complementary {
+    border-color: rgba(34, 211, 238, 0.3);
+  }
+
+  .mechanism-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .mechanism-icon {
+    font-size: 1.25rem;
+  }
+
+  .mechanism-header h4 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .mechanism-badge {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-full);
+    background: rgba(52, 211, 153, 0.1);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+  }
+
+  .mechanism-badge.secondary {
+    background: rgba(34, 211, 238, 0.1);
+    color: #22d3ee;
+    border-color: rgba(34, 211, 238, 0.3);
+  }
+
+  .mechanism-card p {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .code-example {
+    background: #0f172a;
+    border-radius: var(--radius-sm);
+    padding: var(--space-3);
+    margin: var(--space-2) 0;
+    overflow-x: auto;
+  }
+
+  .code-example code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--text-xs);
+    color: #67e8f9;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .mechanism-note {
+    font-style: italic;
+    color: var(--color-text-muted) !important;
+    font-size: var(--text-xs) !important;
+  }
+
+  /* Approval paths */
+  .approval-paths {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .approval-path {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+
+  .path-ok {
+    border-left: 3px solid #34d399;
+  }
+
+  .path-escalation {
+    border-left: 3px solid #fbbf24;
+  }
+
+  .path-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .path-header h4 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .approval-path p {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .approval-path code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--text-xs);
+    background: rgba(34, 211, 238, 0.1);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    color: #67e8f9;
+  }
+
+  /* Lifecycle list */
+  .lifecycle-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .lifecycle-list li {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    padding-left: var(--space-4);
+    position: relative;
+  }
+
+  .lifecycle-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-text-accent);
+    font-weight: 600;
+  }
+
+  .lifecycle-list li strong {
+    color: var(--color-text-primary);
+  }
+
+  .ai-signal-note {
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>

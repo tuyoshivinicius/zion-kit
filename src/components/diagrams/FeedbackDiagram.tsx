@@ -9,15 +9,15 @@ export default function FeedbackDiagram() {
   const responsiveConfig = useResponsiveFlow();
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-      {/* Parte A — Retroalimentação normal */}
-      <div style={{ width: '100%', height: '400px' }}>
+      {/* Parte A — Fluxo de retroalimentação com bifurcação */}
+      <div style={{ width: '100%', height: '580px' }}>
         <ReactFlow
           defaultNodes={nodes}
           defaultEdges={edges}
           nodeTypes={nodeTypes}
           defaultEdgeOptions={defaultEdgeOptions}
           {...responsiveConfig}
-          aria-label="Retroalimentação — fluxo de retorno de descobertas à Product Canon"
+          aria-label="Canon Enrichment — sinalização explícita, detecção assistida, guardrails e escalação condicional"
           tabIndex={0}
         >
           <Background variant={BackgroundVariant.Dots} color="rgba(148, 163, 184, 0.08)" gap={20} size={1} />
