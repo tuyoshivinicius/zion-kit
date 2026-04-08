@@ -10,7 +10,7 @@ import ScrollReveal from '../animations/ScrollReveal.astro';
       <SectionHeader
         sectionNumber={3}
         sectionId="solucao"
-        title='E se todo o conhecimento do seu produto <span class="gradient-text">tivesse uma casa?</span>'
+        title='Um repositório central para <span class="gradient-text">todo o conhecimento do produto</span>'
         depth={1}
       />
     </ScrollReveal>
@@ -30,11 +30,23 @@ import ScrollReveal from '../animations/ScrollReveal.astro';
 
       <ScrollReveal animation="fade-up" delay={0.45}>
         <p>
-          Esse repositório se chama <span class="canon-badge glow-pulse">Product Canon</span> — o cânone do produto. E o ciclo que o mantém vivo tem três etapas: construir o conhecimento, usá-lo para especificar, e devolver o que foi aprendido.
+          O ZionKit se apoia em três padrões: um para estruturar requisitos (IEEE 29148), um para verificá-los com exemplos concretos (SBE), e um que a IA usa internamente para encontrar ambiguidades (SBVR).
         </p>
       </ScrollReveal>
 
       <ScrollReveal animation="fade-up" delay={0.6}>
+        <p class="ai-note">
+          A IA propõe e sinaliza — quem decide é sempre o humano.
+        </p>
+      </ScrollReveal>
+
+      <ScrollReveal animation="fade-up" delay={0.75}>
+        <p>
+          Esse repositório se chama <span class="canon-badge glow-pulse">Product Canon</span> — o cânone do produto. E o ciclo que o mantém vivo tem três etapas: construir o conhecimento, usá-lo para especificar, e devolver o que foi aprendido. Este é um dos princípios de design do modelo: a Product Canon é viva, não estática — diferente de documentos tradicionais, ela é continuamente alimentada pelo uso.
+        </p>
+      </ScrollReveal>
+
+      <ScrollReveal animation="fade-up" delay={0.9}>
         <ExampleBlock variant="analogy">
           Pense na Product Canon como a constituição de um país. Todo mundo precisa seguir as mesmas regras, usar os mesmos termos com os mesmos significados, e quando algo precisa mudar, existe um processo formal para isso — não é cada um interpretando do seu jeito. A diferença é que essa constituição evolui continuamente, ficando mais rica a cada ciclo.
         </ExampleBlock>
@@ -67,6 +79,13 @@ import ScrollReveal from '../animations/ScrollReveal.astro';
     font-size: var(--text-lg);
     line-height: var(--leading-relaxed);
     color: var(--color-text-secondary);
+  }
+
+  .ai-note {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-text-accent);
+    opacity: 0.9;
   }
 
   .canon-badge {
