@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { flowConfig, mobileFlowConfig, desktopFlowConfig } from './shared-config';
+import { useState, useEffect, useCallback } from 'react';
+import type { ReactFlowInstance } from '@xyflow/react';
+import { mobileFlowConfig, desktopFlowConfig } from './shared-config';
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -18,5 +19,13 @@ export function useResponsiveFlow() {
 
   const config = isMobile ? mobileFlowConfig : desktopFlowConfig;
 
-  return config;
+  const onInit = useCallback((instance: ReactFlowInstance) => {
+    // Re-run fitView after a frame to handle content-visibility: auto
+    // race condition where container may have 0 dimensions on first render
+    requestAnimationFrame(() => {
+      instance.fitView(config.fitViewOptions);
+    });
+  }, [config.fitViewOptions]);
+
+  return { ...config, onInit };
 }
