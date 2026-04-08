@@ -1,0 +1,644 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import ChangePlanEnvelopeDiagram from '../diagrams/ChangePlanEnvelopeDiagram.tsx';
+
+const universalFields = [
+  { field: 'id', desc: 'Identificador único (ex.: CP-discovery-2026-04-08-001)' },
+  { field: 'type', desc: 'Um dos 5 tipos de Change Plan' },
+  { field: 'status', desc: 'draft, pending-approval, approved, rejected, abandoned' },
+  { field: 'author', desc: 'Pessoa ou papel que originou o Change Plan' },
+  { field: 'created-at', desc: 'Data de criação' },
+  { field: 'scope', desc: 'Lista de bounded contexts afetados pela mudança' },
+  { field: 'approvals', desc: 'Registro sequencial de cada aprovação/rejeição (papel, pessoa, decisão, data, razão)' },
+];
+
+const conditionalFields = [
+  { field: 'affected-layer', type: 'incremental-plan', desc: 'Indica camadas impactadas: negócio, arquitetura ou ambas' },
+  { field: 'conditionality', type: 'incremental-plan', desc: 'Indica se há impactos na Product Canon (vazio = sem aprovação)' },
+  { field: 'edited-artifacts', type: 'expert-edit-plan', desc: 'Lista explícita de artefatos da Product Canon alterados' },
+  { field: 'compliance-report', type: 'expert-edit-plan', desc: 'Referência ao Relatório de Conformidade produzido no ciclo de guardrails' },
+];
+
+const changeTypes = [
+  { name: 'discovery-plan', origin: 'Sessão de Descoberta de Domínio (Etapa 1)', desc: 'Captura fluxos, eventos, atores e agregados descobertos via Event Storming. Payload apenas na camada de negócio.' },
+  { name: 'constitution-plan', origin: 'Sessão de Constituição Técnica (Etapa 1)', desc: 'Captura princípios técnicos, restrições e decisões de ADR. Payload apenas na camada de arquitetura.' },
+  { name: 'specification-plan', origin: 'Sessão de Especificação de Requisitos (Etapa 1)', desc: 'Captura requisitos formalizados em IEEE 29148 + SBE. Payload em ambas as camadas.' },
+  { name: 'expert-edit-plan', origin: 'Edição Direta do Domain Expert', desc: 'Refinamentos e correções de artefatos existentes, fora de cerimônias formais. Restrito à camada de negócio com aprovação sequencial obrigatória.' },
+  { name: 'incremental-plan', origin: 'Spec Crafting (Etapa 2)', desc: 'Mudanças emergentes ao escrever specs contra a Product Canon existente. Pode ser vazio (dispensando aprovação) ou com impacto (roteado por camada afetada).' },
+];
+---
+
+<section id="change-plan" class="change-plan-section section-even" aria-labelledby="heading-change-plan">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={10}
+        sectionId="change-plan"
+        title='O <span class="gradient-text">Canonical Change Plan</span>'
+        depth={3}
+        subtitle="Documento que descreve exatamente o que vai mudar na Product Canon. É o artefato que torna visíveis as mudanças antes de serem aplicadas."
+      />
+    </ScrollReveal>
+
+    <!-- Envelope de metadados -->
+    <ScrollReveal animation="fade-up">
+      <div class="envelope-section">
+        <h3 class="subsection-title">Envelope de Metadados</h3>
+        <p class="subsection-desc">
+          Todo Change Plan — independente do tipo — possui um <strong>envelope</strong> (camada de metadados) e um <strong>payload</strong> (camada de conteúdo com estrutura específica ao tipo).
+        </p>
+
+        <div class="fields-grid">
+          <div class="fields-column universal">
+            <h4 class="fields-title">
+              <span class="field-dot universal-dot" aria-hidden="true"></span>
+              7 Campos Universais
+            </h4>
+            <p class="fields-subtitle">Presentes em todos os 5 tipos</p>
+            <div class="fields-list">
+              {universalFields.map(f => (
+                <div class="field-item">
+                  <code class="field-name">{f.field}</code>
+                  <span class="field-desc">{f.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="fields-column conditional">
+            <h4 class="fields-title">
+              <span class="field-dot conditional-dot" aria-hidden="true"></span>
+              4 Campos Condicionais
+            </h4>
+            <p class="fields-subtitle">Presentes apenas em tipos específicos</p>
+            <div class="fields-list">
+              {conditionalFields.map(f => (
+                <div class="field-item">
+                  <code class="field-name">{f.field}</code>
+                  <span class="field-type-badge">{f.type}</span>
+                  <span class="field-desc">{f.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+
+    <!-- 5 tipos de Change Plan -->
+    <ScrollReveal animation="fade-up">
+      <div class="types-section">
+        <h3 class="subsection-title">5 Tipos de Change Plan</h3>
+        <div class="types-grid">
+          {changeTypes.map(t => (
+            <div class="type-card">
+              <h4 class="type-name">
+                <code>{t.name}</code>
+              </h4>
+              <p class="type-origin">{t.origin}</p>
+              <p class="type-desc">{t.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </ScrollReveal>
+
+    <!-- Aprovação por afinidade -->
+    <ScrollReveal animation="fade-up">
+      <div class="approval-section">
+        <h3 class="subsection-title">Aprovação por Afinidade</h3>
+        <p class="subsection-desc">
+          O aprovador é determinado pela <strong>competência sobre o conteúdo</strong>, não por hierarquia burocrática.
+        </p>
+
+        <div class="approval-grid">
+          <div class="approval-card standard">
+            <h4>Fluxo Padrão</h4>
+            <ul>
+              <li><strong>Aprovador primário:</strong> papel com expertise direta sobre o conteúdo</li>
+              <li><strong>Aprovador secundário:</strong> assíncrono com janela de veto (padrão 48h úteis)</li>
+              <li>Expiração sem manifestação = <strong>aprovação tácita</strong></li>
+            </ul>
+          </div>
+
+          <div class="approval-card exception">
+            <h4>Exceção: <code>expert-edit-plan</code></h4>
+            <ul>
+              <li><strong>1. Domain Expert</strong> aprova primeiro — valida que a formalização preserva a intenção original</li>
+              <li><strong>2. Architect</strong> aprova segundo — avalia impacto técnico, dependências cross-context, violações constitucionais</li>
+              <li>Expiração sem manifestação = <strong>bloqueio</strong> (não aprovação tácita)</li>
+              <li>Aprovação sequencial, obrigatória e não-delegável</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+
+    <!-- Rejeição -->
+    <ScrollReveal animation="fade-up">
+      <div class="rejection-section">
+        <h3 class="subsection-title">Rejeição</h3>
+        <p class="subsection-desc">
+          Rejeição devolve o Change Plan ao contexto de origem com razão registrada em texto livre.
+          O autor decide: <strong>revisar e reenviar</strong> ou <strong>abandonar</strong>.
+          Não existe rejeição parcial — o Change Plan é devolvido como unidade.
+          Abandono é registrado com razão para evitar ciclos improdutivos.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <!-- Diagrama -->
+    <ScrollReveal animation="fade-up">
+      <DiagramContainer
+        label="Diagrama do Canonical Change Plan — Envelope, tipos e fluxo de aprovação"
+        title="Diagrama 10 — Estrutura do Canonical Change Plan"
+      >
+        <ChangePlanEnvelopeDiagram client:visible />
+      </DiagramContainer>
+    </ScrollReveal>
+
+    <!-- Exemplo visual PIX -->
+    <ScrollReveal animation="fade-up">
+      <div class="pix-example">
+        <h3 class="subsection-title">Exemplo: PIX no Checkout</h3>
+        <p class="subsection-desc">
+          Um engenheiro escreve a spec "adicionar PIX como método de pagamento no checkout".
+          A IA, com contexto da Product Canon, identifica que o evento <code>PagamentoConfirmado</code> não inclui campos específicos de PIX — e gera um <code>incremental-plan</code>.
+        </p>
+
+        <div class="pix-envelope">
+          <div class="pix-header">
+            <span class="pix-label">ENVELOPE</span>
+          </div>
+          <div class="pix-fields">
+            <div class="pix-field"><span class="pix-key">ID</span><span class="pix-value">CP-incremental-2026-04-08-003</span></div>
+            <div class="pix-field"><span class="pix-key">Type</span><span class="pix-value">incremental-plan</span></div>
+            <div class="pix-field"><span class="pix-key">Status</span><span class="pix-value">pending-approval</span></div>
+            <div class="pix-field"><span class="pix-key">Author</span><span class="pix-value">Engenheiro (Domain Builder)</span></div>
+            <div class="pix-field"><span class="pix-key">Scope</span><span class="pix-value">Pagamentos, Compliance, Notificações</span></div>
+            <div class="pix-field"><span class="pix-key">Affected layer</span><span class="pix-value">negócio + arquitetura</span></div>
+            <div class="pix-field"><span class="pix-key">Conditionality</span><span class="pix-value">com impacto</span></div>
+          </div>
+        </div>
+
+        <div class="pix-payload">
+          <div class="pix-payload-columns">
+            <div class="pix-payload-col business">
+              <h4>
+                <span class="field-dot universal-dot" aria-hidden="true"></span>
+                Camada de Negócio
+              </h4>
+              <p class="pix-approver">Aprovação: Domain Expert</p>
+              <div class="pix-items">
+                <div class="pix-item">
+                  <span class="pix-badge new">NOVO</span>
+                  <strong>Glossário:</strong> "Chave PIX" — Identificador único do recebedor em transações PIX.
+                </div>
+                <div class="pix-item">
+                  <span class="pix-badge new">NOVA</span>
+                  <strong>Regra de negócio:</strong> "Transações PIX acima de R$ 1.000 em horário noturno (20h-6h) requerem confirmação adicional."
+                </div>
+                <div class="pix-item">
+                  <strong>Bounded contexts:</strong> Pagamentos (alteração direta), Compliance (validação noturna), Notificações (novo template).
+                </div>
+              </div>
+            </div>
+
+            <div class="pix-payload-col architecture">
+              <h4>
+                <span class="field-dot conditional-dot" aria-hidden="true"></span>
+                Camada de Arquitetura
+              </h4>
+              <p class="pix-approver">Aprovação: Architect</p>
+              <div class="pix-items">
+                <div class="pix-item">
+                  <span class="pix-badge change">ALTERAÇÃO</span>
+                  <strong>Evento:</strong> "PagamentoConfirmado" — adicionar campo <code>metodo_pagamento</code> ao schema.
+                </div>
+                <div class="pix-item">
+                  <span class="pix-badge new">NOVO</span>
+                  <strong>Evento:</strong> "ChavePixValidada" — emitido após validação junto ao banco central.
+                </div>
+                <div class="pix-item">
+                  <span class="pix-badge new">NOVO</span>
+                  <strong>ADR necessário:</strong> extensão do schema de PagamentoConfirmado vs. evento separado.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="pix-footnote">
+          Ambas as camadas afetadas → requer aprovação do Domain Expert <strong>e</strong> do Architect. Somente após aprovação a implementação avança com visibilidade de todos os impactos conceituais já decididos.
+        </p>
+      </div>
+    </ScrollReveal>
+  </div>
+</section>
+
+<style>
+  .change-plan-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .subsection-title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .subsection-desc {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-6);
+  }
+
+  /* Envelope fields */
+  .envelope-section {
+    margin-bottom: var(--space-12);
+  }
+
+  .fields-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 768px) {
+    .fields-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .fields-column {
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+
+  .fields-column.universal {
+    border-color: rgba(52, 211, 153, 0.2);
+  }
+
+  .fields-column.conditional {
+    border-color: rgba(251, 191, 36, 0.2);
+  }
+
+  .fields-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-1);
+  }
+
+  .field-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .universal-dot { background: var(--color-aurora-green); }
+  .conditional-dot { background: #fbbf24; }
+
+  .fields-subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .fields-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .field-item {
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+  }
+
+  .field-name {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-accent);
+    display: block;
+    margin-bottom: var(--space-1);
+  }
+
+  .field-type-badge {
+    display: inline-block;
+    font-size: 0.6875rem;
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    border-radius: var(--radius-sm);
+    padding: 0.125rem 0.375rem;
+    margin-bottom: var(--space-1);
+  }
+
+  .field-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+    display: block;
+  }
+
+  /* Types */
+  .types-section {
+    margin-bottom: var(--space-12);
+  }
+
+  .types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .type-card {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    transition: border-color var(--duration-normal) ease;
+  }
+
+  .type-card:hover {
+    border-color: rgba(34, 211, 238, 0.3);
+  }
+
+  .type-name {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-2);
+  }
+
+  .type-name code {
+    color: var(--color-text-accent);
+    font-weight: 600;
+  }
+
+  .type-origin {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+    font-style: italic;
+  }
+
+  .type-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+  }
+
+  /* Approval */
+  .approval-section {
+    margin-bottom: var(--space-12);
+  }
+
+  .approval-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 768px) {
+    .approval-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .approval-card {
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+
+  .approval-card.standard {
+    border-color: rgba(52, 211, 153, 0.2);
+  }
+
+  .approval-card.exception {
+    border-color: rgba(248, 113, 113, 0.2);
+  }
+
+  .approval-card h4 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .approval-card code {
+    color: var(--color-text-accent);
+    font-size: var(--text-sm);
+  }
+
+  .approval-card ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .approval-card li {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+    padding-left: var(--space-4);
+    position: relative;
+  }
+
+  .approval-card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .approval-card.standard li::before {
+    background: var(--color-aurora-green);
+  }
+
+  .approval-card.exception li::before {
+    background: #f87171;
+  }
+
+  /* Rejection */
+  .rejection-section {
+    margin-bottom: var(--space-12);
+    padding: var(--space-6);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    border-left: 3px solid var(--color-text-muted);
+  }
+
+  .rejection-section .subsection-title {
+    font-size: var(--text-xl);
+  }
+
+  .rejection-section .subsection-desc {
+    margin-bottom: 0;
+  }
+
+  /* PIX example */
+  .pix-example {
+    margin-top: var(--space-12);
+    padding: var(--space-8);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+  }
+
+  .pix-example .subsection-title {
+    font-size: var(--text-xl);
+  }
+
+  .pix-envelope {
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--space-6);
+  }
+
+  .pix-header {
+    background: rgba(34, 211, 238, 0.08);
+    padding: var(--space-2) var(--space-4);
+    border-bottom: 1px solid rgba(34, 211, 238, 0.2);
+  }
+
+  .pix-label {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-text-accent);
+  }
+
+  .pix-fields {
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .pix-field {
+    display: flex;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .pix-key {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+
+  .pix-value {
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .pix-payload {
+    margin-bottom: var(--space-6);
+  }
+
+  .pix-payload-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 768px) {
+    .pix-payload-columns {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .pix-payload-col {
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+  }
+
+  .pix-payload-col.business {
+    border-color: rgba(52, 211, 153, 0.2);
+  }
+
+  .pix-payload-col.architecture {
+    border-color: rgba(167, 139, 250, 0.2);
+  }
+
+  .pix-payload-col h4 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-base);
+    font-weight: 600;
+    margin-bottom: var(--space-1);
+  }
+
+  .pix-approver {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-bottom: var(--space-3);
+  }
+
+  .pix-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .pix-item {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+  }
+
+  .pix-badge {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    padding: 0.0625rem 0.375rem;
+    margin-right: var(--space-1);
+  }
+
+  .pix-badge.new {
+    color: var(--color-aurora-green);
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+  }
+
+  .pix-badge.change {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+  }
+
+  .pix-footnote {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+    font-style: italic;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border-default);
+  }
+</style>
