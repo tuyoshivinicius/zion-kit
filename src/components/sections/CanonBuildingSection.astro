@@ -1,0 +1,554 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+import CanonBuildingDiagram from '../diagrams/CanonBuildingDiagram.tsx';
+import CeremonyFlowDiagram from '../diagrams/CeremonyFlowDiagram.tsx';
+---
+
+<section id="canon-building" class="canon-building-section section-odd" aria-labelledby="heading-canon-building">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={5}
+        sectionId="canon-building"
+        title='Canon Building — <span class="gradient-text">Construir o Conhecimento</span>'
+        depth={2}
+      />
+    </ScrollReveal>
+
+    <!-- Princípio orientador -->
+    <ScrollReveal animation="fade-up">
+      <aside class="principle-note" role="note">
+        <p>Este é um dos princípios de design do modelo: <strong>governança por cerimônia com canal de exceção</strong> — toda mudança na Product Canon passa por processo formal, seja cerimônia ou edição direta com guardrails.</p>
+      </aside>
+    </ScrollReveal>
+
+    <!-- Introdução -->
+    <ScrollReveal animation="fade-up" delay={0.15}>
+      <p class="section-intro">
+        O Domain Builder e o Architect constroem e mantêm a Product Canon de forma complementar, através de <strong>três cerimônias formais</strong> organizadas em um fluxo sequencial com gates de aprovação. Cada cerimônia produz um <em>Canonical Change Plan</em> que precisa ser aprovado antes de habilitar a próxima.
+      </p>
+    </ScrollReveal>
+
+    <!-- Diagrama existente: Canon Building -->
+    <ScrollReveal animation="scale-in" delay={0.3}>
+      <DiagramContainer label="Canon Building — processo de construção da Product Canon em três sessões" title="Diagrama — Visão Geral do Canon Building">
+        <CanonBuildingDiagram client:visible />
+      </DiagramContainer>
+    </ScrollReveal>
+
+    <!-- Sessão 1 — Domain Discovery Session -->
+    <ScrollReveal animation="fade-up" delay={0.15}>
+      <div class="ceremony-block">
+        <h3 class="ceremony-title">
+          <span class="ceremony-number" aria-hidden="true">1</span>
+          Domain Discovery Session
+        </h3>
+        <p class="ceremony-desc">
+          Baseada em <strong>Event Storming</strong>: "É uma técnica onde você conta a história do negócio e alguém organiza em um mapa — no ZionKit, esse alguém é a IA."
+        </p>
+        <div class="ceremony-phases">
+          <h4>4 Fases:</h4>
+          <ol>
+            <li><strong>Descoberta de eventos de domínio</strong> — o que acontece no negócio, expressos no passado ("Pedido Criado", "Pagamento Confirmado").</li>
+            <li><strong>Identificação de comandos e atores</strong> — o que causou cada evento e quem disparou.</li>
+            <li><strong>Mapeamento de agregados e bounded contexts</strong> — agrupamentos coesos com fronteiras naturais.</li>
+            <li><strong>Decomposição de casos de uso</strong> — pré-condições, pós-condições, fluxos alternativos.</li>
+          </ol>
+        </div>
+        <div class="example-block">
+          <h4>Exemplo — Fintech</h4>
+          <p>
+            Um gestor de operações descreve: <em>"Quando um cliente pede pra sacar dinheiro, a gente verifica se tem saldo, se tem limite diário disponível, e se não tem nenhum bloqueio judicial."</em>
+          </p>
+          <p>
+            A IA identifica eventos (<code>SaqueSolicitado</code>, <code>SaldoVerificado</code>, <code>LimiteValidado</code>, <code>BloqueioVerificado</code>, <code>SaqueProcessado</code>, <code>NotificaçãoEnviada</code>), comandos, atores (Cliente, Sistema de Compliance), bounded contexts (Conta, Compliance, Notificações).
+          </p>
+        </div>
+        <div class="perspective-block">
+          <h4>Perspectiva do Architect</h4>
+          <p>
+            Avalia que verificação de bloqueio judicial (Compliance) precisa ser <strong>síncrona</strong> com processamento de saque (Conta). Comunicação com Notificações será <strong>assíncrona</strong> via evento. Registra como ADR.
+          </p>
+        </div>
+        <p class="ceremony-output">
+          <strong>Saída:</strong> <code>discovery-plan</code> — aprovação primária Domain Expert + secundária Architect
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <!-- Sessão 2 — Technical Constitution Session -->
+    <ScrollReveal animation="fade-up" delay={0.3}>
+      <div class="ceremony-block">
+        <h3 class="ceremony-title">
+          <span class="ceremony-number" aria-hidden="true">2</span>
+          Technical Constitution Session
+        </h3>
+        <p class="ceremony-desc">
+          O Architect define <strong>princípios técnicos constitucionais</strong>: stack, comunicação entre contextos, persistência, segurança, observabilidade.
+        </p>
+        <div class="example-block">
+          <h4>Exemplo de princípios (formato simplificado)</h4>
+          <ul>
+            <li>Stack: Python/FastAPI, PostgreSQL, Redis, RabbitMQ</li>
+            <li>Comunicação assíncrona entre bounded contexts via eventos</li>
+            <li>Schema de banco por contexto</li>
+            <li>Autenticação OAuth2/JWT</li>
+            <li>Traces OpenTelemetry</li>
+          </ul>
+        </div>
+        <div class="ieee-block">
+          <h4>Níveis de aderência IEEE 29148</h4>
+          <p class="ieee-analogy">
+            <em>"O nível de detalhe de uma planta de casa — pode ser um croqui básico (Mínimo), uma planta técnica (Moderado), ou um projeto executivo (Completo)."</em>
+          </p>
+          <div class="ieee-levels">
+            <div class="ieee-level">
+              <h5>Mínimo</h5>
+              <p>Tipo + descrição + SBE</p>
+              <span class="ieee-use">Produtos novos, prototipação</span>
+            </div>
+            <div class="ieee-level">
+              <h5>Moderado</h5>
+              <p>Adiciona subtipo, rastreabilidade, dependências</p>
+              <span class="ieee-use">Produto em crescimento</span>
+            </div>
+            <div class="ieee-level">
+              <h5>Completo</h5>
+              <p>Rastreabilidade bidirecional e atributos de qualidade</p>
+              <span class="ieee-use">Produto maduro, domínios regulados</span>
+            </div>
+          </div>
+          <p class="ieee-note">O nível pode variar por bounded context. SBE obrigatório em todos os níveis.</p>
+        </div>
+        <p class="ceremony-output">
+          <strong>Saída:</strong> <code>constitution-plan</code> — aprovação primária Architect + secundária Domain Expert
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <!-- Sessão 3 — Requirements Specification Session -->
+    <ScrollReveal animation="fade-up" delay={0.45}>
+      <div class="ceremony-block">
+        <h3 class="ceremony-title">
+          <span class="ceremony-number" aria-hidden="true">3</span>
+          Requirements Specification Session
+        </h3>
+        <p class="ceremony-desc">
+          Formalização de requisitos via <strong>clarificação iterativa</strong> em 6 passos:
+        </p>
+        <ol class="clarification-steps">
+          <li>Domain Builder descreve requisito em linguagem natural</li>
+          <li>IA ativa validação semântica interna (SBVR) + demais guardrails</li>
+          <li>IA consolida problemas e apresenta perguntas de clarificação</li>
+          <li>Domain Builder refina em ciclo iterativo</li>
+          <li>IA formaliza em IEEE 29148 + SBE</li>
+          <li>Domain Builder valida</li>
+        </ol>
+        <div class="example-block example-req">
+          <h4>Exemplo — REQ-CANCEL-001</h4>
+          <p>
+            Domain Builder descreve: <em>"O cliente deve poder cancelar um pedido antes do faturamento."</em>
+          </p>
+          <p>
+            IA detecta ambiguidade: <em>"Quais status permitem cancelamento? Apenas Pendente, ou também Confirmado?"</em> — Domain Builder esclarece — IA consulta Product Canon e encontra regra existente.
+          </p>
+          <blockquote class="req-formal">
+            <p><strong>REQ-CANCEL-001</strong> | Tipo: Funcional | Contexto: Pedidos | Prioridade: Alta</p>
+            <p><em>O sistema deve permitir que o Cliente titular cancele um Pedido cujo status é Pendente ou Confirmado.</em></p>
+            <p><strong>Cenário SBE:</strong> Dado um Pedido com status 'Confirmado' pertencendo ao Cliente titular / Quando o Cliente solicita cancelamento / Então o status muda para 'Cancelado' e o evento PedidoCancelado é emitido.</p>
+          </blockquote>
+        </div>
+        <p class="ceremony-output">
+          <strong>Saída:</strong> <code>specification-plan</code> — aprovação primária Domain Expert + secundária Architect
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <!-- Decisão de Continuidade do Ciclo -->
+    <ScrollReveal animation="fade-up" delay={0.15}>
+      <div class="decision-block">
+        <h3 class="decision-title">Decisão de Continuidade do Ciclo</h3>
+        <div class="decision-paths">
+          <div class="decision-path path-a">
+            <span class="path-label">(a)</span>
+            <div>
+              <strong>Mapear mais fluxos</strong>
+              <p>Volta para Domain Discovery Session</p>
+            </div>
+          </div>
+          <div class="decision-path path-b">
+            <span class="path-label">(b)</span>
+            <div>
+              <strong>Formalizar mais requisitos</strong>
+              <p>Volta para Requirements Specification Session</p>
+              <p class="path-precondition">Pré-condição: bounded contexts já mapeados com constituição técnica definida. Se os novos requisitos tocam bounded contexts não mapeados, deve voltar para Domain Discovery (caminho a).</p>
+            </div>
+          </div>
+          <div class="decision-path path-c">
+            <span class="path-label">(c)</span>
+            <div>
+              <strong>Encerrar ciclo</strong>
+              <p>Prosseguir para Spec Crafting</p>
+            </div>
+          </div>
+        </div>
+        <div class="checkpoint-block">
+          <h4>Checkpoint IEEE 29148</h4>
+          <p>A IA apresenta sinais indicativos de que o nível de aderência pode ser insuficiente: requisitos com dependências inter-contexto não rastreadas, requisitos não-funcionais aparecendo, rejeições por ambiguidade de escopo. A decisão de progredir é do Architect.</p>
+        </div>
+        <p class="decision-authority">Autoridade: Domain Builder decide, IA sinaliza cobertura.</p>
+      </div>
+    </ScrollReveal>
+
+    <!-- Novo diagrama: Ceremony Flow -->
+    <ScrollReveal animation="scale-in" delay={0.3}>
+      <DiagramContainer label="Fluxo das cerimônias do Canon Building" title="CeremonyFlowDiagram">
+        <CeremonyFlowDiagram client:visible />
+      </DiagramContainer>
+    </ScrollReveal>
+
+    <!-- Princípio: Prevenção sobre detecção -->
+    <ScrollReveal animation="fade-up" delay={0.45}>
+      <aside class="principle-note principle-closing" role="note">
+        <p><strong>Prevenção sobre detecção:</strong> Gates de aprovação capturam inconsistências no momento mais barato de corrigi-las — antes de qualquer linha de código existir.</p>
+      </aside>
+    </ScrollReveal>
+  </div>
+</section>
+
+<style>
+  .canon-building-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-primary);
+  }
+
+  .section-intro {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-8);
+  }
+
+  /* Principle notes */
+  .principle-note {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+    padding: var(--space-4) var(--space-6);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-aurora-cyan, rgba(34, 211, 238, 0.6));
+    margin-bottom: var(--space-8);
+  }
+
+  .principle-closing {
+    margin-top: var(--space-8);
+    margin-bottom: 0;
+    border-left-color: var(--color-aurora-green, rgba(52, 211, 153, 0.6));
+  }
+
+  /* Ceremony blocks */
+  .ceremony-block {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .ceremony-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .ceremony-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(34, 211, 238, 0.1);
+    color: var(--color-text-accent);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .ceremony-desc {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  .ceremony-phases h4,
+  .example-block h4,
+  .perspective-block h4,
+  .ieee-block h4,
+  .checkpoint-block h4 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .ceremony-phases ol {
+    list-style: decimal;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-4);
+  }
+
+  .ceremony-phases li {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-2);
+  }
+
+  .clarification-steps {
+    list-style: decimal;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+
+  .clarification-steps li {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-2);
+  }
+
+  /* Example blocks */
+  .example-block {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .example-block p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-2);
+  }
+
+  .example-block p:last-child {
+    margin-bottom: 0;
+  }
+
+  .example-block ul {
+    list-style: disc;
+    padding-left: var(--space-6);
+  }
+
+  .example-block ul li {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-1);
+  }
+
+  .example-block code {
+    font-size: var(--text-xs);
+    background: rgba(34, 211, 238, 0.08);
+    padding: 1px 4px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-accent);
+  }
+
+  .perspective-block {
+    background: rgba(167, 139, 250, 0.05);
+    border: 1px solid rgba(167, 139, 250, 0.15);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .perspective-block p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Requirement formal block */
+  .req-formal {
+    background: var(--color-bg-tertiary);
+    border-left: 3px solid var(--color-text-accent);
+    padding: var(--space-4);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin-top: var(--space-3);
+  }
+
+  .req-formal p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-2);
+  }
+
+  .req-formal p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ceremony-output {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border-default);
+    margin-top: var(--space-4);
+    margin-bottom: 0;
+  }
+
+  .ceremony-output code {
+    font-size: var(--text-xs);
+    background: rgba(34, 211, 238, 0.08);
+    padding: 1px 4px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-accent);
+  }
+
+  /* IEEE levels */
+  .ieee-block {
+    margin-bottom: var(--space-4);
+  }
+
+  .ieee-analogy {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-bottom: var(--space-4);
+  }
+
+  .ieee-levels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  @media (max-width: 768px) {
+    .ieee-levels {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ieee-level {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    text-align: center;
+  }
+
+  .ieee-level h5 {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .ieee-level p {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+    margin-bottom: var(--space-1);
+  }
+
+  .ieee-use {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .ieee-note {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  /* Decision block */
+  .decision-block {
+    background: var(--color-bg-tertiary);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .decision-title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .decision-paths {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .decision-path {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-secondary);
+  }
+
+  .path-label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-text-accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .decision-path strong {
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+  }
+
+  .decision-path p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+    margin-top: var(--space-1);
+  }
+
+  .path-precondition {
+    font-size: var(--text-xs) !important;
+    color: var(--color-text-muted) !important;
+    font-style: italic;
+    margin-top: var(--space-2) !important;
+  }
+
+  .checkpoint-block {
+    background: rgba(251, 191, 36, 0.05);
+    border: 1px solid rgba(251, 191, 36, 0.15);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .checkpoint-block p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .decision-authority {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+</style>

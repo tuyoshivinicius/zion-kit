@@ -1,0 +1,388 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import DirectEditFlowDiagram from '../diagrams/DirectEditFlowDiagram.tsx';
+
+const guardrailSteps = [
+  { step: '1', title: 'Proposta em linguagem natural', desc: 'O Domain Expert descreve a alteração em formato livre — uma correção factual, uma mudança regulatória, um ajuste de definição.' },
+  { step: '2', title: 'Guardrails simultâneos', desc: 'A IA executa simultaneamente: Clarificação de Conformidade, validação semântica interna (SBVR), Validação de Consistência e Padronização Canônica (reescrita em IEEE 29148 + SBE).' },
+  { step: '3', title: 'Relatório de Conformidade', desc: 'A IA apresenta perguntas de clarificação, a versão formalizada como proposta e o Relatório de Conformidade completo.' },
+  { step: '4', title: 'Decisão do Domain Expert', desc: 'O Domain Expert decide: aceitar a versão formalizada, solicitar ajustes, responder às clarificações ou reescrever e resubmeter.' },
+  { step: '5', title: 'Ciclo iterativo', desc: 'O ciclo repete até que todas as divergências sejam resolvidas e o Domain Expert aceite a versão final.' },
+];
+
+const reportSections = [
+  { title: 'Divergências terminológicas', desc: 'Termos usados que diferem do glossário da Product Canon, com referência à definição oficial.' },
+  { title: 'Contradições com regras existentes', desc: 'Conflitos identificados com regras de negócio vigentes, com referência ao artefato conflitante.' },
+  { title: 'Impactos em bounded contexts adjacentes', desc: 'Alterações que podem afetar outros contextos além do escopo direto da edição.' },
+  { title: 'Divergências intencionais aceitas', desc: 'Divergências que o Domain Expert revisou e decidiu manter, com justificativa registrada.' },
+];
+---
+
+<section id="edicao-direta" class="direct-edit-section section-even" aria-labelledby="heading-edicao-direta">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={12}
+        sectionId="edicao-direta"
+        title='Edição Direta do <span class="gradient-text">Domain Expert</span>'
+        depth={3}
+        subtitle="Para capturar conhecimento de domínio que emerge fora do ritmo das cerimônias."
+      />
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.1}>
+      <div class="when-to-use">
+        <h3>Quando usar</h3>
+        <p>Para capturar conhecimento de domínio que emerge fora do ritmo das cerimônias — uma mudança regulatória, uma correção factual, uma definição que precisa de ajuste. Novas funcionalidades e alterações conceituais significativas devem continuar passando pelas cerimônias formais.</p>
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.2}>
+      <div class="scope-box">
+        <h3>Escopo limitado</h3>
+        <ul>
+          <li><strong>Apenas camada de negócio</strong> — glossário, regras, requisitos, fluxos. Artefatos de arquitetura são exclusivos do Architect.</li>
+          <li><strong>Apenas refinamentos e correções</strong> — de artefatos existentes. Conceitos inteiramente novos requerem cerimônia completa.</li>
+        </ul>
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.3}>
+      <h3 class="subsection-title">Fluxo de guardrails iterativos</h3>
+      <div class="steps-list">
+        {guardrailSteps.map(item => (
+          <div class="step-card">
+            <span class="step-number">{item.step}</span>
+            <div class="step-content">
+              <h4>{item.title}</h4>
+              <p>{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.4}>
+      <DiagramContainer label="Fluxo da Edição Direta — proposta, guardrails iterativos, relatório, expert-edit-plan e aprovação sequencial" title="Diagrama — Fluxo da Edição Direta">
+        <DirectEditFlowDiagram client:visible />
+      </DiagramContainer>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.5}>
+      <h3 class="subsection-title">Relatório de Conformidade</h3>
+      <p class="report-intro">Documento markdown com 4 seções fixas, gerado automaticamente pela IA. O Domain Expert apenas revisa.</p>
+      <div class="report-grid">
+        {reportSections.map(item => (
+          <div class="report-card">
+            <h4>{item.title}</h4>
+            <p>{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.6}>
+      <div class="approval-box">
+        <h3><code>expert-edit-plan</code> e aprovação sequencial obrigatória</h3>
+        <p>A saída do fluxo é um Change Plan tipado como <code>expert-edit-plan</code>, contendo a versão formalizada, o Relatório de Conformidade, divergências flagradas e impactos identificados.</p>
+        <div class="approval-sequence">
+          <div class="approval-step">
+            <span class="approval-order">1º</span>
+            <div>
+              <strong>Domain Expert</strong>
+              <p>Aprova a fidelidade semântica — a formalização preserva a intenção original.</p>
+            </div>
+          </div>
+          <span class="approval-arrow" aria-hidden="true">→</span>
+          <div class="approval-step">
+            <span class="approval-order">2º</span>
+            <div>
+              <strong>Architect</strong>
+              <p>Avalia o impacto técnico. Aprovação obrigatória e não delegável. Expiração = bloqueio.</p>
+            </div>
+          </div>
+        </div>
+        <p class="approval-rationale">A fidelidade semântica é pré-requisito para avaliação técnica — por isso a ordem é fixa.</p>
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.7}>
+      <div class="safeguards-box">
+        <h3>Salvaguardas</h3>
+        <p>Mecanismos que preservam a primazia das cerimônias formais:</p>
+        <ul>
+          <li><strong>Tipagem distinta</strong> — o tipo <code>expert-edit-plan</code> permite auditoria de frequência de edições diretas.</li>
+          <li><strong>Fricção deliberada</strong> — aprovação obrigatória do Architect em toda edição direta.</li>
+          <li><strong>Sinal de alerta</strong> — se a proporção de <code>expert-edit-plan</code> crescer excessivamente, é sinal de contorno do processo formal.</li>
+        </ul>
+      </div>
+    </ScrollReveal>
+  </div>
+</section>
+
+<style>
+  .direct-edit-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .when-to-use,
+  .scope-box,
+  .approval-box,
+  .safeguards-box {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+
+  .when-to-use h3,
+  .scope-box h3,
+  .approval-box h3,
+  .safeguards-box h3,
+  .subsection-title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .when-to-use p,
+  .scope-box p {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .scope-box ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .scope-box li {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    padding-left: var(--space-4);
+    position: relative;
+  }
+
+  .scope-box li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-text-muted);
+  }
+
+  .subsection-title {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-4);
+  }
+
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .step-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(34, 211, 238, 0.1);
+    color: var(--color-aurora-cyan);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: var(--text-sm);
+  }
+
+  .step-content h4 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .step-content p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+  }
+
+  .report-intro {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+  }
+
+  .report-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  @media (max-width: 768px) {
+    .report-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .report-card {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .report-card h4 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .report-card p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+  }
+
+  .approval-box code {
+    font-size: var(--text-sm);
+    background: rgba(34, 211, 238, 0.1);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    color: var(--color-aurora-cyan);
+  }
+
+  .approval-box p {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  .approval-sequence {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  @media (max-width: 768px) {
+    .approval-sequence {
+      flex-direction: column;
+    }
+
+    .approval-arrow {
+      transform: rotate(90deg);
+    }
+  }
+
+  .approval-step {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    background: var(--color-bg-secondary);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .approval-order {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: var(--text-sm);
+  }
+
+  .approval-step strong {
+    display: block;
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .approval-step p {
+    font-size: var(--text-sm);
+    margin-bottom: 0;
+  }
+
+  .approval-arrow {
+    font-size: var(--text-2xl);
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+  }
+
+  .approval-rationale {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .safeguards-box ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .safeguards-box li {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    padding-left: var(--space-4);
+    position: relative;
+  }
+
+  .safeguards-box li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-text-muted);
+  }
+
+  .safeguards-box code {
+    font-size: var(--text-sm);
+    background: rgba(34, 211, 238, 0.1);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    color: var(--color-aurora-cyan);
+  }
+
+  .safeguards-box p {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3);
+  }
+</style>
