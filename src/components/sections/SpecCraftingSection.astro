@@ -1,0 +1,173 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import ExampleBlock from '../ui/ExampleBlock.astro';
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+import ContextualSpecDiagram from '../diagrams/ContextualSpecDiagram';
+---
+
+<section id="spec-crafting" class="spec-crafting-section section-even" aria-labelledby="heading-spec-crafting">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={6}
+        sectionId="spec-crafting"
+        title='Spec Crafting — <span class="gradient-text">Especificação Contextualizada</span>'
+        depth={2}
+      />
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up">
+      <div class="narrative-block">
+        <h3>Injeção seletiva de contexto</h3>
+        <p>A IA não recebe toda a Product Canon — só os pedaços relevantes para a tarefa. Ela identifica quais bounded contexts são tocados pela especificação e carrega apenas os artefatos pertinentes: glossário do contexto afetado, eventos de domínio, regras de negócio aplicáveis, ADRs relevantes e requisitos existentes relacionados.</p>
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.15}>
+      <div class="narrative-block">
+        <h3>Clarificação e validação contextualizada</h3>
+        <p>Termos inconsistentes são sinalizados. Requisitos que contradizem regras existentes são flagrados. Dependências entre bounded contexts são identificadas. O mesmo processo de validação da Etapa 1, mas agora contra a Product Canon como referência — o que torna as sinalizações mais precisas.</p>
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.3}>
+      <div class="narrative-block">
+        <h3 id="incremental-plan">Canonical Change Plan incremental</h3>
+        <p>Quando a IA identifica que uma feature vai causar mudanças na Product Canon não antecipadas no Canon Building, ela gera automaticamente um Change Plan incremental — um "diff semântico" entre o estado atual da Product Canon e o estado após a implementação. Organizado em duas seções: alterações na camada de negócio e alterações na camada de arquitetura.</p>
+
+        <ExampleBlock>
+          <strong>Exemplo: PIX no Checkout.</strong> Um Domain Builder especifica "Adicionar PIX como método de pagamento no checkout." A IA identifica impactos em duas camadas:
+          <br/><br/>
+          <strong>Camada de Negócio:</strong> novo termo "Chave PIX" no glossário, nova regra "transações PIX acima de R$ 1.000 em horário noturno requerem confirmação adicional."
+          <br/><br/>
+          <strong>Camada de Arquitetura:</strong> alteração no evento "PagamentoConfirmado" (novo campo "metodo_pagamento"), novo evento "ChavePixValidada."
+        </ExampleBlock>
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.45}>
+      <div class="narrative-block">
+        <h3>Aprovação condicional</h3>
+        <p>Se o Change Plan incremental for vazio — a spec consome a Product Canon sem alterá-la — a aprovação é dispensada e a spec flui direto para implementação. Sem gate, sem burocracia.</p>
+        <p>Se houver impacto, a aprovação é roteada por camada: o Domain Expert aprova a camada de negócio, o Architect aprova a camada de arquitetura. Specs que afetam ambas exigem as duas aprovações.</p>
+
+        <div class="approval-flow">
+          <div class="flow-card flow-empty">
+            <span class="flow-icon" aria-hidden="true">&#10003;</span>
+            <strong>Change Plan vazio</strong>
+            <p>Sem impacto na Product Canon — spec segue direto para implementação.</p>
+          </div>
+          <div class="flow-card flow-business">
+            <span class="flow-icon" aria-hidden="true">&#128269;</span>
+            <strong>Impacto em negócio</strong>
+            <p>Domain Expert aprova a camada de negócio.</p>
+          </div>
+          <div class="flow-card flow-arch">
+            <span class="flow-icon" aria-hidden="true">&#9881;</span>
+            <strong>Impacto em arquitetura</strong>
+            <p>Architect aprova a camada de arquitetura.</p>
+          </div>
+          <div class="flow-card flow-both">
+            <span class="flow-icon" aria-hidden="true">&#128274;</span>
+            <strong>Impacto em ambas</strong>
+            <p>Duas aprovações necessárias — uma por camada.</p>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="scale-in" delay={0.6}>
+      <DiagramContainer label="Fluxo de especificação contextualizada consumindo a Product Canon" title="Diagrama — Especificação Contextualizada">
+        <ContextualSpecDiagram client:visible />
+      </DiagramContainer>
+    </ScrollReveal>
+  </div>
+</section>
+
+<style>
+  .spec-crafting-section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .narrative-block {
+    margin-bottom: var(--space-6);
+  }
+
+  .narrative-block h3 {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .narrative-block p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3);
+  }
+
+  .narrative-block p:last-child {
+    margin-bottom: 0;
+  }
+
+  .approval-flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 768px) {
+    .approval-flow {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .flow-card {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    text-align: center;
+  }
+
+  .flow-card .flow-icon {
+    display: block;
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-2);
+    opacity: 0.8;
+  }
+
+  .flow-card strong {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .flow-card p {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
+  .flow-empty {
+    border-top: 3px solid var(--color-aurora-green, #34d399);
+  }
+
+  .flow-business {
+    border-top: 3px solid var(--color-aurora-cyan);
+  }
+
+  .flow-arch {
+    border-top: 3px solid var(--color-aurora-violet);
+  }
+
+  .flow-both {
+    border-top: 3px solid var(--color-aurora-amber, #fbbf24);
+  }
+</style>
