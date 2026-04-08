@@ -1,0 +1,330 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import ScrollReveal from '../animations/ScrollReveal.astro';
+import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
+---
+
+<section id="guardrails" class="guardrails-section section-even" aria-labelledby="heading-guardrails">
+  <div class="max-width-content">
+    <ScrollReveal animation="fade-up">
+      <SectionHeader
+        sectionNumber={8}
+        sectionId="guardrails"
+        title='Guardrails — <span class="gradient-text">Como a Integridade é Mantida</span>'
+        depth={2}
+      />
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.1}>
+      <p class="section-intro">
+        Guardrails são mecanismos automáticos que a IA usa para manter a integridade da Product Canon.
+        Eles operam em todas as etapas do ciclo.
+      </p>
+    </ScrollReveal>
+
+    <!-- 1. Clarificação de Conformidade -->
+    <ScrollReveal animation="fade-up" delay={0.15}>
+      <div class="guardrail-card">
+        <div class="guardrail-header">
+          <span class="guardrail-icon" aria-hidden="true">🔤</span>
+          <h3>1. Clarificação de Conformidade</h3>
+          <span class="guardrail-stage">Canon Building</span>
+        </div>
+        <p>
+          Se você diz "cliente" onde o glossário define "titular da conta", a IA pergunta:
+          <em>"Você quis dizer titular da conta?"</em>
+        </p>
+        <p>
+          Atua nas sessões de Domain Discovery e Technical Constitution. Confronta o vocabulário
+          utilizado com a linguagem ubíqua formalizada na Product Canon.
+        </p>
+        <div class="hotspot-callout">
+          <strong>Hotspots de domínio</strong> recebem atenção especial — são áreas da Product Canon
+          marcadas pelo Domain Expert como frágeis ou frequentemente mal interpretadas.
+          Cada hotspot possui metadados (autor, data, descrição). Quando a IA encontra referência
+          a um hotspot, ela exibe proativamente a definição precisa e alerta sobre a incerteza registrada.
+        </div>
+      </div>
+    </ScrollReveal>
+
+    <!-- 2. Validação de Consistência -->
+    <ScrollReveal animation="fade-up" delay={0.3}>
+      <div class="guardrail-card">
+        <div class="guardrail-header">
+          <span class="guardrail-icon" aria-hidden="true">⚖️</span>
+          <h3>2. Validação de Consistência</h3>
+          <span class="guardrail-stage">Todas as etapas</span>
+        </div>
+        <p>
+          Se você propõe algo que contradiz uma regra existente, a IA mostra a contradição antes de aceitar.
+        </p>
+        <p>
+          Confronta alterações com o estado atual da Product Canon, incluindo tanto as
+          regras de negócio quanto os princípios técnicos constitucionais. Contradições em
+          qualquer uma das camadas são identificadas antes de serem aceitas.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <!-- 3. Validação Semântica Interna -->
+    <ScrollReveal animation="fade-up" delay={0.45}>
+      <div class="guardrail-card">
+        <div class="guardrail-header">
+          <span class="guardrail-icon" aria-hidden="true">🔍</span>
+          <h3>3. Validação Semântica Interna</h3>
+          <span class="guardrail-stage">Canon Building · Edição Direta</span>
+        </div>
+        <p>
+          A IA usa internamente métodos formais (como SBVR) para encontrar ambiguidades — mas
+          apresenta os problemas como perguntas simples.
+        </p>
+        <p>
+          SBVR é a metodologia principal mas não exclusiva. Detecta: ambiguidade estrutural,
+          incompletude de predicados e indefinição de participantes. Os resultados são sempre
+          traduzidos para linguagem natural, sem exigir conhecimento técnico do interlocutor.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <!-- 4. Padronização Canônica -->
+    <ScrollReveal animation="fade-up" delay={0.6}>
+      <div class="guardrail-card">
+        <div class="guardrail-header">
+          <span class="guardrail-icon" aria-hidden="true">📐</span>
+          <h3>4. Padronização Canônica</h3>
+          <span class="guardrail-stage">Cerimônias · Edição Direta</span>
+        </div>
+        <p>
+          Tudo que entra na Product Canon precisa estar no formato padrão (IEEE 29148 + SBE).
+          A IA faz a formatação automaticamente.
+        </p>
+        <p>
+          Dois modos de operação: <strong>implícito</strong> nas cerimônias (parte da mediação natural da IA)
+          e <strong>explícito</strong> na edição direta (o Domain Expert propõe em formato livre, a IA
+          reescreve no padrão). Respeita o nível de aderência IEEE 29148 configurado pelo Architect.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <!-- 5. Versionamento por Estrangulamento -->
+    <ScrollReveal animation="fade-up" delay={0.75}>
+      <div class="guardrail-card guardrail-card--highlight">
+        <div class="guardrail-header">
+          <span class="guardrail-icon" aria-hidden="true">🌿</span>
+          <h3>5. Versionamento por Estrangulamento</h3>
+          <span class="guardrail-stage">Mudanças estruturais</span>
+        </div>
+        <p>
+          Mudanças grandes são aplicadas aos poucos. A Product Canon mantém duas versões:
+          a vigente (<strong>current</strong>) e a em transição (<strong>next</strong>).
+        </p>
+        <div class="version-faces">
+          <div class="version-face version-face--current">
+            <span class="version-label">current</span>
+            <span class="version-desc">Versão vigente — specs de manutenção usam esta</span>
+          </div>
+          <div class="version-face version-face--next">
+            <span class="version-label">next</span>
+            <span class="version-desc">Versão em transição — specs novas usam esta</span>
+          </div>
+        </div>
+        <ul class="strangler-details">
+          <li><strong>Escopo declarado:</strong> lista explícita de artefatos e bounded contexts afetados</li>
+          <li><strong>Conclusão:</strong> quando todas as dependências forem migradas, o Architect declara a transição como concluída</li>
+          <li><strong>Cancelamento:</strong> possível via Change Plan que restaura <code>current</code> como estado único</li>
+          <li><strong>Heurística cross-context:</strong> a IA sinaliza automaticamente quando mudança afeta múltiplos bounded contexts, recomendando versionamento gradual (decisão do Architect)</li>
+        </ul>
+        <p class="design-principle">
+          Este é um dos princípios de design do modelo: <em>alterações radicais são graduais</em> —
+          mudanças estruturais são versionadas e aplicadas por criticidade, sem quebrar o que já funciona.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <!-- Diagrama -->
+    <ScrollReveal animation="scale-in" delay={0.9}>
+      <DiagramContainer label="Guardrails da Product Canon — cinco camadas de proteção e onde cada uma atua no ciclo">
+        <GuardrailsDiagram client:visible />
+      </DiagramContainer>
+    </ScrollReveal>
+  </div>
+</section>
+
+<style>
+  .guardrails-section {
+    padding: var(--space-24) 0;
+  }
+
+  .section-intro {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    max-width: 48rem;
+    line-height: 1.7;
+    margin-bottom: var(--space-12);
+  }
+
+  .guardrail-card {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: 0.75rem;
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+    transition: border-color 0.2s ease;
+  }
+
+  .guardrail-card:hover {
+    border-color: var(--color-border-accent);
+  }
+
+  .guardrail-card--highlight {
+    border-color: rgba(52, 211, 153, 0.3);
+  }
+
+  .guardrail-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .guardrail-icon {
+    font-size: 1.25rem;
+  }
+
+  .guardrail-header h3 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .guardrail-stage {
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    background: rgba(148, 163, 184, 0.08);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    margin-left: auto;
+  }
+
+  .guardrail-card p {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-3);
+  }
+
+  .guardrail-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .hotspot-callout {
+    background: rgba(251, 191, 36, 0.05);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    border-radius: 0.5rem;
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    font-size: var(--text-sm);
+  }
+
+  .hotspot-callout strong {
+    color: #fbbf24;
+  }
+
+  .version-faces {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin: var(--space-4) 0;
+  }
+
+  .version-face {
+    border-radius: 0.5rem;
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .version-face--current {
+    background: rgba(52, 211, 153, 0.05);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+  }
+
+  .version-face--next {
+    background: rgba(167, 139, 250, 0.05);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+  }
+
+  .version-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: var(--text-sm);
+  }
+
+  .version-face--current .version-label {
+    color: #34d399;
+  }
+
+  .version-face--next .version-label {
+    color: #a78bfa;
+  }
+
+  .version-desc {
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+  }
+
+  .strangler-details {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0;
+  }
+
+  .strangler-details li {
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    padding: 0.25rem 0;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .strangler-details li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-text-tertiary);
+  }
+
+  .strangler-details code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8em;
+    background: rgba(148, 163, 184, 0.08);
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.25rem;
+    color: #67e8f9;
+  }
+
+  .design-principle {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    font-style: italic;
+    border-left: 2px solid rgba(52, 211, 153, 0.3);
+    padding-left: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  @media (max-width: 768px) {
+    .version-faces {
+      grid-template-columns: 1fr;
+    }
+
+    .guardrail-stage {
+      margin-left: 0;
+    }
+  }
+</style>
