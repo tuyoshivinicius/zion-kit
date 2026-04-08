@@ -94,7 +94,7 @@ O Domain Builder e o Architect constroem e mantêm a Product Canon de forma comp
 3. **Requirements Specification Session (Sessão de Especificação de Requisitos)** → Canonical Change Plan aprovado →
 4. **Decisão de Continuidade do Ciclo**
 
-Cada Canonical Change Plan requer aprovação primária pelo papel com expertise na cerimônia correspondente, e aprovação secundária assíncrona com janela de veto pelo outro papel humano. Se a janela de veto da aprovação secundária expira sem manifestação do aprovador, a expiração equivale a aprovação tácita — a aprovação primária já foi concedida pelo papel com expertise principal, e a aprovação secundária é salvaguarda adicional. A expiração é registrada no histórico. Somente após a aprovação do Change Plan de uma cerimônia a próxima cerimônia é habilitada.
+Cada Canonical Change Plan possui um envelope de metadados com estrutura comum a todos os tipos (definida na secao 5.1) e um payload cujo conteudo varia conforme a cerimonia ou canal de origem. Cada Canonical Change Plan requer aprovação primária pelo papel com expertise na cerimônia correspondente, e aprovação secundária assíncrona com janela de veto pelo outro papel humano. A janela de veto possui uma duracao-default configurada pelo Architect (default: 48 horas uteis), com possibilidade de override por tipo de Change Plan — por exemplo, `expert-edit-plan` pode ter janela menor por ser refinamento pontual. A IA notifica o aprovador no inicio da janela e emite lembrete quando restam 25% do tempo. A duracao e a notificacao sao parametros de configuracao do projeto, nao do modelo — o Architect ajusta conforme o contexto operacional da equipe. Se a janela de veto da aprovação secundária expira sem manifestação do aprovador, a expiração equivale a aprovação tácita — a aprovação primária já foi concedida pelo papel com expertise principal, e a aprovação secundária é salvaguarda adicional. A expiração é registrada no histórico. Somente após a aprovação do Change Plan de uma cerimônia a próxima cerimônia é habilitada.
 
 Toda rejeição — primária ou secundária — é uma devolução do Canonical Change Plan ao contexto da cerimônia de origem, com motivo em texto livre registrado no histórico. O Change Plan retorna ao estado "em elaboração". O autor decide se revisa e resubmete ou abandona. A cerimônia subsequente permanece bloqueada até aprovação ou abandono explícito. O abandono é registrado no histórico com motivo. Não há rejeição parcial: o Change Plan é devolvido como unidade. Essa regra se aplica uniformemente a todos os gates de aprovação no modelo.
 
@@ -194,6 +194,14 @@ a) **Mapear mais fluxos e contextos** → volta para Domain Discovery Session
 b) **Formalizar mais requisitos** → volta para Requirements Specification Session
 c) **Encerrar ciclo** → prosseguir para Etapa 2 (Spec Crafting)
 
+Adicionalmente, a Decisao de Continuidade inclui um **checkpoint de nivel de aderencia IEEE 29148**: a IA apresenta ao Architect sinais indicativos de que o nivel de aderencia atual pode ser insuficiente para o estagio da Product Canon. Os sinais sao heuristicas qualitativas — nao thresholds numericos:
+
+- Requisitos com dependencias inter-contexto nao rastreadas — sinal de que rastreabilidade (nivel Moderado) seria util.
+- Requisitos nao-funcionais ou de interface aparecendo pela primeira vez — sinal de que a taxonomia expandida seria util.
+- Rejeicoes de Change Plans motivadas por ambiguidade de escopo ou dependencia — sinal de que atributos adicionais resolveriam o problema na origem.
+
+A IA apresenta esses sinais como item de revisao: "Sinais de progressao detectados: [lista]. Avaliar progressao de nivel?" A decisao de progredir permanece com o Architect.
+
 O caminho (b) possui uma pré-condição derivada do fluxo sequencial: o Domain Builder só pode voltar diretamente para a Requirements Specification Session se os novos requisitos pertencem a bounded contexts já mapeados na Product Canon e cujos princípios técnicos constitucionais já foram definidos na Technical Constitution Session. Essa pré-condição é logicamente necessária porque a Requirements Specification Session consome contexto produzido pelas cerimônias anteriores — operar sem esse contexto significa especificar requisitos contra um domínio incompletamente mapeado ou sem restrições técnicas definidas. Se os novos requisitos tocam bounded contexts não mapeados ou sem constituição técnica, o caminho correto é (a) — voltar para Domain Discovery Session e percorrer o fluxo sequencial completo. A IA sinaliza quando a pré-condição não é atendida; a decisão final permanece com o Domain Builder.
 
 A autoridade sobre essa decisão é do Domain Builder, com input da IA sobre cobertura. A IA pode sinalizar áreas não mapeadas ou requisitos pendentes — por exemplo, bounded contexts mencionados mas não explorados, ou fluxos de negócio referenciados sem decomposição — mas **não decide** se o ciclo deve continuar ou encerrar. A decisão é sempre humana.
@@ -242,7 +250,7 @@ Quando o Domain Expert propõe uma edição direta, um ciclo iterativo de guardr
 4. O Domain Expert decide: aceitar a formalização, solicitar ajustes, responder perguntas de clarificação, ou reescrever a edição original e submeter novamente.
 5. O ciclo se repete até que o Domain Expert aceite a versão formalizada e as divergências sejam resolvidas ou explicitamente justificadas.
 
-O Relatório de Conformidade pode assumir forma estática (documento estruturado) ou forma conversacional (sessão interativa), à escolha do Domain Expert. Somente após a conclusão do ciclo, o `expert-edit-plan` é gerado.
+O Relatorio de Conformidade e um documento markdown estruturado com quatro secoes fixas: (1) divergencias terminologicas detectadas, com referencia ao glossario; (2) contradicoes com regras de negocio existentes, com referencia ao artefato conflitante; (3) impactos em bounded contexts adjacentes; (4) divergencias intencionais aceitas pelo Domain Expert, com justificativa. A IA gera o relatorio automaticamente — o Domain Expert nao precisa escreve-lo, apenas revisa-lo. Somente apos a conclusao do ciclo, o `expert-edit-plan` e gerado.
 
 ##### `expert-edit-plan` e Aprovação Sequencial
 
@@ -259,7 +267,7 @@ Se o Domain Expert rejeita o `expert-edit-plan`, o Change Plan retorna ao ciclo 
 
 ### 2.3 Etapa 2 — Spec Crafting (Especificação Contextualizada com Canonical Change Plan Incremental)
 
-Nesta etapa, um Domain Builder ou um Architect escreve uma especificação de feature para um produto novo ou existente. A especificação é criada utilizando ferramentas de Spec-Driven Development existentes e consome contexto de ambas as camadas da Product Canon. O Domain Builder define a intenção de produto; o Architect toma decisões técnicas dentro da spec — escolha de padrões de integração, estratégias de persistência, schemas — orientado pelos princípios técnicos constitucionais da Product Canon.
+Nesta etapa, um Domain Builder ou um Architect escreve uma especificação de feature para um produto novo ou existente. A especificacao e criada utilizando ferramentas de Spec-Driven Development e consome contexto de ambas as camadas da Product Canon. Para fins de prototipacao, o modelo assume que o mesmo agente de IA que media as cerimonias da Etapa 1 opera tambem na Etapa 2 — a Product Canon, sendo markdown versionado em Git (secao 5), e injetada seletivamente no contexto do agente conforme descrito na secao 2.3.1. A geracao do Canonical Change Plan `incremental-plan` e responsabilidade do agente ZionKit, nao de ferramenta externa. Para preservar a possibilidade futura de integracao com ferramentas SDD externas, a fronteira de responsabilidade e explicita: a ferramenta SDD (quando separada) recebe fragmentos da Product Canon como input e produz a especificacao de feature; a deteccao de impactos na Product Canon e a geracao do `incremental-plan` sao sempre do agente ZionKit, independente de quem gera a especificacao. O Domain Builder define a intenção de produto; o Architect toma decisões técnicas dentro da spec — escolha de padrões de integração, estratégias de persistência, schemas — orientado pelos princípios técnicos constitucionais da Product Canon.
 
 A base conceitual do produto já foi aprovada no Canon Building. O Canonical Change Plan da Etapa 2 é **incremental** — captura apenas impactos emergentes que só se tornam visíveis quando uma especificação concreta é escrita contra a Product Canon. Mudanças fundamentais (novos termos, novas regras, novos bounded contexts) já foram tratadas no Canon Building.
 
@@ -286,6 +294,21 @@ Em termos de mecânica, o plano funciona como um "diff semântico" — uma compa
 ```
 CANONICAL CHANGE PLAN INCREMENTAL — Spec: PIX no Checkout
 ================================================================
+
+ENVELOPE
+────────
+  ID:              CP-incremental-2026-04-08-003
+  Type:            incremental-plan
+  Status:          pending-approval
+  Author:          Engenheiro (Domain Builder)
+  Created at:      2026-04-08
+  Scope:           [Pagamentos, Compliance, Notificacoes]
+  Affected layer:  negocio + arquitetura
+  Conditionality:  com impacto
+  Approvals:       (pendente)
+
+PAYLOAD
+────────
 
 CAMADA DE NEGÓCIO (aprovação: Domain Expert)
 ────────────────────────────────────────────
@@ -340,7 +363,12 @@ Se um aprovador rejeita sua camada do Canonical Change Plan incremental, o plano
 
 ### 2.4 Etapa 3 — Canon Enrichment (Retroalimentação da Product Canon)
 
-Canonical Change Plans aprovados no Canon Building já são integrados à Product Canon via Versionamento Gradual por Estrangulamento — essa integração é parcialmente antecipada. A Etapa 3 concentra-se em **descobertas emergentes da implementação**: conceitos que precisaram ser refinados, regras não documentadas descobertas durante o código, decisões técnicas não previstas.
+Canonical Change Plans aprovados no Canon Building já são integrados à Product Canon via Versionamento Gradual por Estrangulamento — essa integração é parcialmente antecipada. A Etapa 3 concentra-se em **descobertas emergentes da implementacao** — qualquer conceito de dominio, regra de negocio, decisao tecnica ou ajuste de vocabulario que surgiu durante a implementacao e nao esta formalizado na Product Canon nem declarado no Canonical Change Plan aprovado. A identificacao de descobertas opera por dois mecanismos complementares:
+
+- **Sinalizacao explicita.** O desenvolvedor (ou a IA de codificacao, quando usada) marca descobertas durante a implementacao em formato leve — anotacao inline (ex.: `// CANON-DISCOVERY: [descricao]`) ou registro em artefato dedicado — criando um backlog de descobertas para a Etapa 3. A sinalizacao explicita e o mecanismo primario: nao depende de capacidades incertas da IA e torna a Etapa 3 prototipavel imediatamente.
+- **Deteccao assistida pela IA.** Ao iniciar a Etapa 3, a IA compara os artefatos produzidos na implementacao (codigo, schemas, configuracoes) contra a Product Canon e apresenta candidatos a descobertas nao sinalizados explicitamente (ex.: "O codigo introduziu o conceito 'OfertaExpirada' que nao existe no glossario — formalizar?"). A deteccao assistida e complementar e nao bloqueante — funciona como rede de seguranca.
+
+O desenvolvedor revisa tanto as sinalizacoes proprias quanto os candidatos da IA e decide quais sao descobertas reais a serem submetidas ao mecanismo de aprovacao descrito a seguir.
 
 A Etapa 3 opera em dois componentes com governança distinta:
 
@@ -467,7 +495,17 @@ Cada ciclo enriquece a Product Canon. Especificações futuras operam com contex
 
 O ZionKit define quatro papéis com autoridades complementares e não sobrepostas.
 
-Os quatro papéis representam perspectivas distintas sobre o conhecimento do produto, não necessariamente pessoas distintas. Em equipes pequenas ou em estágios iniciais de produto, uma mesma pessoa pode exercer múltiplas perspectivas — o fundador de uma startup pode ser simultaneamente Domain Builder (descreve os fluxos de negócio) e Domain Expert (valida a fidelidade semântica). O valor da separação está na completude das perspectivas exercidas: mesmo quando acumulados por uma única pessoa, cada papel força perguntas diferentes sobre o artefato — o Domain Builder pergunta "o que o produto deve fazer?", o Domain Expert pergunta "essa descrição é fiel ao que o domínio realmente é?", o Architect pergunta "essa estrutura é tecnicamente viável e sustentável?". Quando uma pessoa acumula papéis, ela exerce os momentos de aprovação correspondentes como exercício deliberado de perspectiva — não como formalidade vazia, mas como mudança intencional de lente sobre o mesmo artefato.
+Os quatro papeis representam perspectivas distintas sobre o conhecimento do produto, nao necessariamente pessoas distintas. Em equipes pequenas ou em estagios iniciais de produto, uma mesma pessoa pode exercer multiplas perspectivas — o fundador de uma startup pode ser simultaneamente Domain Builder (descreve os fluxos de negocio) e Domain Expert (valida a fidelidade semantica). O valor da separacao esta na completude das perspectivas exercidas: mesmo quando acumulados por uma unica pessoa, cada papel forca perguntas diferentes sobre o artefato — o Domain Builder pergunta "o que o produto deve fazer?", o Domain Expert pergunta "essa descricao e fiel ao que o dominio realmente e?", o Architect pergunta "essa estrutura e tecnicamente viavel e sustentavel?".
+
+O acumulo de papeis e governado por um **Protocolo de Perspectiva Assistida** que transforma a troca de perspectiva em ato verificavel:
+
+1. **Declaracao explicita.** O acumulo e declarado na configuracao do projeto (ex.: "Pessoa X exerce Domain Builder + Domain Expert"), tornando-o visivel e auditavel. A declaracao nao e formalidade — e o mecanismo que ativa o comportamento diferenciado da IA nos gates de aprovacao.
+
+2. **Checklist de perspectiva mediado pela IA.** Quando a mesma pessoa aprova em papeis distintos, a IA apresenta perguntas especificas da perspectiva do papel sendo exercido. Por exemplo, ao aprovar como Domain Expert: "A terminologia usada e fiel ao vocabulario do dominio?"; ao aprovar como Architect: "As dependencias cross-context estao cobertas?" O aprovador responde antes de registrar a aprovacao. A IA varia as perguntas com base no conteudo especifico do Change Plan — nao utiliza checklist fixo — para evitar respostas mecanicas.
+
+3. **Registro distinto por papel-perspectiva.** O campo `approvals` do envelope do Change Plan (secao 5.1) registra cada aprovacao com o papel exercido, mesmo que a pessoa seja a mesma (ex.: "Joao — Domain Expert — aprovado — 2026-04-08" e "Joao — Architect — aprovado — 2026-04-08"). Isso preserva a rastreabilidade e permite analise posterior de quais acumulos funcionam.
+
+Combinacoes incompativeis de papeis nao sao definidas nesta fase — a prototipacao coletara dados sobre quais acumulos degradam a governanca (ver secao 10).
 
 **Domain Builder.** Analista de negócio, product owner ou gestor de operações que conhece o produto e suas regras. Escreve em linguagem natural. Pode não ter precisão terminológica ou consciência de todas as implicações técnicas de suas decisões. No ZionKit, é o autor primário das cerimônias conversacionais: participa da Domain Discovery Session e da Requirements Specification Session (Etapa 1), escreve especificações de feature orientadas a produto (Etapa 2) e decide se o ciclo de Canon Building continua com mais cerimônias ou encerra. Seus gaps de vocabulário e consistência são compensados pelos guardrails da IA.
 
@@ -494,6 +532,33 @@ Em organizações com múltiplos bounded contexts, Domain Experts e Architects p
 ---
 
 ## 5. Estrutura de Artefatos
+
+### 5.1 Envelope do Canonical Change Plan
+
+Todo Canonical Change Plan — independente de tipo — possui um envelope com campos de metadados e um payload cujo conteudo varia por tipo. O envelope define a identidade, o estado e a rastreabilidade do artefato; o payload define o conteudo semantico da mudanca proposta.
+
+**Campos obrigatorios universais** (presentes em todos os cinco tipos):
+
+| Campo | Descricao |
+|-------|-----------|
+| `id` | Identificador unico do Change Plan (ex.: `CP-discovery-2026-04-08-001`) |
+| `type` | Um dos cinco tipos: `discovery-plan`, `constitution-plan`, `specification-plan`, `expert-edit-plan`, `incremental-plan` |
+| `status` | Estado do Change Plan: `draft`, `pending-approval`, `approved`, `rejected`, `abandoned` |
+| `author` | Pessoa ou papel que originou o Change Plan |
+| `created-at` | Data de criacao do Change Plan |
+| `scope` | Lista de bounded contexts afetados pela mudanca proposta |
+| `approvals` | Registro sequencial de cada aprovacao ou rejeicao: papel exercido, pessoa, decisao (aprovado/rejeitado/veto-expirado), data e motivo (quando rejeicao). Cada entrada e um registro independente, mesmo que a mesma pessoa aprove em papeis distintos |
+
+**Campos obrigatorios condicionais** (presentes apenas nos tipos indicados):
+
+| Campo | Tipos aplicaveis | Descricao |
+|-------|-------------------|-----------|
+| `affected-layer` | `incremental-plan` | Indica quais camadas da Product Canon sao impactadas: `negocio`, `arquitetura` ou ambas. Determina o roteamento de aprovacao |
+| `edited-artifacts` | `expert-edit-plan` | Lista explicita dos artefatos da Product Canon alterados pela edicao direta |
+| `compliance-report` | `expert-edit-plan` | Referencia ao Relatorio de Conformidade produzido no ciclo iterativo de guardrails |
+| `conditionality` | `incremental-plan` | Indica se o Change Plan contem impactos na Product Canon. Se vazio, a aprovacao e dispensada (secao 2.3.4) |
+
+O payload permanece livre por tipo — sua estrutura emerge da prototipacao. A definicao do envelope e tratada como v0.1, com expectativa explicita de ajuste apos experimentacao.
 
 A Product Canon contém as seguintes seções essenciais de conhecimento:
 
@@ -612,7 +677,7 @@ Organizações que não possuem nenhum conhecimento de domínio formalizado prec
 
 ### 9.4 Disciplina de retroalimentação
 
-O modelo depende de que a Etapa 3 seja efetivamente executada após cada implementação. Se equipes sob pressão de prazo começam a pular a retroalimentação, a Product Canon se desatualiza e o modelo degrada para SDD convencional sem camada semântica. Este risco é parcialmente mitigado pelo Canon Building: se Canonical Change Plans já são integrados à Product Canon durante a Etapa 1, a Etapa 3 é um incremento menor — focado em descobertas emergentes da implementação. O risco residual concentra-se nessas descobertas emergentes.
+O modelo depende de que a Etapa 3 seja efetivamente executada após cada implementação. Se equipes sob pressão de prazo começam a pular a retroalimentação, a Product Canon se desatualiza e o modelo degrada para SDD convencional sem camada semântica. Este risco é parcialmente mitigado pelo Canon Building: se Canonical Change Plans já são integrados à Product Canon durante a Etapa 1, a Etapa 3 é um incremento menor — focado em descobertas emergentes da implementação. O risco residual concentra-se nessas descobertas emergentes. A sinalizacao explicita pelo desenvolvedor (secao 2.4) oferece mitigacao adicional: ao capturar descobertas durante a implementacao — no momento em que emergem — reduz a dependencia da execucao disciplinada da Etapa 3 como ato separado. A deteccao assistida pela IA complementa como rede de seguranca, executando-se automaticamente ao iniciar a Etapa 3 independentemente da disciplina de sinalizacao.
 
 O risco inverso também existe: descobertas emergentes incorporadas sem validação adequada podem degradar a qualidade da Product Canon. O mecanismo de aprovação leve com escalação condicional (seção 2.4) mitiga esse risco ao submeter todas as descobertas aos guardrails antes da integração — refinamentos triviais recebem revisão passiva, enquanto descobertas com inconsistências ou impacto cross-context são escaladas para aprovação ativa. A eficácia desse mecanismo de triagem depende da qualidade dos guardrails (ver seção 9.1) e será validada pela prioridade 5 da seção 10.
 
@@ -622,7 +687,7 @@ O Canon Building introduz três gates de aprovação na Etapa 1 e um gate condic
 
 A rejeição com devolução e resubmissão pode aumentar o número de ciclos de aprovação em um mesmo Change Plan, agravando a demanda sobre aprovadores — especialmente em cenários com múltiplas rejeições consecutivas. A resubmissão é decisão do autor, não obrigatória — o abandono com motivo registrado é a saída para evitar ciclos improdutivos.
 
-O comportamento diferenciado da expiração da janela de veto mitiga parcialmente o risco de disponibilidade: nas aprovações secundárias do Canon Building e na revisão assíncrona da Etapa 3, a expiração equivale a aprovação tácita, impedindo que a indisponibilidade temporária de um aprovador secundário bloqueie o fluxo. Na aprovação do Architect em `expert-edit-plan`, a expiração equivale a bloqueio — o risco de indisponibilidade persiste nesse contexto.
+O comportamento diferenciado da expiração da janela de veto mitiga parcialmente o risco de disponibilidade: nas aprovações secundárias do Canon Building e na revisão assíncrona da Etapa 3, a expiração equivale a aprovação tácita, impedindo que a indisponibilidade temporária de um aprovador secundário bloqueie o fluxo. Na aprovação do Architect em `expert-edit-plan`, a expiração equivale a bloqueio — o risco de indisponibilidade persiste nesse contexto. A duracao-default de 48 horas uteis e arbitraria e pode ser inadequada em cenarios extremos: curta para organizacoes com aprovadores em fusos distintos, longa para prototipacao individual onde uma pessoa acumula papeis. Na prototipacao, o Architect pode definir valores minimos (ex.: 1h) para testar a mecanica do fluxo sem esperas artificiais.
 
 ### 9.6 Qualidade da tradução de validação interna para linguagem natural
 
@@ -636,6 +701,14 @@ O Canon Building não detalha fases internas de todas as cerimônias (apenas Dom
 
 O modelo define semânticas para escopo, conclusão e cancelamento de transições no Versionamento Gradual por Estrangulamento, mas não normatiza o cenário de múltiplas transições simultâneas. Se duas transições afetam artefatos interdependentes — por exemplo, a divisão de um bounded context ocorre simultaneamente à redefinição de um conceito central em um contexto adjacente — os conflitos são avaliados pelo Architect caso a caso com suporte da Validação de Consistência. Essa abordagem pode produzir inconsistências se o cenário se tornar frequente. A limitação é uma decisão consciente: normatizar concorrência sem dados empíricos sobre frequência e padrões de conflito é over-engineering. A prototipação revelará se a normatização é necessária.
 
+### 9.9 Eficacia do Protocolo de Perspectiva Assistida
+
+O Protocolo de Perspectiva Assistida depende da qualidade das perguntas de perspectiva geradas pela IA. Se as perguntas se tornarem formulaicas — por repeticao tematica ou por limitacao do modelo — o aprovador pode responder mecanicamente, degradando o protocolo para a mesma formalidade vazia que ele pretende substituir. A mitigacao principal e a variacao de perguntas com base no conteudo especifico do Change Plan (nao checklist fixo). A eficacia do protocolo sera validada na prototipacao (secao 10).
+
+### 9.10 Estagnacao no nivel Minimo de aderencia IEEE 29148
+
+O nivel Minimo de aderencia e adequado a prototipacao e produtos novos, mas pode se tornar insuficiente conforme a Product Canon cresce — requisitos interdependentes sem rastreabilidade, categorias nao cobertas sem taxonomia. Se a progressao depende inteiramente do julgamento individual do Architect sem heuristicas de suporte, o risco e permanecer no nivel Minimo por inercia. O checkpoint de revisao de nivel na Decisao de Continuidade (secao 2.2.4) mitiga parcialmente ao tornar a revisao proativa. A eficacia dos sinais indicativos sera validada na prototipacao (prioridade 10(e) da secao 10).
+
 ---
 
 ## 10. Direções para Prototipação
@@ -646,7 +719,7 @@ O modelo conceitual sugere as seguintes prioridades para validação experimenta
 
 2. **Guardrail de Conformidade com Product Canon existente.** Criar uma Product Canon mínima (glossário de 20-30 termos, 3-4 bounded contexts, 10-15 regras de negócio, princípios técnicos constitucionais) e testar se a IA consegue detectar inconsistências — tanto no vocabulário de negócio quanto nos princípios técnicos — quando um participante escreve uma especificação com termos incorretos ou requisitos contraditórios.
 
-3. **Geração de Canonical Change Plans em cada cerimônia.** Validar se a IA gera Change Plans corretos com envelope + payload tipado (`discovery-plan`, `constitution-plan`, `specification-plan`) em cada cerimônia, não apenas na Etapa 2. Testar se os Change Plans identificam corretamente quais conceitos são afetados e quais aprovadores precisam ser consultados.
+3. **Geração de Canonical Change Plans em cada cerimônia.** Validar se a IA gera Change Plans corretos com o envelope definido na secao 5.1 e payload tipado (`discovery-plan`, `constitution-plan`, `specification-plan`) em cada cerimônia, não apenas na Etapa 2. Testar se os Change Plans identificam corretamente quais conceitos são afetados e quais aprovadores precisam ser consultados.
 
 4. **Validação de Canonical Change Plans por aprovadores reais.** Testar a aprovação por afinidade: o Domain Expert aprova primariamente Change Plans de Domain Discovery e Requirements Specification; o Architect aprova primariamente Constitution. Avaliar se a aprovação secundária assíncrona agrega valor ou é percebida como burocracia. Avaliar se o artefato é compreensível e se a separação entre camadas é clara. Testar também o fluxo de rejeição: avaliar se o motivo em texto livre é suficiente para orientar a revisão, se o ciclo rejeição-revisão-resubmissão é percebido como produtivo, e se o abandono explícito é exercido naturalmente quando o impasse é real.
 
@@ -658,9 +731,11 @@ O modelo conceitual sugere as seguintes prioridades para validação experimenta
 
 8. **Guardrail de Padronização Canônica.** Testar se a IA consegue formalizar corretamente edições em linguagem natural para o formato canônico IEEE 29148 + SBE (com classificação conforme nível de aderência configurado), preservando o significado original. Métrica: taxa de aceitação pelo Domain Expert na primeira tentativa de formalização versus necessidade de ciclos iterativos. Validar também se o guardrail opera corretamente nos artefatos produzidos por cerimônias (modo implícito).
 
-9. **Edição direta do Domain Expert com aprovação sequencial.** Testar o fluxo completo: Domain Expert edita em formato livre → guardrails validam e formalizam em IEEE 29148 + SBE → Domain Expert revisa no ciclo iterativo → `expert-edit-plan` gerado → Domain Expert aprova o Change Plan consolidado → Architect avalia impacto técnico. Avaliar: (a) se a segunda aprovação do Domain Expert no Change Plan agrega valor real ou é percebida como burocracia; (b) se a ordem sequencial (Domain Expert antes do Architect) elimina retrabalho; (c) se o Domain Expert consegue identificar diferenças entre o que revisou no ciclo iterativo e o artefato consolidado final; (d) se o processo é percebido como facilitador ou como burocracia; (e) testar ambas as formas do Relatório de Conformidade (estática e conversacional).
+9. **Edição direta do Domain Expert com aprovação sequencial.** Testar o fluxo completo: Domain Expert edita em formato livre → guardrails validam e formalizam em IEEE 29148 + SBE → Domain Expert revisa no ciclo iterativo → `expert-edit-plan` gerado → Domain Expert aprova o Change Plan consolidado → Architect avalia impacto técnico. Avaliar: (a) se a segunda aprovação do Domain Expert no Change Plan agrega valor real ou é percebida como burocracia; (b) se a ordem sequencial (Domain Expert antes do Architect) elimina retrabalho; (c) se o Domain Expert consegue identificar diferenças entre o que revisou no ciclo iterativo e o artefato consolidado final; (d) se o processo é percebido como facilitador ou como burocracia; (e) testar se o formato estruturado do Relatorio de Conformidade (secao 2.2.6) e compreensivel e util para Domain Experts, e se a geracao automatica pela IA produz relatorios com secoes efetivamente preenchidas e acionaveis.
 
 10. **Taxonomia IEEE 29148 na Requirements Specification Session.** Testar se: (a) a IA consegue guiar Domain Builder e Architect pelas categorias IEEE 29148 sem que o processo pareça burocrático; (b) a sinalização de categorias não cobertas (requisitos não-funcionais, interfaces, restrições de design) produz requisitos que teriam sido omitidos sem o guia; (c) a aderência adaptativa funciona na prática — projetos em fase inicial aceitam seções 'pendente' sem pressão artificial de preenchimento; (d) os três níveis de aderência são percebidos como proporcionais e não arbitrários; (e) a progressão de nível Mínimo para Moderado acontece naturalmente conforme a Product Canon cresce.
+
+11. **Protocolo de Perspectiva Assistida em cenarios de acumulo.** Testar se: (a) a declaracao explicita de acumulo na configuracao do projeto e exercida naturalmente; (b) as perguntas de perspectiva da IA diferenciam efetivamente a aprovacao em papeis distintos — o aprovador responde de forma substantivamente diferente quando muda de perspectiva; (c) o registro distinto por papel-perspectiva no envelope permite identificar padroes de acumulo que degradam a governanca; (d) o protocolo e percebido como mecanismo util ou como burocracia adicional em equipes de uma pessoa.
 
 ---
 
