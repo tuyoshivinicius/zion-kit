@@ -5,9 +5,9 @@ import ScrollReveal from '../animations/ScrollReveal.astro';
 import CycleDiagram from '../diagrams/CycleDiagram';
 
 const steps = [
-  { icon: '🔨', title: 'Construir o Conhecimento', desc: 'Pessoas de negócio e tecnologia trabalham juntas, em sessões guiadas por IA, para formalizar o que sabem sobre o produto na Product Canon.' },
-  { icon: '📝', title: 'Usar para Especificar', desc: 'Quando alguém escreve uma especificação, a IA consulta a Product Canon e carrega automaticamente o contexto relevante, confrontando com o conhecimento existente.' },
-  { icon: '🔄', title: 'Devolver o Aprendizado', desc: 'Depois da implementação, tudo que foi descoberto — conceitos refinados, regras novas, decisões técnicas — volta para a Product Canon.' },
+  { icon: '🔨', title: 'Etapa 1 — Canon Building', desc: 'Pessoas de negócio e tecnologia constroem a Product Canon através de 3 cerimônias formais — Domain Discovery Session, Technical Constitution Session e Requirements Specification Session — com gates de aprovação entre cada uma. Ao final, a Decisão de Continuidade do Ciclo oferece 3 caminhos: mapear mais fluxos, formalizar mais requisitos ou encerrar e prosseguir para a especificação.' },
+  { icon: '📝', title: 'Etapa 2 — Spec Crafting', desc: 'Quando alguém escreve uma especificação de feature, a IA consulta a Product Canon e carrega o contexto relevante. Se a especificação revela impactos não antecipados no Canon Building, a IA gera um Canonical Change Plan incremental (incremental-plan), aprovado condicionalmente por camada afetada antes que qualquer código seja escrito.' },
+  { icon: '🔄', title: 'Etapa 3 — Canon Enrichment', desc: 'Depois da implementação, descobertas emergentes retornam à Product Canon. O desenvolvedor sinaliza explicitamente achados no código (CANON-DISCOVERY), e a IA complementa com detecção assistida — comparando artefatos produzidos contra a Product Canon para identificar conceitos não formalizados.' },
 ];
 ---
 
@@ -17,9 +17,9 @@ const steps = [
       <SectionHeader
         sectionNumber={4}
         sectionId="ciclo"
-        title='O ciclo que faz o <span class="gradient-text">conhecimento crescer</span>'
+        title='Como o ciclo de <span class="gradient-text">três etapas funciona</span>'
         depth={1}
-        subtitle="O ZionKit opera em um ciclo de três etapas que se repete continuamente. A cada volta, o repositório de conhecimento fica mais rico."
+        subtitle="O ZionKit opera em um ciclo bidirecional de três etapas: informação flui da Product Canon para as especificações e das especificações de volta para a Product Canon. A cada volta, o repositório de conhecimento fica mais rico. Além do ciclo formal, o Domain Expert pode editar diretamente artefatos da camada de negócio como canal complementar de manutenção."
       />
     </ScrollReveal>
 
