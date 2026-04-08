@@ -26,9 +26,21 @@ export const nodes: Node[] = [
     },
   },
   {
+    id: 'continuity',
+    type: 'nodeCard',
+    position: { x: 0, y: 380 },
+    data: {
+      title: 'Decisão de Continuidade',
+      content: ['a) Mais fluxos → Discovery', 'b) Mais requisitos → Specification', 'c) Encerrar → Etapa 2'],
+      variant: 'decision',
+      icon: '🔀',
+      tooltip: 'Ao final do Canon Building, o Domain Builder decide: mapear mais fluxos, formalizar mais requisitos ou encerrar o ciclo e prosseguir para Spec Crafting.',
+    },
+  },
+  {
     id: 'use',
     type: 'nodeCard',
-    position: { x: 250, y: 350 },
+    position: { x: 250, y: 530 },
     data: {
       title: 'Etapa 2 — Usar para Especificar',
       content: 'Contexto injetado automaticamente',
@@ -49,6 +61,18 @@ export const nodes: Node[] = [
       tooltip: 'Termos novos, regras descobertas, eventos e decisões técnicas voltam para a Product Canon.',
     },
   },
+  {
+    id: 'direct-edit',
+    type: 'nodeCard',
+    position: { x: 500, y: 420 },
+    data: {
+      title: 'Edição Direta',
+      content: ['Canal complementar', 'Domain Expert + IA', 'expert-edit-plan'],
+      variant: 'complementary',
+      icon: '✏️',
+      tooltip: 'O Domain Expert pode editar diretamente artefatos da camada de negócio fora das cerimônias formais. Gera um expert-edit-plan com aprovação obrigatória do Architect.',
+    },
+  },
 ];
 
 export const edges: Edge[] = [
@@ -63,11 +87,30 @@ export const edges: Edge[] = [
     style: { stroke: 'rgba(34, 211, 238, 0.5)', strokeWidth: 2 },
   },
   {
-    id: 'build-use',
+    id: 'build-continuity',
     source: 'build',
-    target: 'use',
+    target: 'continuity',
     type: 'smoothstep',
     style: { stroke: 'rgba(34, 211, 238, 0.5)', strokeWidth: 2 },
+  },
+  {
+    id: 'continuity-build',
+    source: 'continuity',
+    target: 'build',
+    label: 'mais fluxos / requisitos',
+    type: 'smoothstep',
+    animated: true,
+    labelStyle: { fill: '#a78bfa', fontSize: 10 },
+    style: { stroke: 'rgba(167, 139, 250, 0.5)', strokeWidth: 2 },
+  },
+  {
+    id: 'continuity-use',
+    source: 'continuity',
+    target: 'use',
+    label: 'encerrar ciclo',
+    type: 'smoothstep',
+    labelStyle: { fill: '#a78bfa', fontSize: 10 },
+    style: { stroke: 'rgba(167, 139, 250, 0.5)', strokeWidth: 2 },
   },
   {
     id: 'use-feedback',
@@ -85,5 +128,15 @@ export const edges: Edge[] = [
     type: 'smoothstep',
     labelStyle: { fill: '#94a3b8', fontSize: 11 },
     style: { stroke: 'rgba(34, 211, 238, 0.5)', strokeWidth: 2 },
+  },
+  {
+    id: 'direct-edit-canon',
+    source: 'direct-edit',
+    target: 'canon',
+    label: 'expert-edit-plan',
+    type: 'smoothstep',
+    animated: true,
+    labelStyle: { fill: '#f472b6', fontSize: 10 },
+    style: { stroke: 'rgba(244, 114, 182, 0.5)', strokeWidth: 2, strokeDasharray: '6 3' },
   },
 ];

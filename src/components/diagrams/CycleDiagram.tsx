@@ -8,7 +8,7 @@ import { useResponsiveFlow } from '../../lib/diagrams/use-responsive-flow';
 export default function CycleDiagram() {
   const responsiveConfig = useResponsiveFlow();
   return (
-    <div style={{ width: '100%', height: '500px' }}>
+    <div style={{ width: '100%', height: '680px' }}>
       <ReactFlow
         defaultNodes={nodes}
         defaultEdges={edges}

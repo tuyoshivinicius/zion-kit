@@ -18,7 +18,7 @@ export const nodes: Node[] = [
     position: { x: 0, y: 180 },
     data: {
       title: 'Gate 1 — Aprovação',
-      content: 'Plano de mudanças revisado',
+      content: ['discovery-plan', 'Plano de mudanças revisado'],
       variant: 'gate',
       icon: '🚦',
     },
@@ -40,7 +40,7 @@ export const nodes: Node[] = [
     position: { x: 280, y: 180 },
     data: {
       title: 'Gate 2 — Aprovação',
-      content: 'Plano de mudanças revisado',
+      content: ['constitution-plan', 'Plano de mudanças revisado'],
       variant: 'gate',
       icon: '🚦',
     },
@@ -62,7 +62,7 @@ export const nodes: Node[] = [
     position: { x: 560, y: 180 },
     data: {
       title: 'Gate 3 — Aprovação',
-      content: 'Plano de mudanças revisado',
+      content: ['specification-plan', 'Plano de mudanças revisado'],
       variant: 'gate',
       icon: '🚦',
     },

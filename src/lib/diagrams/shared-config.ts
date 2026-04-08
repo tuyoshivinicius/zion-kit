@@ -63,6 +63,16 @@ export const variantColors = {
     bg: 'rgba(34, 211, 238, 0.08)',
     icon: '#22d3ee',
   },
+  decision: {
+    border: '#a78bfa',
+    bg: 'rgba(167, 139, 250, 0.05)',
+    icon: '#a78bfa',
+  },
+  complementary: {
+    border: '#f472b6',
+    bg: 'rgba(244, 114, 182, 0.05)',
+    icon: '#f472b6',
+  },
 } as const;
 
 export type NodeVariant = keyof typeof variantColors;
