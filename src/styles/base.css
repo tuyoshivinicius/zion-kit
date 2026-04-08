@@ -121,6 +121,20 @@ section:not(:first-of-type) {
   contain-intrinsic-size: auto 800px;
 }
 
+/* ── ReactFlow: pass wheel events through to page ── */
+.react-flow__renderer,
+.react-flow__zoompane,
+.react-flow__selectionpane {
+  pointer-events: none !important;
+}
+.react-flow__nodes,
+.react-flow__edges {
+  pointer-events: none !important;
+}
+.react-flow__node {
+  pointer-events: none !important;
+}
+
 /* ── Focus Visible ── */
 :focus-visible {
   outline: 2px solid var(--color-aurora-cyan);

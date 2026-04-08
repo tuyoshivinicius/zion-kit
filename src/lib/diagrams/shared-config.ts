@@ -30,7 +30,6 @@ export const mobileFlowConfig = {
 
 export const desktopFlowConfig = {
   ...flowConfig,
-  zoomOnScroll: true,
 } as const;
 
 export const variantColors = {

@@ -1,5 +1,5 @@
-import { useState, useCallback, useRef } from 'react';
-import { Handle, Position, useReactFlow, type NodeProps } from '@xyflow/react';
+import { useState } from 'react';
+import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { variantColors, type NodeVariant } from '../../lib/diagrams/shared-config';
 
 export interface NodeCardData {
@@ -15,29 +15,8 @@ export function NodeCard({ data }: NodeProps) {
   const { title, content, variant = 'default', icon, tooltip } = data as NodeCardData;
   const colors = variantColors[variant];
   const [showTooltip, setShowTooltip] = useState(false);
-  const { getViewport, setViewport } = useReactFlow();
-  const dragRef = useRef<{ startX: number; startY: number; vpX: number; vpY: number } | null>(null);
 
   const contentArray = Array.isArray(content) ? content : [content];
-
-  const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    if (e.button !== 0) return;
-    const vp = getViewport();
-    dragRef.current = { startX: e.clientX, startY: e.clientY, vpX: vp.x, vpY: vp.y };
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
-  }, [getViewport]);
-
-  const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!dragRef.current) return;
-    const dx = e.clientX - dragRef.current.startX;
-    const dy = e.clientY - dragRef.current.startY;
-    const vp = getViewport();
-    setViewport({ x: dragRef.current.vpX + dx, y: dragRef.current.vpY + dy, zoom: vp.zoom });
-  }, [getViewport, setViewport]);
-
-  const handlePointerUp = useCallback(() => {
-    dragRef.current = null;
-  }, []);
 
   return (
     <div
@@ -50,15 +29,10 @@ export function NodeCard({ data }: NodeProps) {
         maxWidth: '260px',
         boxShadow: variant === 'canon' ? '0 0 20px rgba(34, 211, 238, 0.15)' : undefined,
         position: 'relative',
-        cursor: 'grab',
       }}
       tabIndex={0}
       role="group"
       aria-label={title}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
       onMouseEnter={() => tooltip && setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
       onFocus={() => tooltip && setShowTooltip(true)}
