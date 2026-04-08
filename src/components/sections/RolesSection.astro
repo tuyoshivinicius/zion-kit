@@ -23,15 +23,33 @@ const roles = [
     icon: '🔍',
     name: 'Domain Expert',
     who: 'Autoridade sobre o significado dos conceitos do negócio',
-    does: 'Aprova que o conhecimento registrado é fiel à realidade. Não participa das sessões — valida os resultados.',
+    does: 'Aprova que o conhecimento registrado é fiel à realidade. Adiciona anotações contextuais durante revisão de Change Plans (observações que podem ser formalizadas, descartadas ou adiadas). Marca hotspots de domínio — áreas frágeis ou frequentemente mal interpretadas, às quais a IA dá atenção especial na validação. Pode editar diretamente artefatos na camada de negócio, fora de cerimônias formais.',
     analogy: 'O revisor técnico — garante que o que foi escrito reflete a verdade do negócio.',
   },
   {
     icon: '🤖',
     name: 'IA',
     who: 'Agentes de inteligência artificial',
-    does: 'Facilita sessões, organiza informação, identifica inconsistências, traduz linguagem natural para formatos precisos.',
-    analogy: 'A secretária mais competente do mundo — organiza, lembra, sinaliza, mas nunca assina pelo chefe.',
+    does: 'Facilita sessões, organiza informação, identifica inconsistências, traduz linguagem natural para formatos precisos. Atua em dois modos: operacional (formatar, sugerir, reorganizar, sinalizar inconsistência, usar validação semântica interna, conduzir guardrails) e decisório (requer humano: incluir/excluir da Product Canon, aprovar Change Plan, resolver ambiguidade).',
+    analogy: 'Uma assistente que organiza, lembra e sinaliza — mas nunca decide pelo responsável.',
+  },
+];
+
+const protocolSteps = [
+  {
+    number: 1,
+    title: 'Declaração explícita',
+    description: 'O acúmulo é declarado na configuração do projeto, ativando comportamento diferenciado da IA.',
+  },
+  {
+    number: 2,
+    title: 'Checklist de perspectiva mediado pela IA',
+    description: 'Quando a mesma pessoa aprova em papéis distintos, a IA apresenta perguntas específicas da perspectiva do papel sendo exercido.',
+  },
+  {
+    number: 3,
+    title: 'Registro distinto por papel-perspectiva',
+    description: 'Cada aprovação registra o papel exercido, mesmo que a pessoa seja a mesma.',
   },
 ];
 ---
@@ -40,9 +58,9 @@ const roles = [
   <div class="max-width-content">
     <ScrollReveal animation="fade-up">
       <SectionHeader
-        sectionNumber={6}
+        sectionNumber={9}
         sectionId="papeis"
-        title='Cada decisão é tomada por quem tem <span class="gradient-text">competência sobre ela</span>'
+        title='Quatro papéis com <span class="gradient-text">autoridades complementares</span>'
         depth={2}
       />
     </ScrollReveal>
@@ -61,7 +79,74 @@ const roles = [
       </div>
     </ScrollReveal>
 
-    <ScrollReveal animation="fade-up">
+    <ScrollReveal animation="fade-up" delay={0.15}>
+      <div class="protocol-block">
+        <h3>Protocolo de Perspectiva Assistida</h3>
+        <p class="protocol-intro">Em equipes pequenas, uma mesma pessoa pode exercer múltiplos papéis. O valor da separação está na completude das perspectivas exercidas. O Protocolo de Perspectiva Assistida governa o acúmulo:</p>
+        <ol class="protocol-steps">
+          {protocolSteps.map(step => (
+            <li>
+              <strong>{step.title}</strong> — {step.description}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.3}>
+      <div class="roles-stage-table-wrapper">
+        <h3>Atuação por Etapa</h3>
+        <div class="table-scroll">
+          <table class="roles-stage-table">
+            <thead>
+              <tr>
+                <th>Papel</th>
+                <th>Etapa 1 — Canon Building</th>
+                <th>Etapa 2 — Spec Crafting</th>
+                <th>Etapa 3 — Canon Enrichment</th>
+                <th>Edição Direta</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Domain Builder</strong></td>
+                <td>Participa de Discovery e Specification; decide continuidade</td>
+                <td>Escreve spec de feature</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td><strong>Architect</strong></td>
+                <td>Conduz Technical Constitution; aprova gates</td>
+                <td>Decisões técnicas; aprova camada de arquitetura</td>
+                <td>Revisão assíncrona (janela de veto)</td>
+                <td>Aprova expert-edit-plan (obrigatório)</td>
+              </tr>
+              <tr>
+                <td><strong>Domain Expert</strong></td>
+                <td>Aprova Discovery e Specification (com anotações e hotspots)</td>
+                <td>Aprova camada de negócio</td>
+                <td>Revisão assíncrona (janela de veto)</td>
+                <td>Edita e aprova expert-edit-plan (fidelidade)</td>
+              </tr>
+              <tr>
+                <td><strong>IA</strong></td>
+                <td>Conduz sessões, gera Change Plans, opera guardrails</td>
+                <td>Gera Change Plan incremental; implementa código</td>
+                <td>Atualiza Product Canon</td>
+                <td>Conduz guardrails; gera expert-edit-plan</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.45}>
+      <p class="principle-note"><strong>Separação de autoridade:</strong> Cada papel tem autoridade sobre uma dimensão específica do conhecimento do produto. O Domain Builder decide a intenção de produto. O Architect decide a viabilidade técnica. O Domain Expert garante a fidelidade semântica. A IA processa e sinaliza, mas nunca decide.</p>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.6}>
       <DiagramContainer label="Tabela de papéis por etapa do ZionKit" title="Diagrama 7 — Quem Faz O Quê em Cada Etapa">
         <RolesMatrixDiagram />
       </DiagramContainer>
@@ -132,5 +217,103 @@ const roles = [
     font-style: italic;
     color: var(--color-text-muted);
     line-height: var(--leading-relaxed);
+  }
+
+  .protocol-block {
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+    border: 1px solid var(--color-border-default);
+  }
+
+  .protocol-block h3 {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .protocol-intro {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  .protocol-steps {
+    list-style: decimal;
+    padding-left: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .protocol-steps li {
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .roles-stage-table-wrapper {
+    margin-bottom: var(--space-8);
+  }
+
+  .roles-stage-table-wrapper h3 {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .roles-stage-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    min-width: 700px;
+  }
+
+  .roles-stage-table th,
+  .roles-stage-table td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border: 1px solid var(--color-border-default);
+    line-height: var(--leading-normal);
+  }
+
+  .roles-stage-table th {
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+  }
+
+  .roles-stage-table td {
+    color: var(--color-text-secondary);
+    vertical-align: top;
+  }
+
+  .roles-stage-table td:first-child {
+    white-space: nowrap;
+    color: var(--color-text-primary);
+  }
+
+  .roles-stage-table tbody tr:hover {
+    background: var(--color-bg-tertiary);
+  }
+
+  .principle-note {
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    border-left: 3px solid var(--color-aurora-green);
   }
 </style>
