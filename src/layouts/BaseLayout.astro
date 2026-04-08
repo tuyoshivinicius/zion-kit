@@ -1,5 +1,6 @@
 ---
 import '../styles/base.css';
+import GlossaryTooltip from '../components/ui/GlossaryTooltip.astro';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
@@ -62,5 +63,6 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://zionkit.dev');
   </head>
   <body>
     <slot />
+    <GlossaryTooltip />
   </body>
 </html>

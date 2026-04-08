@@ -1,0 +1,189 @@
+---
+import { glossaryTerms } from '../../data/glossary-terms';
+
+const glossaryJSON = JSON.stringify(glossaryTerms);
+---
+
+<div
+  id="glossary-tooltip"
+  class="glossary-tooltip"
+  role="tooltip"
+  aria-hidden="true"
+>
+  <p class="glossary-tooltip__term" id="glossary-tooltip-term"></p>
+  <p class="glossary-tooltip__definition" id="glossary-tooltip-definition"></p>
+  <div class="glossary-tooltip__analogy" id="glossary-tooltip-analogy" hidden>
+    <span class="analogy-badge">Analogia</span>
+    <p id="glossary-tooltip-analogy-text"></p>
+  </div>
+  <a
+    class="glossary-tooltip__link"
+    id="glossary-tooltip-link"
+    href="#glossario"
+  >Ver no glossário</a>
+</div>
+
+<script define:vars={{ glossaryJSON }}>
+  const terms = JSON.parse(glossaryJSON);
+
+  // Build lookup map: normalized term → glossary entry
+  const termMap = new Map();
+  for (const entry of terms) {
+    termMap.set(entry.term.toLowerCase().trim(), entry);
+    if (entry.aliases) {
+      for (const alias of entry.aliases) {
+        termMap.set(alias.toLowerCase().trim(), entry);
+      }
+    }
+  }
+
+  const tooltip = document.getElementById('glossary-tooltip');
+  const tooltipTerm = document.getElementById('glossary-tooltip-term');
+  const tooltipDef = document.getElementById('glossary-tooltip-definition');
+  const tooltipAnalogy = document.getElementById('glossary-tooltip-analogy');
+  const tooltipAnalogyText = document.getElementById('glossary-tooltip-analogy-text');
+  const tooltipLink = document.getElementById('glossary-tooltip-link');
+
+  let activeTrigger = null;
+
+  // Scan all <strong> elements outside the glossary section
+  const glossarySection = document.getElementById('glossario');
+  const allStrongs = document.querySelectorAll('strong');
+
+  allStrongs.forEach((el) => {
+    // Skip elements inside the glossary section
+    if (glossarySection && glossarySection.contains(el)) return;
+
+    const text = el.textContent?.trim().toLowerCase();
+    if (!text) return;
+
+    const entry = termMap.get(text);
+    if (!entry) return;
+
+    // Enhance the element
+    el.classList.add('glossary-term-link');
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-label', `Ver definição de ${entry.term}`);
+    el.setAttribute('data-glossary-id', entry.id);
+
+    // Click handler
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleTooltip(el, entry);
+    });
+
+    // Keyboard handler
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleTooltip(el, entry);
+      }
+    });
+  });
+
+  function toggleTooltip(trigger, entry) {
+    if (activeTrigger === trigger) {
+      hideTooltip();
+      return;
+    }
+    showTooltip(trigger, entry);
+  }
+
+  let showTimestamp = 0;
+
+  function showTooltip(trigger, entry) {
+    // Clean up previous
+    if (activeTrigger) {
+      activeTrigger.removeAttribute('aria-describedby');
+    }
+
+    activeTrigger = trigger;
+    showTimestamp = Date.now();
+
+    // Fill content
+    tooltipTerm.textContent = entry.term;
+    tooltipDef.textContent = entry.definition;
+
+    if (entry.analogy) {
+      tooltipAnalogy.hidden = false;
+      tooltipAnalogyText.textContent = entry.analogy;
+    } else {
+      tooltipAnalogy.hidden = true;
+    }
+
+    tooltipLink.href = `#${entry.id}`;
+
+    // Position off-screen first to measure, then show
+    tooltip.style.top = '-9999px';
+    tooltip.style.left = '-9999px';
+    tooltip.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-describedby', 'glossary-tooltip');
+
+    // Use rAF to get correct dimensions after render
+    requestAnimationFrame(() => {
+      positionTooltip(trigger);
+    });
+  }
+
+  function hideTooltip() {
+    tooltip.setAttribute('aria-hidden', 'true');
+    if (activeTrigger) {
+      activeTrigger.removeAttribute('aria-describedby');
+      activeTrigger = null;
+    }
+  }
+
+  function positionTooltip(trigger) {
+    const rect = trigger.getBoundingClientRect();
+    const tooltipWidth = tooltip.offsetWidth;
+    const tooltipHeight = tooltip.offsetHeight;
+    const gap = 8;
+    const viewportPadding = 12;
+
+    // Default: below the trigger, centered
+    let top = rect.bottom + gap;
+    let left = rect.left + rect.width / 2 - tooltipWidth / 2;
+
+    // Flip above if overflows bottom
+    if (top + tooltipHeight > window.innerHeight - viewportPadding) {
+      top = rect.top - tooltipHeight - gap;
+    }
+
+    // Nudge horizontally if overflows
+    if (left < viewportPadding) {
+      left = viewportPadding;
+    } else if (left + tooltipWidth > window.innerWidth - viewportPadding) {
+      left = window.innerWidth - viewportPadding - tooltipWidth;
+    }
+
+    tooltip.style.top = `${top}px`;
+    tooltip.style.left = `${left}px`;
+  }
+
+  // Close on click outside
+  document.addEventListener('click', (e) => {
+    if (!activeTrigger) return;
+    if (tooltip.contains(e.target) || activeTrigger.contains(e.target)) return;
+    hideTooltip();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && activeTrigger) {
+      const trigger = activeTrigger;
+      hideTooltip();
+      trigger.focus();
+    }
+  });
+
+  // Close on scroll (ignore scroll within 300ms of showing tooltip)
+  let scrollTimeout;
+  window.addEventListener('scroll', () => {
+    if (!activeTrigger) return;
+    if (Date.now() - showTimestamp < 300) return;
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => hideTooltip(), 100);
+  }, { passive: true });
+</script>
