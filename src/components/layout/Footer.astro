@@ -8,6 +8,14 @@ const currentYear = new Date().getFullYear();
       <span class="gradient-text" style="font-size: var(--text-xl); font-weight: 700;">ZionKit</span>
       <p>Modelo conceitual para desenvolvimento de software orientado por especificações.</p>
       <p class="footer-status">Protótipo conceitual — v0.6</p>
+      <a
+        href="https://github.com/tuyoshivinicius/zion-kit/blob/main/docs/zionkit-model.md"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-docs-link"
+      >
+        Documentação técnica completa &rarr;
+      </a>
     </div>
 
     <div class="footer-bottom">
@@ -37,6 +45,23 @@ const currentYear = new Date().getFullYear();
 
   .footer-status {
     font-style: italic;
+  }
+
+  .footer-docs-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    min-height: 44px;
+    color: var(--color-text-accent);
+    text-decoration: none;
+    transition: color var(--duration-fast) ease;
+  }
+
+  .footer-docs-link:hover {
+    color: var(--color-text-primary);
+    text-decoration: underline;
   }
 
   .footer-bottom {

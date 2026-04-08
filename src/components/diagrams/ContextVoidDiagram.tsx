@@ -19,7 +19,6 @@ export default function ContextVoidDiagram() {
         tabIndex={0}
       >
         <Background variant={BackgroundVariant.Dots} color="rgba(148, 163, 184, 0.08)" gap={20} size={1} />
-
       </ReactFlow>
     </div>
   );

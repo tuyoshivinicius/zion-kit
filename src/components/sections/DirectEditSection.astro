@@ -200,12 +200,18 @@ const reportSections = [
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-md);
     padding: var(--space-4);
+    transition: border-color var(--duration-normal) ease, box-shadow var(--duration-normal) ease;
+  }
+
+  .step-card:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: var(--shadow-glow-cyan);
   }
 
   .step-number {
     flex-shrink: 0;
-    width: 32px;
-    height: 32px;
+    width: var(--space-8);
+    height: var(--space-8);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -253,6 +259,12 @@ const reportSections = [
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-md);
     padding: var(--space-4);
+    transition: border-color var(--duration-normal) ease, box-shadow var(--duration-normal) ease;
+  }
+
+  .report-card:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: var(--shadow-glow-cyan);
   }
 
   .report-card h4 {
@@ -271,7 +283,7 @@ const reportSections = [
   .approval-box code {
     font-size: var(--text-sm);
     background: rgba(34, 211, 238, 0.1);
-    padding: 2px 6px;
+    padding: var(--space-1) var(--space-2);
     border-radius: var(--radius-sm);
     color: var(--color-aurora-cyan);
   }
@@ -319,7 +331,7 @@ const reportSections = [
     align-items: center;
     justify-content: center;
     background: rgba(251, 191, 36, 0.15);
-    color: #fbbf24;
+    color: var(--color-warning);
     border-radius: 50%;
     font-weight: 700;
     font-size: var(--text-sm);
@@ -375,7 +387,7 @@ const reportSections = [
   .safeguards-box code {
     font-size: var(--text-sm);
     background: rgba(34, 211, 238, 0.1);
-    padding: 2px 6px;
+    padding: var(--space-1) var(--space-2);
     border-radius: var(--radius-sm);
     color: var(--color-aurora-cyan);
   }

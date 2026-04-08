@@ -256,6 +256,12 @@ import CeremonyFlowDiagram from '../diagrams/CeremonyFlowDiagram.tsx';
     border-radius: var(--radius-lg);
     padding: var(--space-6);
     margin-bottom: var(--space-8);
+    transition: border-color var(--duration-normal) ease, box-shadow var(--duration-normal) ease;
+  }
+
+  .ceremony-block:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: var(--shadow-glow-cyan);
   }
 
   .ceremony-title {
@@ -360,7 +366,7 @@ import CeremonyFlowDiagram from '../diagrams/CeremonyFlowDiagram.tsx';
   .example-block code {
     font-size: var(--text-xs);
     background: rgba(34, 211, 238, 0.08);
-    padding: 1px 4px;
+    padding: var(--space-1) var(--space-1);
     border-radius: var(--radius-sm);
     color: var(--color-text-accent);
   }
@@ -411,7 +417,7 @@ import CeremonyFlowDiagram from '../diagrams/CeremonyFlowDiagram.tsx';
   .ceremony-output code {
     font-size: var(--text-xs);
     background: rgba(34, 211, 238, 0.08);
-    padding: 1px 4px;
+    padding: var(--space-1) var(--space-1);
     border-radius: var(--radius-sm);
     color: var(--color-text-accent);
   }
@@ -510,7 +516,7 @@ import CeremonyFlowDiagram from '../diagrams/CeremonyFlowDiagram.tsx';
     font-weight: 700;
     color: var(--color-text-accent);
     flex-shrink: 0;
-    margin-top: 2px;
+    margin-top: var(--space-1);
   }
 
   .decision-path strong {
@@ -525,11 +531,11 @@ import CeremonyFlowDiagram from '../diagrams/CeremonyFlowDiagram.tsx';
     margin-top: var(--space-1);
   }
 
-  .path-precondition {
-    font-size: var(--text-xs) !important;
-    color: var(--color-text-muted) !important;
+  .decision-path .path-precondition {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
     font-style: italic;
-    margin-top: var(--space-2) !important;
+    margin-top: var(--space-2);
   }
 
   .checkpoint-block {

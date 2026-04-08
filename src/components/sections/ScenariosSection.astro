@@ -73,6 +73,7 @@ const scenarios = [
         role="tabpanel"
         aria-labelledby={`scenario-tab-${s.id}`}
         class:list={['scenario-panel', { active: i === 0 }]}
+        hidden={i !== 0}
       >
         <h3>{s.title}</h3>
         <p class="scenario-context"><strong>Situação:</strong> {s.context}</p>
@@ -161,7 +162,7 @@ const scenarios = [
   .timeline::before {
     content: '';
     position: absolute;
-    left: 15px;
+    left: calc(var(--space-4) - 1px);
     top: 0;
     bottom: 0;
     width: 2px;
@@ -179,8 +180,8 @@ const scenarios = [
   .timeline-dot {
     position: absolute;
     left: calc(-1 * var(--space-8) + 4px);
-    width: 24px;
-    height: 24px;
+    width: var(--space-6);
+    height: var(--space-6);
     border-radius: 50%;
     background: var(--color-bg-tertiary);
     border: 2px solid var(--color-aurora-cyan);
@@ -230,13 +231,20 @@ const scenarios = [
         t.classList.remove('active');
         t.setAttribute('aria-selected', 'false');
       });
-      panels.forEach(p => p.classList.remove('active'));
+      panels.forEach(p => {
+        p.classList.remove('active');
+        p.hidden = true;
+      });
 
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
       const panelId = tab.getAttribute('aria-controls');
       if (panelId) {
-        document.getElementById(panelId)?.classList.add('active');
+        const activePanel = document.getElementById(panelId);
+        if (activePanel) {
+          activePanel.classList.add('active');
+          activePanel.hidden = false;
+        }
       }
     });
   });

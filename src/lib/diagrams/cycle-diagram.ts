@@ -1,10 +1,16 @@
 import type { Node, Edge } from '@xyflow/react';
 
+// Layout manual otimizado para o ciclo — ELK stress não produz
+// bom resultado com smoothstep edges em grafos cíclicos.
+// Disposição: canon no topo centro, build/continuity à esquerda,
+// use no centro inferior, feedback à direita, direct-edit canto inferior direito.
+export const layoutOptions = null;
+
 export const nodes: Node[] = [
   {
     id: 'canon',
     type: 'nodeCard',
-    position: { x: 250, y: 0 },
+    position: { x: 220, y: 0 },
     data: {
       title: 'Product Canon',
       content: 'Repositório vivo de conhecimento',
@@ -16,7 +22,7 @@ export const nodes: Node[] = [
   {
     id: 'build',
     type: 'nodeCard',
-    position: { x: 0, y: 200 },
+    position: { x: 0, y: 180 },
     data: {
       title: 'Etapa 1 — Construir',
       content: '3 sessões formais com aprovação',
@@ -28,7 +34,7 @@ export const nodes: Node[] = [
   {
     id: 'continuity',
     type: 'nodeCard',
-    position: { x: 0, y: 380 },
+    position: { x: 0, y: 360 },
     data: {
       title: 'Decisão de Continuidade',
       content: ['a) Mais fluxos → Discovery', 'b) Mais requisitos → Specification', 'c) Encerrar → Etapa 2'],
@@ -40,7 +46,7 @@ export const nodes: Node[] = [
   {
     id: 'use',
     type: 'nodeCard',
-    position: { x: 250, y: 530 },
+    position: { x: 220, y: 520 },
     data: {
       title: 'Etapa 2 — Usar para Especificar',
       content: 'Contexto injetado automaticamente',
@@ -52,7 +58,7 @@ export const nodes: Node[] = [
   {
     id: 'feedback',
     type: 'nodeCard',
-    position: { x: 500, y: 200 },
+    position: { x: 470, y: 180 },
     data: {
       title: 'Etapa 3 — Devolver o Aprendizado',
       content: 'Retroalimentação formal',
@@ -64,7 +70,7 @@ export const nodes: Node[] = [
   {
     id: 'direct-edit',
     type: 'nodeCard',
-    position: { x: 500, y: 420 },
+    position: { x: 470, y: 380 },
     data: {
       title: 'Edição Direta',
       content: ['Canal complementar', 'Domain Expert + IA', 'expert-edit-plan'],
@@ -100,6 +106,8 @@ export const edges: Edge[] = [
     label: 'mais fluxos / requisitos',
     type: 'smoothstep',
     animated: true,
+    sourceHandle: 'left-source',
+    targetHandle: 'left',
     labelStyle: { fill: '#a78bfa', fontSize: 10 },
     style: { stroke: 'rgba(167, 139, 250, 0.5)', strokeWidth: 2 },
   },
@@ -136,6 +144,8 @@ export const edges: Edge[] = [
     label: 'expert-edit-plan',
     type: 'smoothstep',
     animated: true,
+    sourceHandle: 'right-source',
+    targetHandle: 'right',
     labelStyle: { fill: '#f472b6', fontSize: 10 },
     style: { stroke: 'rgba(244, 114, 182, 0.5)', strokeWidth: 2, strokeDasharray: '6 3' },
   },

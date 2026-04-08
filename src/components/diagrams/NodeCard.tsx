@@ -48,6 +48,8 @@ export function NodeCard({ data }: NodeProps) {
       aria-describedby={tooltip ? `tooltip-${title.replace(/\s/g, '-')}` : undefined}
     >
       <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
+      <Handle type="target" position={Position.Left} id="left" style={{ opacity: 0 }} />
+      <Handle type="target" position={Position.Right} id="right" style={{ opacity: 0 }} />
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.375rem' }}>
         {icon && (
@@ -103,6 +105,8 @@ export function NodeCard({ data }: NodeProps) {
       )}
 
       <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
+      <Handle type="source" position={Position.Left} id="left-source" style={{ opacity: 0 }} />
+      <Handle type="source" position={Position.Right} id="right-source" style={{ opacity: 0 }} />
     </div>
   );
 }

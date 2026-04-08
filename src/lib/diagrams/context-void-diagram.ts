@@ -1,5 +1,8 @@
 import type { Node, Edge } from '@xyflow/react';
 
+// Layout manual — 3 nodes horizontais + 1 abaixo do terceiro.
+export const layoutOptions = null;
+
 export const nodes: Node[] = [
   {
     id: 'knowledge',

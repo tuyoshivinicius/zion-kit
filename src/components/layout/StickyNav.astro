@@ -183,6 +183,10 @@ const sections = [
     border: none;
     cursor: pointer;
     padding: var(--space-2);
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
   }
 
   .hamburger,
@@ -266,6 +270,12 @@ const sections = [
       padding: var(--space-2) var(--space-3);
     }
 
+    .nav-logo {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+
     .mobile-depth-bar {
       display: flex;
       justify-content: center;
@@ -276,6 +286,10 @@ const sections = [
 
     .mobile-depth-bar :global(.depth-filter) {
       display: flex;
+    }
+
+    .mobile-depth-bar :global(.depth-btn) {
+      min-height: 44px;
     }
   }
 </style>

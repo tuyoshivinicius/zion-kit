@@ -154,27 +154,29 @@ import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
 <style>
   .guardrails-section {
     padding: var(--space-24) 0;
+    background-color: var(--color-bg-secondary);
   }
 
   .section-intro {
     font-size: var(--text-lg);
     color: var(--color-text-secondary);
-    max-width: 48rem;
-    line-height: 1.7;
+    max-width: var(--max-width-narrow);
+    line-height: var(--leading-relaxed);
     margin-bottom: var(--space-12);
   }
 
   .guardrail-card {
-    background: var(--color-bg-secondary);
+    background: var(--color-bg-tertiary);
     border: 1px solid var(--color-border-default);
-    border-radius: 0.75rem;
+    border-radius: var(--radius-lg);
     padding: var(--space-6);
     margin-bottom: var(--space-6);
-    transition: border-color 0.2s ease;
+    transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
   }
 
   .guardrail-card:hover {
     border-color: var(--color-border-accent);
+    box-shadow: var(--shadow-glow-cyan);
   }
 
   .guardrail-card--highlight {
@@ -190,7 +192,7 @@ import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
   }
 
   .guardrail-icon {
-    font-size: 1.25rem;
+    font-size: var(--text-xl);
   }
 
   .guardrail-header h3 {
@@ -202,16 +204,16 @@ import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
 
   .guardrail-stage {
     font-size: var(--text-xs);
-    color: var(--color-text-tertiary);
+    color: var(--color-text-muted);
     background: rgba(148, 163, 184, 0.08);
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
     margin-left: auto;
   }
 
   .guardrail-card p {
     color: var(--color-text-secondary);
-    line-height: 1.7;
+    line-height: var(--leading-relaxed);
     margin-bottom: var(--space-3);
   }
 
@@ -222,16 +224,16 @@ import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
   .hotspot-callout {
     background: rgba(251, 191, 36, 0.05);
     border: 1px solid rgba(251, 191, 36, 0.2);
-    border-radius: 0.5rem;
+    border-radius: var(--radius-md);
     padding: var(--space-4);
     margin-top: var(--space-4);
     color: var(--color-text-secondary);
-    line-height: 1.7;
+    line-height: var(--leading-relaxed);
     font-size: var(--text-sm);
   }
 
   .hotspot-callout strong {
-    color: #fbbf24;
+    color: var(--color-warning);
   }
 
   .version-faces {
@@ -242,11 +244,11 @@ import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
   }
 
   .version-face {
-    border-radius: 0.5rem;
+    border-radius: var(--radius-md);
     padding: var(--space-4);
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   .version-face--current {
@@ -260,22 +262,22 @@ import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
   }
 
   .version-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-weight: 600;
     font-size: var(--text-sm);
   }
 
   .version-face--current .version-label {
-    color: #34d399;
+    color: var(--color-solution);
   }
 
   .version-face--next .version-label {
-    color: #a78bfa;
+    color: var(--color-aurora-violet);
   }
 
   .version-desc {
     font-size: var(--text-xs);
-    color: var(--color-text-tertiary);
+    color: var(--color-text-muted);
   }
 
   .strangler-details {
@@ -287,8 +289,8 @@ import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
   .strangler-details li {
     color: var(--color-text-secondary);
     font-size: var(--text-sm);
-    line-height: 1.7;
-    padding: 0.25rem 0;
+    line-height: var(--leading-relaxed);
+    padding: var(--space-1) 0;
     padding-left: 1rem;
     position: relative;
   }
@@ -297,21 +299,21 @@ import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
     content: '→';
     position: absolute;
     left: 0;
-    color: var(--color-text-tertiary);
+    color: var(--color-text-muted);
   }
 
   .strangler-details code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8em;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
     background: rgba(148, 163, 184, 0.08);
-    padding: 0.1rem 0.4rem;
-    border-radius: 0.25rem;
-    color: #67e8f9;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-accent);
   }
 
   .design-principle {
     font-size: var(--text-sm);
-    color: var(--color-text-tertiary);
+    color: var(--color-text-muted);
     font-style: italic;
     border-left: 2px solid rgba(52, 211, 153, 0.3);
     padding-left: var(--space-4);

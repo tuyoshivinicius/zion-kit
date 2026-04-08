@@ -60,21 +60,12 @@ const { label, title, class: className = '' } = Astro.props;
 
     .diagram-content :global(> astro-island > div),
     .diagram-content :global(> div) {
-      min-width: 850px;
+      min-width: auto;
+      width: 100%;
     }
 
-    .diagram-container {
-      position: relative;
-    }
-
-    .diagram-container::after {
-      content: '← deslize para ver →';
-      display: block;
-      text-align: center;
-      font-size: var(--text-xs);
-      color: var(--color-text-muted);
-      padding: var(--space-2);
-      opacity: 0.6;
+    .diagram-content {
+      overflow-x: hidden;
     }
   }
 </style>

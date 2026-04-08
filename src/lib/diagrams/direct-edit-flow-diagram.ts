@@ -1,10 +1,14 @@
 import type { Node, Edge } from '@xyflow/react';
 
+// Layout manual — fluxo iterativo com feedback loop.
+// ELK cyclicFlow cria coluna única com back-edges confusos.
+export const layoutOptions = null;
+
 export const nodes: Node[] = [
   {
     id: 'propose',
     type: 'nodeCard',
-    position: { x: 0, y: 120 },
+    position: { x: 0, y: 140 },
     data: {
       title: '1. Proposta',
       content: 'Domain Expert propõe alteração em linguagem natural',
@@ -16,7 +20,7 @@ export const nodes: Node[] = [
   {
     id: 'guardrails',
     type: 'nodeCard',
-    position: { x: 250, y: 0 },
+    position: { x: 280, y: 0 },
     data: {
       title: '2. Guardrails Simultâneos',
       content: [
@@ -33,7 +37,7 @@ export const nodes: Node[] = [
   {
     id: 'report',
     type: 'nodeCard',
-    position: { x: 530, y: 0 },
+    position: { x: 570, y: 0 },
     data: {
       title: '3. Relatório de Conformidade',
       content: [
@@ -50,7 +54,7 @@ export const nodes: Node[] = [
   {
     id: 'review',
     type: 'nodeCard',
-    position: { x: 380, y: 230 },
+    position: { x: 400, y: 250 },
     data: {
       title: '4. Decisão do Domain Expert',
       content: 'Aceitar, ajustar, responder clarificações ou reescrever',
@@ -62,7 +66,7 @@ export const nodes: Node[] = [
   {
     id: 'plan',
     type: 'nodeCard',
-    position: { x: 700, y: 180 },
+    position: { x: 740, y: 180 },
     data: {
       title: '5. expert-edit-plan',
       content: 'Change Plan com versão formalizada + relatório + impactos',
@@ -74,7 +78,7 @@ export const nodes: Node[] = [
   {
     id: 'approve-de',
     type: 'nodeCard',
-    position: { x: 700, y: 350 },
+    position: { x: 700, y: 370 },
     data: {
       title: 'Aprovação: Domain Expert',
       content: 'Valida fidelidade semântica',
@@ -86,7 +90,7 @@ export const nodes: Node[] = [
   {
     id: 'approve-arch',
     type: 'nodeCard',
-    position: { x: 950, y: 350 },
+    position: { x: 980, y: 370 },
     data: {
       title: 'Aprovação: Architect',
       content: 'Valida impacto técnico (obrigatória)',

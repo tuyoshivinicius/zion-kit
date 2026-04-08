@@ -4,9 +4,10 @@ interface Props {
   description?: string;
   linkText: string;
   linkHref: string;
+  external?: boolean;
 }
 
-const { title, description, linkText, linkHref } = Astro.props;
+const { title, description, linkText, linkHref, external = false } = Astro.props;
 ---
 
 <div class="cta-banner">
@@ -14,7 +15,11 @@ const { title, description, linkText, linkHref } = Astro.props;
     <h3 class="cta-title">{title}</h3>
     {description && <p class="cta-desc">{description}</p>}
   </div>
-  <a href={linkHref} class="cta-link">
+  <a
+    href={linkHref}
+    class="cta-link"
+    {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+  >
     {linkText}
     <span aria-hidden="true">&rarr;</span>
   </a>

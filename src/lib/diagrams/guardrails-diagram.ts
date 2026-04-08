@@ -1,5 +1,9 @@
 import type { Node, Edge } from '@xyflow/react';
 
+// Layout manual — Canon no centro com guardrails ao redor (radial).
+// ELK hierarchical empilha 9 nodes verticalmente, perdendo o conceito radial.
+export const layoutOptions = null;
+
 export const nodes: Node[] = [
   // Central — Product Canon
   {

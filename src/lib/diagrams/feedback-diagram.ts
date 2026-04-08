@@ -1,5 +1,9 @@
 import type { Node, Edge } from '@xyflow/react';
 
+// Layout manual — padrão diamante com bifurcação.
+// ELK layered empilha tudo verticalmente, perdendo a forma de diamante.
+export const layoutOptions = null;
+
 export const nodes: Node[] = [
   {
     id: 'impl',

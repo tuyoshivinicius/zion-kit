@@ -141,6 +141,7 @@ import FeedbackDiagram from '../diagrams/FeedbackDiagram';
   .enrichment-section {
     padding: var(--space-24) 0;
     background-color: var(--color-bg-primary);
+    overflow-x: hidden;
   }
 
   .section-intro {
@@ -185,15 +186,26 @@ import FeedbackDiagram from '../diagrams/FeedbackDiagram';
     background: var(--color-bg-tertiary);
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-md);
-    padding: var(--space-5);
+    padding: var(--space-6);
+    transition: border-color var(--duration-normal) ease, box-shadow var(--duration-normal) ease;
   }
 
   .mechanism-card.primary {
     border-color: rgba(52, 211, 153, 0.3);
   }
 
+  .mechanism-card.primary:hover {
+    border-color: var(--color-aurora-green);
+    box-shadow: var(--shadow-glow-green);
+  }
+
   .mechanism-card.complementary {
     border-color: rgba(34, 211, 238, 0.3);
+  }
+
+  .mechanism-card.complementary:hover {
+    border-color: var(--color-aurora-cyan);
+    box-shadow: var(--shadow-glow-cyan);
   }
 
   .mechanism-header {
@@ -205,7 +217,7 @@ import FeedbackDiagram from '../diagrams/FeedbackDiagram';
   }
 
   .mechanism-icon {
-    font-size: 1.25rem;
+    font-size: var(--text-xl);
   }
 
   .mechanism-header h4 {
@@ -218,16 +230,16 @@ import FeedbackDiagram from '../diagrams/FeedbackDiagram';
   .mechanism-badge {
     font-size: var(--text-xs);
     font-weight: 500;
-    padding: 0.125rem 0.5rem;
+    padding: var(--space-1) var(--space-2);
     border-radius: var(--radius-full);
     background: rgba(52, 211, 153, 0.1);
-    color: #34d399;
+    color: var(--color-solution);
     border: 1px solid rgba(52, 211, 153, 0.3);
   }
 
   .mechanism-badge.secondary {
     background: rgba(34, 211, 238, 0.1);
-    color: #22d3ee;
+    color: var(--color-aurora-cyan);
     border-color: rgba(34, 211, 238, 0.3);
   }
 
@@ -239,7 +251,7 @@ import FeedbackDiagram from '../diagrams/FeedbackDiagram';
   }
 
   .code-example {
-    background: #0f172a;
+    background: var(--color-bg-primary);
     border-radius: var(--radius-sm);
     padding: var(--space-3);
     margin: var(--space-2) 0;
@@ -247,17 +259,17 @@ import FeedbackDiagram from '../diagrams/FeedbackDiagram';
   }
 
   .code-example code {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: var(--text-xs);
-    color: #67e8f9;
+    color: var(--color-text-accent);
     white-space: pre-wrap;
     word-break: break-word;
   }
 
-  .mechanism-note {
+  .mechanism-card .mechanism-note {
     font-style: italic;
-    color: var(--color-text-muted) !important;
-    font-size: var(--text-xs) !important;
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
   }
 
   /* Approval paths */
@@ -272,15 +284,15 @@ import FeedbackDiagram from '../diagrams/FeedbackDiagram';
     background: var(--color-bg-tertiary);
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-md);
-    padding: var(--space-5);
+    padding: var(--space-6);
   }
 
   .path-ok {
-    border-left: 3px solid #34d399;
+    border-left: 3px solid var(--color-solution);
   }
 
   .path-escalation {
-    border-left: 3px solid #fbbf24;
+    border-left: 3px solid var(--color-warning);
   }
 
   .path-header {
@@ -305,12 +317,12 @@ import FeedbackDiagram from '../diagrams/FeedbackDiagram';
   }
 
   .approval-path code {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: var(--text-xs);
     background: rgba(34, 211, 238, 0.1);
-    padding: 0.125rem 0.375rem;
+    padding: var(--space-1) var(--space-2);
     border-radius: var(--radius-sm);
-    color: #67e8f9;
+    color: var(--color-text-accent);
   }
 
   /* Lifecycle list */

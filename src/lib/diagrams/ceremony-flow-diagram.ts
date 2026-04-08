@@ -1,5 +1,9 @@
 import type { Node, Edge } from '@xyflow/react';
 
+// Layout manual — sequência vertical compacta com feedback loops laterais.
+// ELK layered cria 7 layers com spacing excessivo (~1310px), ficando minúsculo.
+export const layoutOptions = null;
+
 export const nodes: Node[] = [
   {
     id: 'discovery',
@@ -141,7 +145,7 @@ export const edges: Edge[] = [
     label: '(a) mais fluxos',
     labelStyle: { fill: '#22d3ee', fontSize: 10 },
     style: { stroke: 'rgba(34, 211, 238, 0.3)', strokeWidth: 1.5, strokeDasharray: '6 3' },
-    sourceHandle: 'left',
+    sourceHandle: 'left-source',
     targetHandle: 'left',
   },
   {
@@ -152,7 +156,7 @@ export const edges: Edge[] = [
     label: '(b) mais requisitos',
     labelStyle: { fill: '#22d3ee', fontSize: 10 },
     style: { stroke: 'rgba(34, 211, 238, 0.3)', strokeWidth: 1.5, strokeDasharray: '6 3' },
-    sourceHandle: 'right',
+    sourceHandle: 'right-source',
     targetHandle: 'right',
   },
 ];

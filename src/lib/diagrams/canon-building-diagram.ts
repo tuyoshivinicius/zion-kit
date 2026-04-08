@@ -1,5 +1,9 @@
 import type { Node, Edge } from '@xyflow/react';
 
+// Layout manual — 3 colunas de pares session→gate.
+// ELK layered coloca tudo numa única coluna, ficando minúsculo.
+export const layoutOptions = null;
+
 export const nodes: Node[] = [
   {
     id: 'session1',
@@ -26,7 +30,7 @@ export const nodes: Node[] = [
   {
     id: 'session2',
     type: 'nodeCard',
-    position: { x: 280, y: 0 },
+    position: { x: 270, y: 0 },
     data: {
       title: 'Constituição Técnica',
       content: ['Quem: Architect', 'O quê: stack, comunicação, segurança, regras técnicas'],
@@ -37,7 +41,7 @@ export const nodes: Node[] = [
   {
     id: 'gate2',
     type: 'nodeCard',
-    position: { x: 280, y: 180 },
+    position: { x: 270, y: 180 },
     data: {
       title: 'Gate 2 — Aprovação',
       content: ['constitution-plan', 'Plano de mudanças revisado'],
@@ -48,7 +52,7 @@ export const nodes: Node[] = [
   {
     id: 'session3',
     type: 'nodeCard',
-    position: { x: 560, y: 0 },
+    position: { x: 540, y: 0 },
     data: {
       title: 'Especificação de Requisitos',
       content: ['Quem: Domain Builder', 'O quê: requisitos formalizados com critérios claros'],
@@ -59,7 +63,7 @@ export const nodes: Node[] = [
   {
     id: 'gate3',
     type: 'nodeCard',
-    position: { x: 560, y: 180 },
+    position: { x: 540, y: 180 },
     data: {
       title: 'Gate 3 — Aprovação',
       content: ['specification-plan', 'Plano de mudanças revisado'],

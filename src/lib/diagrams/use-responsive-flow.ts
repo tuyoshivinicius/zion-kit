@@ -4,7 +4,7 @@ import type { ReactFlowInstance } from '@xyflow/react';
 
 const MOBILE_BREAKPOINT = 768;
 
-export function useResponsiveFlow() {
+export function useResponsiveFlow(fitViewTrigger?: boolean) {
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' ? window.innerWidth < MOBILE_BREAKPOINT : false
   );
@@ -25,11 +25,15 @@ export function useResponsiveFlow() {
   const onInit = useCallback((instance: ReactFlowInstance) => {
     instanceRef.current = instance;
     const padding = window.innerWidth < MOBILE_BREAKPOINT ? 0.05 : 0.15;
-    // Multiple attempts to ensure fitView works after rendering
     instance.fitView({ padding });
-    setTimeout(() => instance.fitView({ padding }), 50);
-    setTimeout(() => instance.fitView({ padding }), 200);
   }, []);
+
+  useEffect(() => {
+    if (fitViewTrigger && instanceRef.current) {
+      const padding = window.innerWidth < MOBILE_BREAKPOINT ? 0.05 : 0.15;
+      instanceRef.current.fitView({ padding });
+    }
+  }, [fitViewTrigger]);
 
   const config = isMobile ? mobileFlowConfig : desktopFlowConfig;
 

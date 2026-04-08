@@ -1,11 +1,15 @@
 import type { Node, Edge } from '@xyflow/react';
 
+// Layout manual — hierarquia envelope → fields → types → approval.
+// ELK hierarchical cria coluna única com 11 nodes, ficando minúsculo.
+export const layoutOptions = null;
+
 export const nodes: Node[] = [
   // Envelope header
   {
     id: 'envelope',
     type: 'nodeCard',
-    position: { x: 220, y: 0 },
+    position: { x: 300, y: 0 },
     data: {
       title: 'Canonical Change Plan',
       content: 'Envelope + Payload',
@@ -19,7 +23,7 @@ export const nodes: Node[] = [
   {
     id: 'universal',
     type: 'nodeCard',
-    position: { x: 0, y: 130 },
+    position: { x: 60, y: 130 },
     data: {
       title: '7 Campos Universais',
       content: [
@@ -41,7 +45,7 @@ export const nodes: Node[] = [
   {
     id: 'conditional',
     type: 'nodeCard',
-    position: { x: 440, y: 130 },
+    position: { x: 540, y: 130 },
     data: {
       title: '4 Campos Condicionais',
       content: [
@@ -60,7 +64,7 @@ export const nodes: Node[] = [
   {
     id: 'discovery',
     type: 'nodeCard',
-    position: { x: -80, y: 420 },
+    position: { x: -40, y: 420 },
     data: {
       title: 'discovery-plan',
       content: 'Sessão de Descoberta (Etapa 1)',
@@ -72,7 +76,7 @@ export const nodes: Node[] = [
   {
     id: 'constitution',
     type: 'nodeCard',
-    position: { x: 120, y: 420 },
+    position: { x: 190, y: 420 },
     data: {
       title: 'constitution-plan',
       content: 'Constituição Técnica (Etapa 1)',
@@ -84,7 +88,7 @@ export const nodes: Node[] = [
   {
     id: 'specification',
     type: 'nodeCard',
-    position: { x: 320, y: 420 },
+    position: { x: 420, y: 420 },
     data: {
       title: 'specification-plan',
       content: 'Especificação de Requisitos (Etapa 1)',
@@ -96,7 +100,7 @@ export const nodes: Node[] = [
   {
     id: 'expert-edit',
     type: 'nodeCard',
-    position: { x: 520, y: 420 },
+    position: { x: 680, y: 420 },
     data: {
       title: 'expert-edit-plan',
       content: 'Edição Direta do Domain Expert',
@@ -108,7 +112,7 @@ export const nodes: Node[] = [
   {
     id: 'incremental',
     type: 'nodeCard',
-    position: { x: 720, y: 420 },
+    position: { x: 940, y: 420 },
     data: {
       title: 'incremental-plan',
       content: 'Spec Crafting (Etapa 2)',
@@ -122,7 +126,7 @@ export const nodes: Node[] = [
   {
     id: 'approval',
     type: 'nodeCard',
-    position: { x: 100, y: 620 },
+    position: { x: 150, y: 640 },
     data: {
       title: 'Aprovação por Afinidade',
       content: [
@@ -140,7 +144,7 @@ export const nodes: Node[] = [
   {
     id: 'exception',
     type: 'nodeCard',
-    position: { x: 470, y: 620 },
+    position: { x: 570, y: 640 },
     data: {
       title: 'Exceção: expert-edit-plan',
       content: [
