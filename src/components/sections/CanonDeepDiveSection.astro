@@ -5,16 +5,17 @@ import ScrollReveal from '../animations/ScrollReveal.astro';
 const businessLayer = [
   { name: 'Glossário de linguagem ubíqua', desc: 'O dicionário oficial do produto. Cada termo tem uma definição precisa, acordada por todos.' },
   { name: 'Regras de negócio', desc: 'Restrições e políticas do produto, expressas de forma clara e verificável.' },
-  { name: 'Requisitos formalizados', desc: 'Requisitos produzidos via mediação da IA — linguagem natural traduzida para formato preciso.' },
+  { name: 'Requisitos formalizados', desc: 'Requisitos produzidos via mediação da IA em formato IEEE 29148 com critérios de aceitação SBE (Specification by Example), com completude e consistência validadas internamente pela IA.' },
   { name: 'Fluxos de domínio', desc: 'O que acontece, em que ordem, quem faz o quê — derivados das sessões de descoberta.' },
 ];
 
 const archLayer = [
-  { name: 'Princípios técnicos constitucionais', desc: 'Stack, comunicação entre componentes, segurança, observabilidade.' },
+  { name: 'Princípios técnicos constitucionais', desc: 'Stack, comunicação entre componentes, segurança, observabilidade. Incluem o nível de aderência IEEE 29148 configurado para cada bounded context (Mínimo, Moderado ou Completo).' },
   { name: 'Bounded contexts', desc: 'Fronteiras lógicas que separam áreas com vocabulário e regras próprias.' },
   { name: 'Eventos de domínio', desc: 'Catálogo dos fatos relevantes que acontecem no sistema, com dados e consumidores.' },
   { name: 'Context maps', desc: 'Como as áreas do negócio se relacionam entre si e trocam informações.' },
   { name: 'ADRs', desc: 'O que foi decidido, por quê, quais alternativas foram consideradas e consequências.' },
+  { name: 'Canonical Change Plans', desc: 'Registros dos planos de mudança aprovados em cada cerimônia ou canal — discovery-plan, constitution-plan, specification-plan, expert-edit-plan, incremental-plan — todos contendo requisitos em formato IEEE 29148 + SBE.' },
 ];
 ---
 
@@ -22,7 +23,7 @@ const archLayer = [
   <div class="max-width-content">
     <ScrollReveal animation="fade-up">
       <SectionHeader
-        sectionNumber={8}
+        sectionNumber={11}
         sectionId="canon"
         title='Anatomia da <span class="gradient-text">Product Canon</span>'
         depth={3}
@@ -69,6 +70,12 @@ const archLayer = [
     </div>
 
     <ScrollReveal animation="fade-up" delay={0.3}>
+      <p class="canon-metadata-note">
+        Artefatos da Product Canon podem conter metadados de hotspot de domínio (autor, data, descrição) — áreas frágeis que a IA prioriza durante validação — e histórico de anotações de aprovação, enriquecendo o contexto disponível para especificações futuras.
+      </p>
+    </ScrollReveal>
+
+    <ScrollReveal animation="fade-up" delay={0.45}>
       <p class="canon-footnote">
         Todos os artefatos são documentos markdown versionados em Git — com rastreabilidade completa de quem alterou o quê, quando e por quê.
       </p>
@@ -157,6 +164,18 @@ const archLayer = [
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
     line-height: var(--leading-normal);
+  }
+
+  .canon-metadata-note {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+    text-align: center;
+    margin-bottom: var(--space-6);
+    padding: var(--space-4) var(--space-6);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-aurora-green);
   }
 
   .canon-footnote {
