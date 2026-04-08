@@ -14,6 +14,7 @@ export const flowConfig = {
   minZoom: 0.3,
   nodesDraggable: false,
   panOnDrag: false,
+  panOnScroll: false,
   zoomOnScroll: false,
   zoomOnPinch: false,
   zoomOnDoubleClick: false,
@@ -25,16 +26,11 @@ export const mobileFlowConfig = {
   ...flowConfig,
   fitViewOptions: { padding: 0.05 },
   minZoom: 0.2,
-  zoomOnPinch: true,
-  panOnDrag: true,
-  preventScrolling: true,
 } as const;
 
 export const desktopFlowConfig = {
   ...flowConfig,
-  panOnDrag: true,
   zoomOnScroll: true,
-  zoomOnPinch: true,
 } as const;
 
 export const variantColors = {
