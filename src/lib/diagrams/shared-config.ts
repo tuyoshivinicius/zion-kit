@@ -1,37 +1,3 @@
-import type { Edge } from '@xyflow/react';
-
-export const defaultEdgeOptions: Partial<Edge> = {
-  type: 'smoothstep',
-  style: {
-    stroke: 'rgba(34, 211, 238, 0.5)',
-    strokeWidth: 2,
-  },
-};
-
-export const flowConfig = {
-  fitView: true,
-  fitViewOptions: { padding: 0.15 },
-  minZoom: 0.3,
-  nodesDraggable: false,
-  panOnDrag: false,
-  panOnScroll: false,
-  zoomOnScroll: false,
-  zoomOnPinch: false,
-  zoomOnDoubleClick: false,
-  preventScrolling: false,
-  proOptions: { hideAttribution: true },
-} as const;
-
-export const mobileFlowConfig = {
-  ...flowConfig,
-  fitViewOptions: { padding: 0.05 },
-  minZoom: 0.2,
-} as const;
-
-export const desktopFlowConfig = {
-  ...flowConfig,
-} as const;
-
 export const variantColors = {
   default: {
     border: 'rgba(148, 163, 184, 0.1)',

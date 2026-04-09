@@ -1,0 +1,149 @@
+---
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import ProcessTimeline from '../ui/ProcessTimeline.astro';
+import ProcessCard from '../ui/ProcessCard.astro';
+
+const iconDiscovery = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="16" stroke="currentColor" stroke-width="1.5"/><path d="M40 40l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 28h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M28 22v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="28" cy="28" r="6" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg>`;
+
+const iconGate = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 6L56 16v16c0 14-10 22-24 26C8 54 8 46 8 32V16L32 6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M22 32l6 6 12-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const iconConstitution = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="10" stroke="currentColor" stroke-width="1.5"/><circle cx="32" cy="32" r="3" fill="currentColor" opacity="0.6"/><path d="M32 8v8M32 48v8M8 32h8M48 32h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M16.7 16.7l5.6 5.6M41.7 41.7l5.6 5.6M47.3 16.7l-5.6 5.6M22.3 41.7l-5.6 5.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/></svg>`;
+
+const iconSpecification = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="6" width="36" height="52" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="22" y1="18" x2="42" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="22" y1="26" x2="42" y2="26" stroke="currentColor" stroke-width="1"/><line x1="22" y1="34" x2="38" y2="34" stroke="currentColor" stroke-width="1"/><line x1="22" y1="42" x2="40" y2="42" stroke="currentColor" stroke-width="1"/><path d="M18 26l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/></svg>`;
+
+const iconDecision = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 8L56 32L32 56L8 32L32 8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M32 20v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="32" cy="40" r="2.5" fill="currentColor"/><path d="M8 32H4M60 32h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg>`;
+---
+
+<DiagramContainer label="Fluxo de Cerimonia do Canon Building" title="Fluxo de Cerimonia">
+  <div class="ceremony-flow-diagram">
+    <ProcessTimeline accentColor="var(--color-aurora-cyan)">
+
+      <!-- 1. Domain Discovery Session -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Domain Discovery Session"
+          description="Baseada em Event Storming. Saída: discovery-plan"
+          icon={iconDiscovery}
+          roles={['Domain Builder', 'Domain Expert', 'Architect']}
+          type="ceremony"
+          accentColor="var(--color-aurora-cyan)"
+          position="left"
+        />
+      </div>
+
+      <!-- 2. Gate — Aprovação (Discovery) -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Gate — Aprovação"
+          description="Domain Expert (primária) + Architect"
+          icon={iconGate}
+          roles={['Domain Expert', 'Architect']}
+          type="process"
+          accentColor="var(--color-semantic-warning, rgba(250, 204, 21, 0.8))"
+          position="right"
+          markerType="gate"
+        />
+      </div>
+
+      <!-- 3. Technical Constitution Session -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Technical Constitution Session"
+          description="Architect define princípios técnicos. Saída: constitution-plan"
+          icon={iconConstitution}
+          roles={['Architect', 'Domain Expert']}
+          type="ceremony"
+          accentColor="var(--color-aurora-cyan)"
+          position="left"
+        />
+      </div>
+
+      <!-- 4. Gate — Aprovação (Constitution) -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Gate — Aprovação"
+          description="Architect (primária) + Domain Expert"
+          icon={iconGate}
+          roles={['Architect', 'Domain Expert']}
+          type="process"
+          accentColor="var(--color-semantic-warning, rgba(250, 204, 21, 0.8))"
+          position="right"
+          markerType="gate"
+        />
+      </div>
+
+      <!-- 5. Requirements Specification Session -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Requirements Specification Session"
+          description="Clarificação iterativa (8 passos). Saída: specification-plan"
+          icon={iconSpecification}
+          roles={['Domain Builder', 'Domain Expert']}
+          type="ceremony"
+          accentColor="var(--color-aurora-cyan)"
+          position="left"
+        />
+      </div>
+
+      <!-- 6. Gate — Aprovação (Specification) -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Gate — Aprovação"
+          description="Domain Expert (primária) + Architect"
+          icon={iconGate}
+          roles={['Domain Expert', 'Architect']}
+          type="process"
+          accentColor="var(--color-semantic-warning, rgba(250, 204, 21, 0.8))"
+          position="right"
+          markerType="gate"
+        />
+      </div>
+
+      <!-- 7. Decisão do Canon -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Decisão do Canon"
+          description="Variante do canon-type"
+          icon={iconDecision}
+          roles={['Domain Builder']}
+          type="decision"
+          accentColor="var(--color-aurora-violet, rgba(167, 139, 250, 0.8))"
+          position="left"
+          markerType="decision"
+        />
+        <p class="feedback-annotation" role="note">
+          <span class="feedback-annotation__icon" aria-hidden="true">↩</span>
+          (a) Mais fluxos → volta para Discovery &nbsp;|&nbsp; (b) Mais requisitos → volta para Specification &nbsp;|&nbsp; (c) Encerrar → Spec Crafting
+        </p>
+      </div>
+
+    </ProcessTimeline>
+  </div>
+</DiagramContainer>
+
+<style>
+  .ceremony-flow-diagram {
+    width: 100%;
+  }
+
+  .feedback-annotation {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-aurora-violet, rgba(167, 139, 250, 0.9));
+    background: rgba(167, 139, 250, 0.05);
+    border: 1px dashed rgba(167, 139, 250, 0.3);
+    border-radius: var(--radius-md);
+    font-style: italic;
+    line-height: var(--leading-relaxed);
+  }
+
+  .feedback-annotation__icon {
+    font-size: var(--text-base);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+</style>

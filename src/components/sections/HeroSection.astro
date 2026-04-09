@@ -3,7 +3,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 import ExampleBlock from '../ui/ExampleBlock.astro';
 import DiagramContainer from '../ui/DiagramContainer.astro';
 import ScrollReveal from '../animations/ScrollReveal.astro';
-import ContextVoidDiagram from '../diagrams/ContextVoidDiagram';
+import ContextVoidDiagramV2 from '../diagrams/ContextVoidDiagramV2.astro';
 ---
 
 <section id="problema" class="hero-section section-odd" aria-labelledby="heading-problema">
@@ -52,7 +52,7 @@ import ContextVoidDiagram from '../diagrams/ContextVoidDiagram';
 
     <ScrollReveal animation="scale-in">
       <DiagramContainer label="O Vazio de Contexto — o fluxo atual com a quebra entre conhecimento e código" title="Diagrama 1 — O Vazio de Contexto">
-        <ContextVoidDiagram client:visible />
+        <ContextVoidDiagramV2 />
       </DiagramContainer>
     </ScrollReveal>
 

@@ -1,0 +1,156 @@
+---
+import FlowCard from '../ui/FlowCard.astro';
+---
+
+<div class="contextual-spec-diagram" role="img" aria-label="Especificação Contextualizada — fluxo de injeção seletiva de contexto da Product Canon">
+
+  <FlowCard
+    icon="📚"
+    title="Product Canon"
+    variant="canon"
+    description="Conhecimento formalizado"
+  />
+
+  <div class="arrow arrow--cyan" aria-hidden="true">
+    <span class="arrow__label">contexto relevante injetado</span>
+    <svg class="arrow__svg" viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="12" y1="0" x2="12" y2="30" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3"/>
+      <polyline points="6,24 12,36 18,24" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <FlowCard
+    icon="📝"
+    title="Especificação de Funcionalidade"
+    variant="default"
+  >
+    <ul class="check-list">
+      <li class="check-list__item check-list__item--ok">Vocabulário consistente?</li>
+      <li class="check-list__item check-list__item--ok">Regras de negócio respeitadas?</li>
+      <li class="check-list__item check-list__item--ok">Decisões técnicas compatíveis?</li>
+      <li class="check-list__item check-list__item--warn">Impactos identificados</li>
+    </ul>
+  </FlowCard>
+
+  <div class="arrow arrow--green" aria-hidden="true">
+    <span class="arrow__label">impactos documentados</span>
+    <svg class="arrow__svg" viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="12" y1="0" x2="12" y2="30" stroke="currentColor" stroke-width="2"/>
+      <polyline points="6,24 12,36 18,24" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <FlowCard
+    icon="📑"
+    title="Plano de Mudanças Incremental"
+    variant="solution"
+  >
+    <ul class="plan-list">
+      <li>Negócio: termos, regras novas</li>
+      <li>Arquitetura: eventos, schemas</li>
+      <li class="plan-list__approval">→ Aprovação por responsáveis</li>
+    </ul>
+  </FlowCard>
+
+</div>
+
+<style>
+  .contextual-spec-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: var(--space-2) 0;
+  }
+
+  .contextual-spec-diagram :global(.flow-card) {
+    width: 100%;
+  }
+
+  /* Arrow connector */
+  .arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1) 0;
+  }
+
+  .arrow__label {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-muted);
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
+  .arrow__svg {
+    width: 24px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .arrow--cyan {
+    color: rgba(34, 211, 238, 0.6);
+  }
+
+  .arrow--green {
+    color: rgba(52, 211, 153, 0.6);
+  }
+
+  /* Checklist inside spec card */
+  .check-list {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .check-list__item {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-text-secondary);
+    padding-left: var(--space-5);
+    position: relative;
+  }
+
+  .check-list__item::before {
+    position: absolute;
+    left: 0;
+    font-size: var(--text-sm);
+  }
+
+  .check-list__item--ok::before {
+    content: '✓';
+    color: rgba(52, 211, 153, 0.9);
+  }
+
+  .check-list__item--warn::before {
+    content: '⚠';
+    color: rgba(250, 204, 21, 0.9);
+  }
+
+  /* Plan list inside plan card */
+  .plan-list {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .plan-list li {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-text-secondary);
+  }
+
+  .plan-list__approval {
+    color: var(--color-text-accent, rgba(52, 211, 153, 0.9));
+    font-weight: var(--font-medium, 500);
+    margin-top: var(--space-1);
+  }
+</style>

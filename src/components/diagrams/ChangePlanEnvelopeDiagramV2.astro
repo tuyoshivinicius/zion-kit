@@ -1,0 +1,527 @@
+---
+// ChangePlanEnvelopeDiagramV2.astro
+// Diagrama estático em 3 partes: envelope + campos, grid de tipos, aprovação.
+// Substitui ChangePlanEnvelopeDiagram.tsx (ReactFlow).
+
+const universalFields = [
+  'id — identificador único',
+  'type — um dos 5 tipos',
+  'status — draft → approved',
+  'author — pessoa ou papel',
+  'created-at — data de criação',
+  'scope — bounded contexts',
+  'approvals — registro sequencial',
+];
+
+const conditionalFields = [
+  { field: 'affected-layer',    type: 'incremental-plan'  },
+  { field: 'conditionality',    type: 'incremental-plan'  },
+  { field: 'edited-artifacts',  type: 'expert-edit-plan'  },
+  { field: 'compliance-report', type: 'expert-edit-plan'  },
+];
+
+const changeTypes = [
+  { icon: '🔍', title: 'discovery-plan',     subtitle: 'Sessão de Descoberta (Etapa 1)',          variant: 'default'  },
+  { icon: '⚖️', title: 'constitution-plan',  subtitle: 'Constituição Técnica (Etapa 1)',           variant: 'default'  },
+  { icon: '📐', title: 'specification-plan', subtitle: 'Especificação de Requisitos (Etapa 1)',     variant: 'default'  },
+  { icon: '✏️', title: 'expert-edit-plan',   subtitle: 'Edição Direta do Domain Expert',           variant: 'problem'  },
+  { icon: '📈', title: 'incremental-plan',   subtitle: 'Spec Crafting (Etapa 2)',                  variant: 'default'  },
+] as const;
+
+type Variant = typeof changeTypes[number]['variant'];
+
+const variantBorder: Record<Variant, string> = {
+  default: 'rgba(34,211,238,0.3)',
+  problem: 'rgba(248,113,113,0.4)',
+};
+const variantBg: Record<Variant, string> = {
+  default: 'rgba(34,211,238,0.05)',
+  problem: 'rgba(248,113,113,0.06)',
+};
+---
+
+<div class="cpe-diagram" aria-label="Diagrama do Canonical Change Plan — Envelope, tipos e aprovação">
+
+  <!-- ── Part 1: Envelope ──────────────────────────────────────── -->
+  <section class="cpe-part" aria-labelledby="cpe-envelope-title">
+    <!-- Header card -->
+    <div class="cpe-envelope-header">
+      <span class="cpe-icon" aria-hidden="true">📋</span>
+      <div>
+        <h3 class="cpe-header-title" id="cpe-envelope-title">Canonical Change Plan</h3>
+        <p class="cpe-header-sub">Envelope de metadados + Payload tipado</p>
+      </div>
+    </div>
+
+    <!-- Branch connectors -->
+    <div class="cpe-branch" aria-hidden="true">
+      <div class="cpe-branch-line left"></div>
+      <div class="cpe-branch-center"></div>
+      <div class="cpe-branch-line right"></div>
+    </div>
+
+    <!-- Fields grid -->
+    <div class="cpe-fields-grid">
+      <!-- Universal -->
+      <div class="cpe-fields-card universal">
+        <div class="cpe-fields-label-row">
+          <span class="cpe-dot dot-green" aria-hidden="true"></span>
+          <span class="cpe-label-badge badge-green">obrigatórios</span>
+        </div>
+        <h4 class="cpe-fields-title">🔒 7 Campos Universais</h4>
+        <p class="cpe-fields-sub">Presentes em todos os 5 tipos</p>
+        <ul class="cpe-fields-list">
+          {universalFields.map(f => {
+            const [name, ...rest] = f.split(' — ');
+            return (
+              <li>
+                <code class="cpe-field-key">{name}</code>
+                <span class="cpe-field-val"> — {rest.join(' — ')}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
+      <!-- Conditional -->
+      <div class="cpe-fields-card conditional">
+        <div class="cpe-fields-label-row">
+          <span class="cpe-dot dot-yellow" aria-hidden="true"></span>
+          <span class="cpe-label-badge badge-yellow">por tipo</span>
+        </div>
+        <h4 class="cpe-fields-title">⚙️ 4 Campos Condicionais</h4>
+        <p class="cpe-fields-sub">Apenas em tipos específicos</p>
+        <ul class="cpe-fields-list">
+          {conditionalFields.map(f => (
+            <li class="cpe-field-conditional">
+              <code class="cpe-field-key">{f.field}</code>
+              <span class="cpe-type-badge">{f.type}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Connector ─────────────────────────────────────────────── -->
+  <div class="cpe-connector" aria-hidden="true">
+    <div class="cpe-connector-line"></div>
+    <svg class="cpe-connector-arrow" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true">
+      <path d="M0 0 L5 6 L10 0" fill="none" stroke="rgba(34,211,238,0.4)" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <!-- ── Part 2: 5 Tipos ───────────────────────────────────────── -->
+  <section class="cpe-part" aria-labelledby="cpe-types-title">
+    <h3 class="cpe-section-label" id="cpe-types-title">5 Tipos de Change Plan</h3>
+    <div class="cpe-types-grid">
+      {changeTypes.map(t => (
+        <div
+          class:list={['cpe-type-card', `cpe-type-card--${t.variant}`]}
+          style={`--tc-border: ${variantBorder[t.variant]}; --tc-bg: ${variantBg[t.variant]};`}
+        >
+          <span class="cpe-type-icon" aria-hidden="true">{t.icon}</span>
+          <code class="cpe-type-name">{t.title}</code>
+          <p class="cpe-type-sub">{t.subtitle}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ── Connector ─────────────────────────────────────────────── -->
+  <div class="cpe-connector" aria-hidden="true">
+    <div class="cpe-connector-line"></div>
+    <svg class="cpe-connector-arrow" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true">
+      <path d="M0 0 L5 6 L10 0" fill="none" stroke="rgba(34,211,238,0.4)" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <!-- ── Part 3: Aprovação ─────────────────────────────────────── -->
+  <section class="cpe-part" aria-labelledby="cpe-approval-title">
+    <h3 class="cpe-section-label" id="cpe-approval-title">Fluxo de Aprovação</h3>
+    <div class="cpe-approval-grid">
+      <!-- Standard -->
+      <div class="cpe-approval-card standard">
+        <div class="cpe-approval-header">
+          <span class="cpe-icon" aria-hidden="true">✅</span>
+          <h4>Aprovação por Afinidade</h4>
+        </div>
+        <ul>
+          <li><strong>Primário:</strong> papel com expertise direta sobre o conteúdo</li>
+          <li><strong>Secundário:</strong> assíncrono com janela de veto (48h úteis)</li>
+          <li>Expiração = <strong>aprovação tácita</strong></li>
+        </ul>
+      </div>
+
+      <!-- Exception -->
+      <div class="cpe-approval-card exception">
+        <div class="cpe-approval-header">
+          <span class="cpe-icon" aria-hidden="true">⚠️</span>
+          <h4>Exceção: <code>expert-edit-plan</code></h4>
+        </div>
+        <ul>
+          <li><strong>1. Domain Expert</strong> — valida fidelidade da intenção original</li>
+          <li><strong>2. Architect</strong> — avalia impacto técnico e dependências</li>
+          <li>Expiração = <strong>bloqueio</strong> (não aprovação tácita)</li>
+          <li>Sequencial, obrigatória e não-delegável</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<style>
+  /* ── Container ──────────────────────────────────────────────── */
+  .cpe-diagram {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    font-size: var(--text-sm, 0.875rem);
+  }
+
+  .cpe-part {
+    width: 100%;
+  }
+
+  /* ── Envelope header ────────────────────────────────────────── */
+  .cpe-envelope-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3, 0.75rem);
+    background: rgba(167, 139, 250, 0.08);
+    border: 1px solid rgba(167, 139, 250, 0.35);
+    border-radius: var(--radius-lg, 12px);
+    padding: var(--space-4, 1rem) var(--space-5, 1.25rem);
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .cpe-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .cpe-header-title {
+    font-size: var(--text-base, 1rem);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-1, 0.25rem);
+  }
+
+  .cpe-header-sub {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* ── Branch connector ───────────────────────────────────────── */
+  .cpe-branch {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 28px;
+    position: relative;
+  }
+
+  .cpe-branch-center {
+    width: 2px;
+    height: 14px;
+    background: rgba(34, 211, 238, 0.3);
+    align-self: flex-start;
+    flex-shrink: 0;
+  }
+
+  .cpe-branch-line {
+    flex: 1;
+    max-width: 220px;
+    height: 2px;
+    background: rgba(34, 211, 238, 0.3);
+    align-self: flex-end;
+  }
+
+  .cpe-branch-line.left  { margin-right: 0; border-bottom-right-radius: 0; }
+  .cpe-branch-line.right { margin-left: 0; }
+
+  /* ── Fields grid ────────────────────────────────────────────── */
+  .cpe-fields-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4, 1rem);
+  }
+
+  @media (max-width: 640px) {
+    .cpe-fields-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cpe-fields-card {
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg, 12px);
+    padding: var(--space-4, 1rem);
+    background: var(--color-bg-tertiary);
+  }
+
+  .cpe-fields-card.universal  { border-color: rgba(52, 211, 153, 0.25); }
+  .cpe-fields-card.conditional{ border-color: rgba(251, 191, 36, 0.25); }
+
+  .cpe-fields-label-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    margin-bottom: var(--space-2, 0.5rem);
+  }
+
+  .cpe-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-green  { background: var(--color-aurora-green, #34d399); }
+  .dot-yellow { background: var(--color-warning, #fbbf24); }
+
+  .cpe-label-badge {
+    font-size: var(--text-xs, 0.75rem);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide, 0.05em);
+    text-transform: uppercase;
+    border-radius: 9999px;
+    padding: 2px 8px;
+  }
+
+  .badge-green {
+    color: var(--color-aurora-green, #34d399);
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+  }
+
+  .badge-yellow {
+    color: var(--color-warning, #fbbf24);
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+  }
+
+  .cpe-fields-title {
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-1, 0.25rem);
+  }
+
+  .cpe-fields-sub {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-3, 0.75rem);
+  }
+
+  .cpe-fields-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2, 0.5rem);
+  }
+
+  .cpe-fields-list li {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal, 1.5);
+  }
+
+  .cpe-field-key {
+    color: var(--color-text-accent);
+    font-weight: 600;
+  }
+
+  .cpe-field-val {
+    color: var(--color-text-muted);
+  }
+
+  .cpe-field-conditional {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+  }
+
+  .cpe-type-badge {
+    font-size: 0.7rem;
+    color: var(--color-warning, #fbbf24);
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    border-radius: 9999px;
+    padding: 1px 6px;
+    white-space: nowrap;
+  }
+
+  /* ── Vertical connector ─────────────────────────────────────── */
+  .cpe-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-2, 0.5rem) 0;
+  }
+
+  .cpe-connector-line {
+    width: 2px;
+    height: 20px;
+    background: rgba(34, 211, 238, 0.3);
+  }
+
+  .cpe-connector-arrow {
+    display: block;
+    flex-shrink: 0;
+    margin-top: -1px;
+  }
+
+  /* ── Section label ──────────────────────────────────────────── */
+  .cpe-section-label {
+    font-size: var(--text-xs, 0.75rem);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide, 0.05em);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin: 0 0 var(--space-3, 0.75rem);
+  }
+
+  /* ── Types grid ─────────────────────────────────────────────── */
+  .cpe-types-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-3, 0.75rem);
+  }
+
+  @media (max-width: 900px) {
+    .cpe-types-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .cpe-types-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .cpe-type-card {
+    background: var(--tc-bg);
+    border: 1px solid var(--tc-border);
+    border-radius: var(--radius-lg, 12px);
+    padding: var(--space-3, 0.75rem) var(--space-3, 0.75rem) var(--space-4, 1rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-1, 0.25rem);
+    transition: border-color 0.2s ease;
+  }
+
+  .cpe-type-card:hover {
+    border-color: color-mix(in srgb, var(--tc-border) 200%, transparent);
+  }
+
+  .cpe-type-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    margin-bottom: var(--space-1, 0.25rem);
+  }
+
+  .cpe-type-name {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-text-accent);
+    word-break: break-all;
+    line-height: 1.3;
+  }
+
+  .cpe-type-sub {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* ── Approval grid ──────────────────────────────────────────── */
+  .cpe-approval-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4, 1rem);
+  }
+
+  @media (max-width: 640px) {
+    .cpe-approval-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cpe-approval-card {
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg, 12px);
+    padding: var(--space-4, 1rem);
+    background: var(--color-bg-tertiary);
+  }
+
+  .cpe-approval-card.standard  { border-color: rgba(52, 211, 153, 0.25); }
+  .cpe-approval-card.exception { border-color: rgba(248, 113, 113, 0.3); }
+
+  .cpe-approval-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    margin-bottom: var(--space-3, 0.75rem);
+  }
+
+  .cpe-approval-header h4 {
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .cpe-approval-header code {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-accent);
+  }
+
+  .cpe-approval-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2, 0.5rem);
+  }
+
+  .cpe-approval-card li {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal, 1.5);
+    padding-left: var(--space-3, 0.75rem);
+    position: relative;
+  }
+
+  .cpe-approval-card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .cpe-approval-card.standard  li::before { background: rgba(52, 211, 153, 0.7); }
+  .cpe-approval-card.exception li::before { background: rgba(248, 113, 113, 0.7); }
+
+  /* ── Reduced motion ─────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .cpe-type-card { transition: none; }
+  }
+</style>

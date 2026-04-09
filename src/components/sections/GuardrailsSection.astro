@@ -2,7 +2,7 @@
 import SectionHeader from '../ui/SectionHeader.astro';
 import DiagramContainer from '../ui/DiagramContainer.astro';
 import ScrollReveal from '../animations/ScrollReveal.astro';
-import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
+import GuardrailsDiagramV2 from '../diagrams/GuardrailsDiagramV2';
 ---
 
 <section id="guardrails" class="guardrails-section section-even" aria-labelledby="heading-guardrails">
@@ -145,7 +145,7 @@ import GuardrailsDiagram from '../diagrams/GuardrailsDiagram';
     <!-- Diagrama -->
     <ScrollReveal animation="scale-in" delay={0.9}>
       <DiagramContainer label="Guardrails da Product Canon — cinco camadas de proteção e onde cada uma atua no ciclo" title="Diagrama — Guardrails da Product Canon">
-        <GuardrailsDiagram client:visible />
+        <GuardrailsDiagramV2 client:visible />
       </DiagramContainer>
     </ScrollReveal>
   </div>

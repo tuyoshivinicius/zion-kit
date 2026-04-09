@@ -4,7 +4,7 @@ import StatCard from '../ui/StatCard.astro';
 import ExampleBlock from '../ui/ExampleBlock.astro';
 import DiagramContainer from '../ui/DiagramContainer.astro';
 import ScrollReveal from '../animations/ScrollReveal.astro';
-import ThreeGapsDiagram from '../diagrams/ThreeGapsDiagram';
+import ThreeGapsDiagramV2 from '../diagrams/ThreeGapsDiagramV2.astro';
 ---
 
 <section id="consequencias" class="consequencias-section section-even" aria-labelledby="heading-consequencias">
@@ -60,9 +60,7 @@ import ThreeGapsDiagram from '../diagrams/ThreeGapsDiagram';
 
     <!-- Diagrama 2 -->
     <ScrollReveal animation="scale-in">
-      <DiagramContainer label="Os Três Gaps — três problemas distintos mas conectados" title="Diagrama 2 — Os Três Gaps">
-        <ThreeGapsDiagram client:visible />
-      </DiagramContainer>
+      <ThreeGapsDiagramV2 />
     </ScrollReveal>
   </div>
 </section>

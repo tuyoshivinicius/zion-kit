@@ -108,6 +108,24 @@ const { accentColor = 'var(--color-aurora-cyan)' } = Astro.props;
     }
   }
 
+  /* Gate marker — yellow diamond */
+  .process-timeline__items :global(.timeline-node:has([data-marker-type="gate"])::before) {
+    background: var(--color-semantic-warning, rgba(250, 204, 21, 0.8));
+    border-color: var(--color-semantic-warning, rgba(250, 204, 21, 0.8));
+    border-radius: 0;
+    transform: translateX(-50%) rotate(45deg);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--color-semantic-warning, rgba(250, 204, 21, 0.8)) 30%, transparent);
+  }
+
+  /* Decision marker — violet diamond */
+  .process-timeline__items :global(.timeline-node:has([data-marker-type="decision"])::before) {
+    background: var(--color-aurora-violet, rgba(167, 139, 250, 0.8));
+    border-color: var(--color-aurora-violet, rgba(167, 139, 250, 0.8));
+    border-radius: 0;
+    transform: translateX(-50%) rotate(45deg);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--color-aurora-violet, rgba(167, 139, 250, 0.8)) 30%, transparent);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .process-timeline__items :global(.timeline-node::before) {
       box-shadow: none;

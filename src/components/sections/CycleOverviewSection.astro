@@ -2,7 +2,7 @@
 import SectionHeader from '../ui/SectionHeader.astro';
 import DiagramContainer from '../ui/DiagramContainer.astro';
 import ScrollReveal from '../animations/ScrollReveal.astro';
-import CycleDiagram from '../diagrams/CycleDiagram';
+import CycleDiagramV2 from '../diagrams/CycleDiagramV2';
 
 const steps = [
   { icon: '🔨', title: 'Etapa 1 — Canon Building', desc: 'Pessoas de negócio e tecnologia constroem a Product Canon através de 3 cerimônias formais — Domain Discovery Session, Technical Constitution Session e Requirements Specification Session — com gates de aprovação entre cada uma. Ao final, a Decisão de Continuidade do Ciclo oferece 3 caminhos: mapear mais fluxos, formalizar mais requisitos ou encerrar e prosseguir para a especificação.' },
@@ -25,7 +25,7 @@ const steps = [
 
     <ScrollReveal animation="scale-in">
       <DiagramContainer label="O Ciclo ZionKit — três etapas que se repetem continuamente" title="Diagrama 3 — O Ciclo ZionKit">
-        <CycleDiagram client:visible />
+        <CycleDiagramV2 client:visible />
       </DiagramContainer>
     </ScrollReveal>
 

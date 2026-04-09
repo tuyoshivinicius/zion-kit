@@ -1,0 +1,239 @@
+---
+// ContextVoidDiagramV2.astro
+// Pipeline estático: Conhecimento -[GAP]- Especificação → Código gerado ↓ Bugs.
+// Substitui ContextVoidDiagram.tsx (ReactFlow).
+import FlowCard from '../ui/FlowCard.astro';
+---
+
+<div
+  class="cvd"
+  role="img"
+  aria-label="O Vazio de Contexto — pipeline mostrando como o conhecimento se perde sem formalização"
+>
+
+  <!-- ── Linha principal: Conhecimento → GAP → Spec → Code ─────── -->
+  <div class="cvd-row">
+
+    <!-- Node 1: Conhecimento -->
+    <div class="cvd-node">
+      <FlowCard
+        icon="🧠"
+        title="Conhecimento do produto"
+        variant="default"
+        description="Disperso, informal, tácito"
+      />
+    </div>
+
+    <!-- GAP — ruptura visual (sem edge) -->
+    <div class="cvd-gap" aria-hidden="true">
+      <svg class="cvd-gap__svg" viewBox="0 0 56 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- lado esquerdo: linha tracejada vermelha -->
+        <line x1="0" y1="10" x2="17" y2="10" stroke="#f87171" stroke-width="2" stroke-dasharray="4 3" opacity="0.7"/>
+        <!-- lado direito: linha tracejada vermelha -->
+        <line x1="39" y1="10" x2="56" y2="10" stroke="#f87171" stroke-width="2" stroke-dasharray="4 3" opacity="0.7"/>
+        <!-- ícone de ruptura: X centralizado -->
+        <line x1="22" y1="4"  x2="34" y2="16" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="34" y1="4"  x2="22" y2="16" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span class="cvd-gap__label">vazio de contexto</span>
+    </div>
+
+    <!-- Node 2: Especificação -->
+    <div class="cvd-node">
+      <FlowCard
+        icon="📄"
+        title="Especificação"
+        variant="default"
+        description="Sem contexto do produto"
+      />
+    </div>
+
+    <!-- Seta: Spec → Código -->
+    <div class="cvd-arrow cvd-arrow--h" aria-hidden="true">
+      <svg viewBox="0 0 48 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="10" x2="36" y2="10" stroke="rgba(34,211,238,0.5)" stroke-width="2"/>
+        <polyline points="28,4 40,10 28,16" stroke="rgba(34,211,238,0.5)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Node 3 + 4 empilhados verticalmente: Código ↓ Bugs ────── -->
+    <div class="cvd-col">
+      <div class="cvd-node">
+        <FlowCard
+          icon="💻"
+          title="Código gerado"
+          variant="default"
+          description="Decisões silenciosas"
+        />
+      </div>
+
+      <!-- Seta: Código ↓ Bugs -->
+      <div class="cvd-arrow cvd-arrow--v" aria-hidden="true">
+        <span class="cvd-arrow__label">resultado</span>
+        <svg viewBox="0 0 24 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="12" y1="0" x2="12" y2="26" stroke="#f87171" stroke-width="2" opacity="0.7"/>
+          <polyline points="6,20 12,32 18,20" stroke="#f87171" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="cvd-node">
+        <FlowCard
+          icon="🐛"
+          title="Bugs de lógica de negócio"
+          variant="problem"
+          description="Descobertos em produção"
+        />
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+  /* ── Container ──────────────────────────────────────────────── */
+  .cvd {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* ── Linha principal (desktop: horizontal) ──────────────────── */
+  .cvd-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0;
+    width: 100%;
+  }
+
+  /* ── Nó individual ──────────────────────────────────────────── */
+  .cvd-node {
+    flex: 1 1 0;
+    min-width: 140px;
+    max-width: 220px;
+  }
+
+  .cvd-node :global(.flow-card) {
+    height: 100%;
+  }
+
+  /* ── Coluna vertical (Código + seta + Bugs) ─────────────────── */
+  .cvd-col {
+    flex: 1 1 0;
+    min-width: 140px;
+    max-width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  /* ── GAP — ruptura visual ───────────────────────────────────── */
+  .cvd-gap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1, 0.25rem);
+    padding: 0 var(--space-2, 0.5rem);
+    /* alinha ao centro do card (aprox. metade da altura do card) */
+    margin-top: calc(var(--space-4, 1rem) + 0.5rem); /* compensa padding do card */
+    flex-shrink: 0;
+  }
+
+  .cvd-gap__svg {
+    width: 56px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .cvd-gap__label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #f87171;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 0.85;
+  }
+
+  /* ── Seta horizontal ────────────────────────────────────────── */
+  .cvd-arrow--h {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-1, 0.25rem);
+    flex-shrink: 0;
+    /* alinha ao centro do card */
+    margin-top: calc(var(--space-4, 1rem) + 0.75rem);
+  }
+
+  .cvd-arrow--h svg {
+    width: 48px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  /* ── Seta vertical ──────────────────────────────────────────── */
+  .cvd-arrow--v {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: var(--space-1, 0.25rem) 0;
+  }
+
+  .cvd-arrow__label {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-muted);
+    letter-spacing: 0.01em;
+  }
+
+  .cvd-arrow--v svg {
+    width: 24px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  /* ── Mobile: empilha tudo verticalmente ─────────────────────── */
+  @media (max-width: 680px) {
+    .cvd-row {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cvd-node,
+    .cvd-col {
+      width: 100%;
+      max-width: 100%;
+      flex: unset;
+    }
+
+    .cvd-gap {
+      flex-direction: row;
+      margin-top: 0;
+      padding: var(--space-1, 0.25rem) 0;
+      gap: var(--space-2, 0.5rem);
+    }
+
+    .cvd-gap__svg {
+      /* rotaciona para orientação vertical mantendo o X no centro */
+      width: 20px;
+      height: 56px;
+      transform: rotate(90deg);
+    }
+
+    .cvd-arrow--h {
+      margin-top: 0;
+      padding: var(--space-1, 0.25rem) 0;
+      justify-content: center;
+      transform: rotate(90deg);
+    }
+
+    .cvd-col {
+      align-items: center;
+    }
+  }
+</style>

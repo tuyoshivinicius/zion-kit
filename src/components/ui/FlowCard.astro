@@ -1,0 +1,108 @@
+---
+interface Props {
+  variant?: 'default' | 'problem' | 'solution' | 'gate' | 'canon' | 'decision' | 'complementary';
+  icon?: string;
+  title: string;
+  description?: string;
+  badges?: string[];
+  class?: string;
+}
+
+const {
+  variant = 'default',
+  icon,
+  title,
+  description,
+  badges,
+  class: className,
+} = Astro.props;
+
+const variantStyles: Record<NonNullable<Props['variant']>, { border: string; bg: string }> = {
+  default:       { border: 'rgba(34, 211, 238, 0.3)',   bg: 'rgba(34, 211, 238, 0.05)' },
+  problem:       { border: 'rgba(248, 113, 113, 0.4)',  bg: 'rgba(248, 113, 113, 0.08)' },
+  solution:      { border: 'rgba(74, 222, 128, 0.4)',   bg: 'rgba(74, 222, 128, 0.08)' },
+  gate:          { border: 'rgba(250, 204, 21, 0.4)',   bg: 'rgba(250, 204, 21, 0.08)' },
+  canon:         { border: 'rgba(167, 139, 250, 0.4)',  bg: 'rgba(167, 139, 250, 0.08)' },
+  decision:      { border: 'rgba(196, 181, 253, 0.3)',  bg: 'rgba(139, 92, 246, 0.08)' },
+  complementary: { border: 'rgba(244, 114, 182, 0.3)',  bg: 'rgba(244, 114, 182, 0.08)' },
+};
+
+const { border, bg } = variantStyles[variant];
+---
+
+<div
+  class:list={['flow-card', `flow-card--${variant}`, className]}
+  style={`--fc-border: ${border}; --fc-bg: ${bg};`}
+  data-flow-card
+>
+  <div class="flow-card__header">
+    {icon && <span class="flow-card__icon">{icon}</span>}
+    <h4 class="flow-card__title">{title}</h4>
+  </div>
+  {badges && badges.length > 0 && (
+    <div class="flow-card__badges">
+      {badges.map((b) => <span class="flow-card__badge">{b}</span>)}
+    </div>
+  )}
+  {description && <p class="flow-card__description">{description}</p>}
+  <slot />
+</div>
+
+<style>
+  .flow-card {
+    background: var(--fc-bg);
+    border: 1px solid var(--fc-border);
+    border-radius: var(--radius-lg, 12px);
+    padding: var(--space-4, 1rem);
+    transition: border-color 0.2s;
+  }
+
+  .flow-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    margin-bottom: var(--space-2, 0.5rem);
+  }
+
+  .flow-card__icon {
+    flex-shrink: 0;
+    font-size: 1.125rem;
+    line-height: 1;
+  }
+
+  .flow-card__title {
+    font-size: 1rem;
+    font-weight: var(--font-semibold, 600);
+    color: var(--color-text-primary);
+    line-height: var(--leading-tight);
+    margin: 0;
+  }
+
+  .flow-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1, 0.25rem);
+    margin-bottom: var(--space-2, 0.5rem);
+  }
+
+  .flow-card__badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    color: var(--color-text-secondary);
+    background: var(--fc-bg);
+    border: 1px solid var(--fc-border);
+    white-space: nowrap;
+  }
+
+  .flow-card__description {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
+  .flow-card__badges + .flow-card__description {
+    margin-top: var(--space-2, 0.5rem);
+  }
+</style>

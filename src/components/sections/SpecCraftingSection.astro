@@ -3,7 +3,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 import ExampleBlock from '../ui/ExampleBlock.astro';
 import DiagramContainer from '../ui/DiagramContainer.astro';
 import ScrollReveal from '../animations/ScrollReveal.astro';
-import ContextualSpecDiagram from '../diagrams/ContextualSpecDiagram';
+import ContextualSpecDiagramV2 from '../diagrams/ContextualSpecDiagramV2.astro';
 ---
 
 <section id="spec-crafting" class="spec-crafting-section section-even" aria-labelledby="heading-spec-crafting">
@@ -79,7 +79,7 @@ import ContextualSpecDiagram from '../diagrams/ContextualSpecDiagram';
 
     <ScrollReveal animation="scale-in" delay={0.6}>
       <DiagramContainer label="Fluxo de especificação contextualizada consumindo a Product Canon" title="Diagrama — Especificação Contextualizada">
-        <ContextualSpecDiagram client:visible />
+        <ContextualSpecDiagramV2 />
       </DiagramContainer>
     </ScrollReveal>
   </div>

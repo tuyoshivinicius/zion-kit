@@ -42,32 +42,34 @@ const columns = [
 ];
 ---
 
-<div class="roles-matrix-wrapper">
-  <table class="roles-matrix" role="table" aria-label="Papéis por etapa do ZionKit">
-    <thead>
-      <tr>
-        <th scope="col" class="col-role">Papel</th>
-        {columns.map(col => (
-          <th scope="col">{col.label}</th>
-        ))}
-      </tr>
-    </thead>
-    <tbody>
-      {roles.map(role => (
-        <tr class="role-row">
-          <td class="role-name">
-            <span class="role-icon" aria-hidden="true">{role.icon}</span>
-            <strong>{role.name}</strong>
-          </td>
+<div class="roles-matrix-outer">
+  <div class="roles-matrix-wrapper">
+    <table class="roles-matrix" role="table" aria-label="Papéis por etapa do ZionKit">
+      <thead>
+        <tr>
+          <th scope="col" class="col-role">Papel</th>
           {columns.map(col => (
-            <td class:list={{ 'cell-empty': role[col.key] === '—' }}>
-              {role[col.key]}
-            </td>
+            <th scope="col">{col.label}</th>
           ))}
         </tr>
-      ))}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {roles.map(role => (
+          <tr class="role-row">
+            <td class="role-name">
+              <span class="role-icon" aria-hidden="true">{role.icon}</span>
+              <strong>{role.name}</strong>
+            </td>
+            {columns.map(col => (
+              <td class:list={{ 'cell-empty': role[col.key] === '—' }}>
+                {role[col.key]}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 
   <div class="protocol-indicator">
     <span class="protocol-badge" aria-hidden="true">👥</span>
@@ -76,6 +78,10 @@ const columns = [
 </div>
 
 <style>
+  .roles-matrix-outer {
+    position: relative;
+  }
+
   .roles-matrix-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -86,6 +92,13 @@ const columns = [
     .roles-matrix-wrapper {
       mask-image: linear-gradient(to right, black 0, black calc(100% - 2rem), transparent 100%);
       -webkit-mask-image: linear-gradient(to right, black 0, black calc(100% - 2rem), transparent 100%);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .roles-matrix-wrapper {
+      mask-image: linear-gradient(to right, black 0, black 85%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, black 0, black 85%, transparent 100%);
     }
   }
 
@@ -116,11 +129,11 @@ const columns = [
   }
 
   .role-row {
-    transition: background var(--duration-fast) ease;
+    transition: background 0.2s ease;
   }
 
   .role-row:hover {
-    background: rgba(148, 163, 184, 0.04);
+    background: rgba(34, 211, 238, 0.05);
   }
 
   .role-name {
@@ -128,6 +141,15 @@ const columns = [
     align-items: center;
     gap: var(--space-2);
     white-space: nowrap;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--color-bg-surface, #0a0e17);
+    box-shadow: 1px 0 0 var(--color-border-default);
+  }
+
+  .role-row:hover .role-name {
+    background: #0d1220;
   }
 
   .role-name strong {
@@ -145,6 +167,11 @@ const columns = [
 
   .col-role {
     width: 140px;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: var(--color-bg-surface, #0a0e17);
+    box-shadow: 1px 0 0 var(--color-border-default);
   }
 
   .protocol-indicator {

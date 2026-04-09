@@ -1,0 +1,149 @@
+---
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import ProcessTimeline from '../ui/ProcessTimeline.astro';
+import ProcessCard from '../ui/ProcessCard.astro';
+
+const iconPropose = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="10" width="32" height="44" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="20" y1="22" x2="36" y2="22" stroke="currentColor" stroke-width="1.5"/><line x1="20" y1="30" x2="32" y2="30" stroke="currentColor" stroke-width="1.5"/><line x1="20" y1="38" x2="34" y2="38" stroke="currentColor" stroke-width="1.5"/><path d="M42 30l10-10 6 6-10 10H42V30z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M48 24l6 6" stroke="currentColor" stroke-width="1" opacity="0.4"/></svg>`;
+
+const iconGuardrails = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 8L54 16v16c0 14-10 22-22 24C10 54 0 46 0 32V16L32 8z" transform="translate(5,4) scale(0.85)" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M23 32l5 5 9-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const iconReport = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="6" width="36" height="52" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="22" y1="18" x2="42" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="22" y1="26" x2="42" y2="26" stroke="currentColor" stroke-width="1"/><line x1="22" y1="34" x2="38" y2="34" stroke="currentColor" stroke-width="1"/><line x1="22" y1="42" x2="40" y2="42" stroke="currentColor" stroke-width="1"/><rect x="14" y="6" width="36" height="10" rx="3" fill="currentColor" opacity="0.08"/></svg>`;
+
+const iconDecision = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 8L56 32L32 56L8 32L32 8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M32 22v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="32" cy="42" r="2" fill="currentColor"/><path d="M4 32H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/><path d="M56 32h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg>`;
+
+const iconPlan = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="22" height="48" rx="3" stroke="currentColor" stroke-width="1.5"/><rect x="34" y="8" width="22" height="48" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="18" x2="26" y2="18" stroke="currentColor" stroke-width="1"/><line x1="12" y1="24" x2="24" y2="24" stroke="currentColor" stroke-width="1"/><line x1="12" y1="30" x2="26" y2="30" stroke="currentColor" stroke-width="1"/><line x1="38" y1="18" x2="52" y2="18" stroke="currentColor" stroke-width="1"/><line x1="38" y1="24" x2="50" y2="24" stroke="currentColor" stroke-width="1"/><line x1="38" y1="30" x2="52" y2="30" stroke="currentColor" stroke-width="1"/><path d="M19 40l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const iconClock = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="1.5"/><path d="M32 18v16l10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/><path d="M46 8l-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg>`;
+
+const iconSequential = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="12" width="24" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><rect x="36" y="12" width="24" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M28 20h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M33 17l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 38l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M41 38l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="16" y1="28" x2="16" y2="34" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-dasharray="2 2"/><line x1="48" y1="28" x2="48" y2="34" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-dasharray="2 2"/></svg>`;
+---
+
+<DiagramContainer label="Fluxo de Edicao Direta do Product Canon" title="Diagrama — Fluxo de Edição Direta">
+  <div class="direct-edit-diagram">
+    <ProcessTimeline>
+
+      <!-- 1. Proposta do Domain Expert -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Proposta do Domain Expert"
+          description="Sugestão em linguagem natural — correção factual, ajuste de definição ou mudança regulatória descrita em formato livre."
+          icon={iconPropose}
+          roles={['Domain Expert']}
+          type="process"
+          accentColor="var(--color-aurora-cyan)"
+          position="left"
+        />
+      </div>
+
+      <!-- 2. Guardrails Automáticos -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Guardrails Automáticos"
+          description="Validação imediata contra camadas de proteção: Clarificação de Conformidade, Validação Semântica (SBVR), Validação de Consistência e Padronização Canônica (IEEE 29148 + SBE)."
+          icon={iconGuardrails}
+          roles={['IA', 'Guardrails']}
+          type="process"
+          accentColor="var(--color-aurora-cyan)"
+          position="right"
+        />
+      </div>
+
+      <!-- 3. Relatório de Conformidade -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Relatório de Conformidade"
+          description="Resultado da validação automática — documento com divergências terminológicas, contradições com regras existentes, impactos em bounded contexts e divergências intencionais aceitas."
+          icon={iconReport}
+          roles={['IA']}
+          type="process"
+          accentColor="var(--color-aurora-cyan)"
+          position="left"
+        />
+      </div>
+
+      <!-- 4. Revisão Humana -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Revisão Humana"
+          description="Revisão por aprovadores relevantes — aceitar a versão formalizada, solicitar ajustes, responder clarificações ou reescrever e resubmeter."
+          icon={iconDecision}
+          roles={['Domain Expert']}
+          type="decision"
+          accentColor="var(--color-aurora-violet)"
+          position="right"
+          markerType="decision"
+        />
+        <p class="loop-annotation" role="note">
+          <span class="loop-annotation__icon" aria-hidden="true">↩</span>
+          Se rejeitado: volta para Guardrails (loop iterativo)
+        </p>
+      </div>
+
+      <!-- 5. Plano de Mudanças -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Plano de Mudanças"
+          description="expert-edit-plan gerado automaticamente — Change Plan tipado contendo versão formalizada, Relatório de Conformidade, divergências flagradas e impactos identificados."
+          icon={iconPlan}
+          roles={['IA']}
+          type="process"
+          accentColor="var(--color-aurora-cyan)"
+          position="left"
+        />
+      </div>
+
+      <!-- 6. Aprovação Tácita -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Aprovação Tácita"
+          description="Não-aprovação dentro de 48h = aceitação automática. Mecanismo de aprovação passiva que mantém o fluxo sem bloquear indefinidamente."
+          icon={iconClock}
+          roles={['Domain Expert', 'Architect']}
+          type="decision"
+          accentColor="var(--color-aurora-cyan)"
+          position="right"
+          markerType="gate"
+        />
+      </div>
+
+      <!-- 7. Aprovação Sequencial -->
+      <div class="timeline-node">
+        <ProcessCard
+          title="Aprovação Sequencial"
+          description="Camadas relevantes de guardrails aplicadas em sequência — Domain Expert valida fidelidade semântica (1º), Architect valida impacto técnico (2º, obrigatório)."
+          icon={iconSequential}
+          roles={['Domain Expert', 'Architect']}
+          type="process"
+          accentColor="var(--color-aurora-cyan)"
+          position="left"
+        />
+      </div>
+
+    </ProcessTimeline>
+  </div>
+</DiagramContainer>
+
+<style>
+  .direct-edit-diagram {
+    width: 100%;
+  }
+
+  .loop-annotation {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-warning, rgba(251, 191, 36, 0.9));
+    background: rgba(251, 191, 36, 0.05);
+    border: 1px dashed rgba(251, 191, 36, 0.3);
+    border-radius: var(--radius-md);
+    font-style: italic;
+  }
+
+  .loop-annotation__icon {
+    font-size: var(--text-base);
+    flex-shrink: 0;
+  }
+</style>

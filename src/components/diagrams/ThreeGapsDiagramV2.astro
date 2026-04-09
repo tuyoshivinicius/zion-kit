@@ -1,0 +1,57 @@
+---
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import FlowCard from '../ui/FlowCard.astro';
+
+const gaps = [
+  {
+    icon: '🤖',
+    title: 'IA SEM CONTEXTO',
+    description: 'A IA gera código sem saber as regras do produto',
+  },
+  {
+    icon: '🚫',
+    title: 'NEGÓCIO EXCLUÍDO',
+    description: 'Quem conhece o produto não participa da especificação',
+  },
+  {
+    icon: '🗑️',
+    title: 'CONHECIMENTO DESCARTÁVEL',
+    description: 'Descobertas da implementação morrem no código e na memória',
+  },
+];
+---
+
+<DiagramContainer label="Os Três Gaps que fragmentam o desenvolvimento" title="Diagrama 2 — Os Três Gaps">
+  <div class="gaps-grid">
+    {gaps.map((gap) => (
+      <FlowCard
+        variant="problem"
+        icon={gap.icon}
+        title={gap.title}
+        description={gap.description}
+        class="gap-card"
+      />
+    ))}
+  </div>
+</DiagramContainer>
+
+<style>
+  .gaps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6, 1.5rem);
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .gaps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .gaps-grid :global(.gap-card) {
+    border-style: dashed;
+    border-width: 2px;
+    border-radius: var(--radius-lg, 12px);
+  }
+</style>

@@ -1,0 +1,120 @@
+---
+import DiagramContainer from '../ui/DiagramContainer.astro';
+import StepperFlow from '../ui/StepperFlow.astro';
+import FlowCard from '../ui/FlowCard.astro';
+
+const steps = [
+  {
+    number: 1,
+    title: 'Discovery Session',
+    description: 'Descoberta de processos, eventos, atores e áreas do negócio',
+    type: 'step' as const,
+  },
+  {
+    number: 2,
+    title: 'Gate 1',
+    type: 'gate' as const,
+    gateLabel: 'Aprovação',
+  },
+  {
+    number: 3,
+    title: 'Technical Constitution Session',
+    description: 'Stack, comunicação, segurança e regras técnicas',
+    type: 'step' as const,
+  },
+  {
+    number: 4,
+    title: 'Gate 2',
+    type: 'gate' as const,
+    gateLabel: 'Aprovação',
+  },
+  {
+    number: 5,
+    title: 'Requirements Specification Session',
+    description: 'Requisitos formalizados com critérios claros',
+    type: 'step' as const,
+  },
+  {
+    number: 6,
+    title: 'Gate 3',
+    type: 'gate' as const,
+    gateLabel: 'Aprovação',
+  },
+];
+---
+
+<DiagramContainer label="Visao Geral do Canon Building" title="Diagrama — Visão Geral do Canon Building">
+  <div class="canon-diagram">
+    <StepperFlow steps={steps} />
+
+    <div class="canon-diagram__cards">
+      <FlowCard
+        icon="🔍"
+        title="Domain Discovery Session"
+        variant="default"
+        badges={['Domain Builder']}
+        description="Mapeamento de processos, eventos de domínio, atores e áreas do negócio via Event Storming. A IA organiza o conhecimento em bounded contexts."
+      >
+        <p class="card-output"><strong>Saída:</strong> <code>discovery-plan</code> — aprovação Domain Expert + Architect</p>
+      </FlowCard>
+
+      <FlowCard
+        icon="⚙️"
+        title="Technical Constitution Session"
+        variant="canon"
+        badges={['Architect']}
+        description="Definição de princípios técnicos constitucionais: stack, comunicação entre contextos, persistência, segurança e observabilidade."
+      >
+        <p class="card-output"><strong>Saída:</strong> <code>constitution-plan</code> — aprovação Architect + Domain Expert</p>
+      </FlowCard>
+
+      <FlowCard
+        icon="📋"
+        title="Requirements Specification Session"
+        variant="default"
+        badges={['Domain Builder']}
+        description="Formalização de requisitos via clarificação iterativa em 6 passos. Cada requisito é formalizado em IEEE 29148 com cenários SBE."
+      >
+        <p class="card-output"><strong>Saída:</strong> <code>specification-plan</code> — aprovação Domain Expert + Architect</p>
+      </FlowCard>
+    </div>
+  </div>
+</DiagramContainer>
+
+<style>
+  .canon-diagram {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .canon-diagram__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+
+  .card-output {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    padding-top: var(--space-3);
+    margin-top: var(--space-3);
+    border-top: 1px solid var(--color-border-default);
+    margin-bottom: 0;
+  }
+
+  .card-output code {
+    font-size: var(--text-xs);
+    background: rgba(34, 211, 238, 0.08);
+    padding: 1px 4px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-accent);
+  }
+
+  @media (max-width: 767px) {
+    .canon-diagram__cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

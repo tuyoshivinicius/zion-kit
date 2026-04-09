@@ -2,7 +2,7 @@
 import SectionHeader from '../ui/SectionHeader.astro';
 import ScrollReveal from '../animations/ScrollReveal.astro';
 import DiagramContainer from '../ui/DiagramContainer.astro';
-import ChangePlanEnvelopeDiagram from '../diagrams/ChangePlanEnvelopeDiagram.tsx';
+import ChangePlanEnvelopeDiagramV2 from '../diagrams/ChangePlanEnvelopeDiagramV2.astro';
 
 const universalFields = [
   { field: 'id', desc: 'Identificador único (ex.: CP-discovery-2026-04-08-001)' },
@@ -155,7 +155,7 @@ const changeTypes = [
         label="Diagrama do Canonical Change Plan — Envelope, tipos e fluxo de aprovação"
         title="Diagrama 10 — Estrutura do Canonical Change Plan"
       >
-        <ChangePlanEnvelopeDiagram client:visible />
+        <ChangePlanEnvelopeDiagramV2 />
       </DiagramContainer>
     </ScrollReveal>
 

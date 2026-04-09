@@ -1,9 +1,8 @@
 ---
 import SectionHeader from '../ui/SectionHeader.astro';
-import DiagramContainer from '../ui/DiagramContainer.astro';
 import ScrollReveal from '../animations/ScrollReveal.astro';
-import CanonBuildingDiagram from '../diagrams/CanonBuildingDiagram.tsx';
-import CeremonyFlowDiagram from '../diagrams/CeremonyFlowDiagram.tsx';
+import CanonBuildingDiagramV2 from '../diagrams/CanonBuildingDiagramV2.astro';
+import CeremonyFlowDiagramV2 from '../diagrams/CeremonyFlowDiagramV2.astro';
 ---
 
 <section id="canon-building" class="canon-building-section section-odd" aria-labelledby="heading-canon-building">
@@ -31,11 +30,9 @@ import CeremonyFlowDiagram from '../diagrams/CeremonyFlowDiagram.tsx';
       </p>
     </ScrollReveal>
 
-    <!-- Diagrama existente: Canon Building -->
+    <!-- Diagrama: Canon Building V2 -->
     <ScrollReveal animation="scale-in" delay={0.3}>
-      <DiagramContainer label="Canon Building — processo de construção da Product Canon em três sessões" title="Diagrama — Visão Geral do Canon Building">
-        <CanonBuildingDiagram client:visible />
-      </DiagramContainer>
+      <CanonBuildingDiagramV2 />
     </ScrollReveal>
 
     <!-- Sessão 1 — Domain Discovery Session -->
@@ -202,11 +199,9 @@ import CeremonyFlowDiagram from '../diagrams/CeremonyFlowDiagram.tsx';
       </div>
     </ScrollReveal>
 
-    <!-- Novo diagrama: Ceremony Flow -->
+    <!-- Diagrama: Ceremony Flow -->
     <ScrollReveal animation="scale-in" delay={0.3}>
-      <DiagramContainer label="Fluxo das cerimônias do Canon Building" title="CeremonyFlowDiagram">
-        <CeremonyFlowDiagram client:visible />
-      </DiagramContainer>
+      <CeremonyFlowDiagramV2 />
     </ScrollReveal>
 
     <!-- Princípio: Prevenção sobre detecção -->

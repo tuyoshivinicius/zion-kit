@@ -33,3 +33,6 @@ qa-screenshots/
 
 # Claude local settings
 .claude/settings.local.json
+
+# Execution/automation logs
+logs/

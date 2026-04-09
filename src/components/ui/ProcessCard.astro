@@ -7,9 +7,10 @@ interface Props {
   type: 'ceremony' | 'decision' | 'process' | 'complementary';
   accentColor: string;
   position?: 'left' | 'right' | 'lateral';
+  markerType?: 'default' | 'gate' | 'decision';
 }
 
-const { title, description, icon, roles, type, accentColor, position = 'left' } = Astro.props;
+const { title, description, icon, roles, type, accentColor, position = 'left', markerType = 'default' } = Astro.props;
 
 const roleColors: Record<string, string> = {
   'Domain Builder': 'var(--color-aurora-green)',
@@ -30,7 +31,7 @@ const typeLabels: Record<string, string> = {
 };
 ---
 
-<div class:list={['process-card', `process-card--${position}`, `process-card--${type}`, position === 'lateral' && 'process-card--lateral']}>
+<div class:list={['process-card', `process-card--${position}`, `process-card--${type}`, position === 'lateral' && 'process-card--lateral']} data-marker-type={markerType}>
   <div class="process-card__icon" style={`color: ${accentColor}`}>
     <Fragment set:html={icon} />
   </div>

@@ -2,7 +2,7 @@
 import SectionHeader from '../ui/SectionHeader.astro';
 import ScrollReveal from '../animations/ScrollReveal.astro';
 import DiagramContainer from '../ui/DiagramContainer.astro';
-import DirectEditFlowDiagram from '../diagrams/DirectEditFlowDiagram.tsx';
+import DirectEditFlowDiagramV2 from '../diagrams/DirectEditFlowDiagramV2.astro';
 
 const guardrailSteps = [
   { step: '1', title: 'Proposta em linguagem natural', desc: 'O Domain Expert descreve a alteração em formato livre — uma correção factual, uma mudança regulatória, um ajuste de definição.' },
@@ -66,7 +66,7 @@ const reportSections = [
 
     <ScrollReveal animation="fade-up" delay={0.4}>
       <DiagramContainer label="Fluxo da Edição Direta — proposta, guardrails iterativos, relatório, expert-edit-plan e aprovação sequencial" title="Diagrama — Fluxo da Edição Direta">
-        <DirectEditFlowDiagram client:visible />
+        <DirectEditFlowDiagramV2 />
       </DiagramContainer>
     </ScrollReveal>
 

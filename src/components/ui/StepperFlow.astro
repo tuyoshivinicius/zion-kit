@@ -1,0 +1,199 @@
+---
+interface StepItem {
+  number: number;
+  title: string;
+  description?: string;
+  type?: 'step' | 'gate';
+  gateLabel?: string;
+}
+
+interface Props {
+  steps: StepItem[];
+  accentColor?: string;
+  class?: string;
+}
+
+const { steps, accentColor = 'var(--color-aurora-cyan)', class: className } = Astro.props;
+---
+
+<div class:list={['stepper-flow', className]} style={`--stepper-accent: ${accentColor}`}>
+  {steps.map((step, i) => (
+    <>
+      <div class:list={['stepper-flow__item', `stepper-flow__item--${step.type ?? 'step'}`]}>
+        <div class="stepper-flow__marker">
+          {step.type === 'gate' ? (
+            <span class="stepper-flow__gate-icon" aria-label="gate">◇</span>
+          ) : (
+            <span class="stepper-flow__number">{step.number}</span>
+          )}
+        </div>
+        <div class="stepper-flow__content">
+          <h4 class="stepper-flow__title">{step.title}</h4>
+          {step.gateLabel && <span class="stepper-flow__gate-badge">{step.gateLabel}</span>}
+          {step.description && <p class="stepper-flow__description">{step.description}</p>}
+        </div>
+      </div>
+      {i < steps.length - 1 && (
+        <div class="stepper-flow__connector" aria-hidden="true" />
+      )}
+    </>
+  ))}
+</div>
+
+<style>
+  /* ── Base ────────────────────────────────────────────────── */
+  .stepper-flow {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0;
+    width: 100%;
+  }
+
+  /* ── Item ────────────────────────────────────────────────── */
+  .stepper-flow__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-3);
+  }
+
+  /* ── Marker (circle / gate diamond) ─────────────────────── */
+  .stepper-flow__marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stepper-flow__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--stepper-accent);
+    background: color-mix(in srgb, var(--stepper-accent) 10%, transparent);
+    color: var(--stepper-accent);
+    font-size: var(--text-sm, 0.875rem);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--stepper-accent) 20%, transparent);
+  }
+
+  .stepper-flow__gate-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Rotated square → diamond shape */
+    width: 28px;
+    height: 28px;
+    background: rgba(250, 204, 21, 0.12);
+    border: 2px solid rgba(250, 204, 21, 0.6);
+    border-radius: 4px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 12px rgba(250, 204, 21, 0.2);
+    /* Hide the slot text; visual is the box itself */
+    font-size: 0;
+    color: transparent;
+  }
+
+  /* ── Content ─────────────────────────────────────────────── */
+  .stepper-flow__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .stepper-flow__title {
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: var(--leading-tight, 1.25);
+    margin: 0;
+  }
+
+  .stepper-flow__gate-badge {
+    display: inline-block;
+    background: rgba(250, 204, 21, 0.15);
+    color: rgba(250, 204, 21, 0.9);
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    border-radius: 9999px;
+    padding: 2px 10px;
+    border: 1px solid rgba(250, 204, 21, 0.25);
+    white-space: nowrap;
+  }
+
+  .stepper-flow__description {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed, 1.625);
+    margin: 0;
+  }
+
+  /* ── Connector (desktop: horizontal line) ────────────────── */
+  .stepper-flow__connector {
+    flex: 0 0 2rem;
+    align-self: flex-start;
+    /* Vertically center with the 40px marker */
+    margin-top: 19px;
+    height: 2px;
+    background: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--stepper-accent) 60%, transparent),
+      color-mix(in srgb, var(--stepper-accent) 20%, transparent)
+    );
+  }
+
+  /* ── Mobile (< 768px): vertical layout ──────────────────── */
+  @media (max-width: 767px) {
+    .stepper-flow {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .stepper-flow__item {
+      flex-direction: row;
+      align-items: flex-start;
+      text-align: left;
+      gap: var(--space-4);
+    }
+
+    .stepper-flow__content {
+      align-items: flex-start;
+    }
+
+    .stepper-flow__connector {
+      /* Vertical line aligned under the marker center */
+      flex: 0 0 24px;
+      align-self: auto;
+      margin-top: 0;
+      margin-left: 19px; /* center of 40px marker */
+      width: 2px;
+      height: 24px;
+      background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--stepper-accent) 60%, transparent),
+        color-mix(in srgb, var(--stepper-accent) 20%, transparent)
+      );
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stepper-flow__number {
+      box-shadow: none;
+    }
+    .stepper-flow__gate-icon {
+      filter: none;
+    }
+  }
+</style>

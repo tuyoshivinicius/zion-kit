@@ -2,7 +2,7 @@
 import SectionHeader from '../ui/SectionHeader.astro';
 import DiagramContainer from '../ui/DiagramContainer.astro';
 import ScrollReveal from '../animations/ScrollReveal.astro';
-import FeedbackDiagram from '../diagrams/FeedbackDiagram';
+import FeedbackDiagramV2 from '../diagrams/FeedbackDiagramV2';
 ---
 
 <section id="enrichment" class="enrichment-section section-odd" aria-labelledby="heading-enrichment">
@@ -131,7 +131,7 @@ import FeedbackDiagram from '../diagrams/FeedbackDiagram';
     <!-- Diagrama -->
     <ScrollReveal animation="fade-up" delay={0.9}>
       <DiagramContainer label="Fluxo de retroalimentação com sinalização explícita, detecção assistida e escalação condicional" title="Diagrama — Canon Enrichment">
-        <FeedbackDiagram client:visible />
+        <FeedbackDiagramV2 client:visible />
       </DiagramContainer>
     </ScrollReveal>
   </div>
