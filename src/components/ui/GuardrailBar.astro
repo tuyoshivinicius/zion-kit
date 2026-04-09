@@ -1,0 +1,152 @@
+---
+interface Props {
+  guardrails: Array<{
+    icon: string;
+    title: string;
+    description: string;
+  }>;
+}
+
+const { guardrails } = Astro.props;
+---
+
+<aside class="guardrail-bar" role="complementary" aria-label="Guardrails transversais da Product Canon">
+  <div class="guardrail-bar__header">
+    <span class="guardrail-bar__label">Guardrails transversais</span>
+    <p class="guardrail-bar__desc">Operam continuamente em todas as cerimônias e processos da Etapa 1.</p>
+  </div>
+  <div class="guardrail-bar__items">
+    {guardrails.map((g) => (
+      <div class="guardrail-bar__item">
+        <div class="guardrail-bar__icon" aria-hidden="true">
+          <Fragment set:html={g.icon} />
+        </div>
+        <div class="guardrail-bar__item-content">
+          <h4 class="guardrail-bar__item-title">{g.title}</h4>
+          <p class="guardrail-bar__item-desc">{g.description}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="guardrail-bar__gradient" aria-hidden="true"></div>
+</aside>
+
+<style>
+  .guardrail-bar {
+    position: relative;
+    background: var(--color-bg-tertiary);
+    border: 1px solid rgba(244, 114, 182, 0.2);
+    border-left: 3px solid transparent;
+    border-image: linear-gradient(
+      to bottom,
+      var(--color-aurora-green),
+      var(--color-aurora-cyan),
+      var(--color-aurora-violet),
+      var(--color-aurora-pink)
+    ) 1;
+    border-image-slice: 1;
+    border-radius: 0;
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+    overflow: hidden;
+  }
+
+  .guardrail-bar__gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(
+      to bottom,
+      var(--color-aurora-green),
+      var(--color-aurora-cyan),
+      var(--color-aurora-violet),
+      var(--color-aurora-pink)
+    );
+    opacity: 0.6;
+  }
+
+  .guardrail-bar__header {
+    margin-bottom: var(--space-4);
+  }
+
+  .guardrail-bar__label {
+    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--color-aurora-pink);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .guardrail-bar__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-normal);
+    margin-top: var(--space-1);
+  }
+
+  .guardrail-bar__items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .guardrail-bar__item {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: var(--space-3);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    transition: background var(--duration-fast) ease;
+  }
+
+  .guardrail-bar__item:hover {
+    background: color-mix(in srgb, var(--color-bg-secondary) 80%, var(--color-aurora-cyan) 5%);
+  }
+
+  .guardrail-bar__icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    color: var(--color-aurora-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .guardrail-bar__icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .guardrail-bar__item-title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .guardrail-bar__item-desc {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+  }
+
+  @media (min-width: 1024px) {
+    .guardrail-bar {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      grid-template-rows: auto;
+      gap: var(--space-4);
+    }
+
+    .guardrail-bar__items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-3);
+    }
+  }
+</style>

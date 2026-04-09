@@ -1,0 +1,116 @@
+---
+interface Props {
+  accentColor?: string;
+}
+
+const { accentColor = 'var(--color-aurora-cyan)' } = Astro.props;
+---
+
+<div class="process-timeline" style={`--timeline-accent: ${accentColor}`}>
+  <div class="process-timeline__line" aria-hidden="true"></div>
+  <div class="process-timeline__items">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .process-timeline {
+    position: relative;
+    padding: var(--space-4) 0;
+  }
+
+  /* Vertical line */
+  .process-timeline__line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in srgb, var(--timeline-accent) 40%, transparent) 10%,
+      color-mix(in srgb, var(--timeline-accent) 40%, transparent) 90%,
+      transparent
+    );
+    transform: translateX(-50%);
+  }
+
+  .process-timeline__items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    position: relative;
+  }
+
+  /* Timeline node dots */
+  .process-timeline__items :global(.timeline-node) {
+    position: relative;
+  }
+
+  .process-timeline__items :global(.timeline-node::before) {
+    content: '';
+    position: absolute;
+    top: var(--space-6);
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    background: var(--color-bg-primary);
+    border: 2px solid var(--timeline-accent);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--timeline-accent) 30%, transparent);
+  }
+
+  /* Alternating layout — desktop */
+  .process-timeline__items :global(.timeline-node:nth-child(odd)) {
+    padding-right: calc(50% + var(--space-8));
+  }
+
+  .process-timeline__items :global(.timeline-node:nth-child(even)) {
+    padding-left: calc(50% + var(--space-8));
+  }
+
+  /* Tablet — all left-aligned */
+  @media (max-width: 1023px) and (min-width: 768px) {
+    .process-timeline__line {
+      left: var(--space-4);
+      transform: none;
+    }
+
+    .process-timeline__items :global(.timeline-node) {
+      padding-right: 0 !important;
+      padding-left: calc(var(--space-4) + var(--space-8)) !important;
+    }
+
+    .process-timeline__items :global(.timeline-node::before) {
+      left: var(--space-4);
+    }
+  }
+
+  /* Mobile — no timeline, stacked */
+  @media (max-width: 767px) {
+    .process-timeline__line {
+      display: none;
+    }
+
+    .process-timeline__items {
+      gap: var(--space-6);
+    }
+
+    .process-timeline__items :global(.timeline-node) {
+      padding: 0 !important;
+    }
+
+    .process-timeline__items :global(.timeline-node::before) {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process-timeline__items :global(.timeline-node::before) {
+      box-shadow: none;
+    }
+  }
+</style>

@@ -1,0 +1,76 @@
+---
+interface Props {
+  etapaNumber: 1 | 2 | 3;
+  title: string;
+  subtitle?: string;
+}
+
+const { etapaNumber, title, subtitle } = Astro.props;
+
+const etapaColors: Record<number, string> = {
+  1: 'var(--color-aurora-green)',
+  2: 'var(--color-aurora-cyan)',
+  3: 'var(--color-aurora-violet)',
+};
+
+const accentColor = etapaColors[etapaNumber];
+---
+
+<div class="etapa-header" style={`--etapa-accent: ${accentColor}`}>
+  <div class="etapa-header__badge" aria-hidden="true">
+    <span class="etapa-header__number">Etapa {etapaNumber}</span>
+  </div>
+  <h3 class="etapa-header__title">{title}</h3>
+  {subtitle && <p class="etapa-header__subtitle">{subtitle}</p>}
+  <div class="etapa-header__line" aria-hidden="true"></div>
+</div>
+
+<style>
+  .etapa-header {
+    margin-bottom: var(--space-8);
+    padding-top: var(--space-4);
+  }
+
+  .etapa-header__badge {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+
+  .etapa-header__number {
+    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--etapa-accent);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    background: color-mix(in srgb, var(--etapa-accent) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--etapa-accent) 25%, transparent);
+    border-radius: var(--radius-full);
+    padding: var(--space-1) var(--space-4);
+  }
+
+  .etapa-header__title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold, 700);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+    line-height: var(--leading-tight);
+  }
+
+  .etapa-header__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: var(--max-width-narrow);
+    margin-bottom: var(--space-2);
+  }
+
+  .etapa-header__line {
+    width: 60px;
+    height: 3px;
+    background: var(--etapa-accent);
+    border-radius: var(--radius-full);
+    opacity: 0.6;
+  }
+</style>
